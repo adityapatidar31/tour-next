@@ -50,6 +50,15 @@ app.post("/api/v1/tours", (req, res) => {
   );
 });
 
+app.patch("/api/v1/tours/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const tour = tours.find((tour) => tour.id === id);
+  res.status(200).json({
+    status: "success",
+    message: "<Tour Updated>",
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`App is running on the port ${PORT}...`);
 });

@@ -1,116 +1,26 @@
-const PORT = 3000;
-
-const fs = require("fs");
 const express = require("express");
+const morgan = require("morgan");
+
+const tourRouter = require("./routes/tourRoutes");
+const userRouter = require("./routes/userRoutes");
+
 const app = express();
 
+// 1) MIDDLEWARES
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
+
 app.use(express.json());
-app.use(morgan("dev"));
+app.use(express.static(`${__dirname}/public`));
 
-const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
-);
-
-const getAllTours = (req, res) => {
-  res.status(200).json({
-    status: "success",
-    result: tours.length,
-    data: {
-      tours,
-    },
-  });
-};
-
-const getSingleTour = (req, res) => {
-  const id = Number(req.params.id);
-  const tour = tours.find((tour) => tour.id === id);
-  res.status(200).json({
-    status: "success",
-    data: {
-      tour,
-    },
-  });
-};
-
-const createTour = (req, res) => {
-  const newId = tours[tours.length - 1].id + 1;
-  newTour = Object.assign({ id: newId }, req.body);
-  tours.push(newTour);
-
-  fs.writeFile(
-    `${__dirname}/dev-data/data/tours-simple.json`,
-    JSON.stringify(tours),
-    (error) => {
-      res.status(201).json({
-        status: "success",
-        data: {
-          tour: newTour,
-        },
-      });
-    }
-  );
-};
-
-const updateTour = (req, res) => {
-  const id = Number(req.params.id);
-  const tour = tours.find((tour) => tour.id === id);
-  res.status(200).json({
-    status: "success",
-    message: "<Tour Updated>",
-  });
-};
-
-const deleteTour = (req, res) => {
-  const id = Number(req.params.id);
-  const tour = tours.find((tour) => tour.id === id);
-  res.status(204).json({
-    status: "success",
-    data: {},
-  });
-};
-
-const getAllUsers = (req, res) => {
-  res.status(500).json({ message: "Route is not ready Yet" });
-};
-
-const createUser = (req, res) => {
-  res.status(500).send("Route is not ready Yet");
-};
-
-const getSingleUser = (req, res) => {
-  res.status(500).send("Route is not ready Yet");
-};
-
-const updateUser = (req, res) => {
-  res.status(500).send("Route is not ready Yet");
-};
-
-const deleteUser = (req, res) => {
-  res.status(500).send("Route is not ready Yet");
-};
-
-// app.get("/api/v1/tours", getAllTours);
-// app.get("/api/v1/tours/:id", getSingleTour);
-// app.post("/api/v1/tours", createTour);
-// app.patch("/api/v1/tours/:id", updateTour);
-// app.delete("/api/v1/tours/:id", deleteTour);
-
-app.route("/api/v1/tours").get(getAllTours).post(createTour);
-
-app
-  .route("/api/v1/tours/:id")
-  .get(getSingleTour)
-  .patch(updateTour)
-  .delete(deleteTour);
-
-app.route("/api/v1/users").get(getAllUsers).post(createUser);
-
-app
-  .route("/api/v1/users/:id")
-  .get(getSingleUser)
-  .patch(updateUser)
-  .delete(deleteUser);
-
-app.listen(PORT, () => {
-  console.log(`App is running on the port ${PORT}...`);
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
 });
+
+// 3) ROUTES
+app.use("/api/v1/tours", tourRouter);
+app.use("/api/v1/users", userRouter);
+
+module.exports = app;

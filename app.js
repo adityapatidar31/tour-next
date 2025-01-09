@@ -68,6 +68,26 @@ const deleteTour = (req, res) => {
   });
 };
 
+const getAllUsers = (req, res) => {
+  res.status(500).json({ message: "Route is not ready Yet" });
+};
+
+const createUser = (req, res) => {
+  res.status(500).send("Route is not ready Yet");
+};
+
+const getSingleUser = (req, res) => {
+  res.status(500).send("Route is not ready Yet");
+};
+
+const updateUser = (req, res) => {
+  res.status(500).send("Route is not ready Yet");
+};
+
+const deleteUser = (req, res) => {
+  res.status(500).send("Route is not ready Yet");
+};
+
 // app.get("/api/v1/tours", getAllTours);
 // app.get("/api/v1/tours/:id", getSingleTour);
 // app.post("/api/v1/tours", createTour);
@@ -81,6 +101,14 @@ app
   .get(getSingleTour)
   .patch(updateTour)
   .delete(deleteTour);
+
+app.route("/api/v1/users").get(getAllUsers).post(createUser);
+
+app
+  .route("/api/v1/users/:id")
+  .get(getSingleUser)
+  .patch(updateUser)
+  .delete(deleteUser);
 
 app.listen(PORT, () => {
   console.log(`App is running on the port ${PORT}...`);

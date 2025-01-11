@@ -78,8 +78,6 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   return false;
 };
 
-const User = mongoose.model("User", userSchema);
-
 userSchema.methods.createPasswordResetToken = function () {
   const resetToken = crypto.randomBytes(32).toString("hex");
 
@@ -91,5 +89,7 @@ userSchema.methods.createPasswordResetToken = function () {
 
   return resetToken;
 };
+
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;

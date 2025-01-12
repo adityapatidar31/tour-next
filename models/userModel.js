@@ -96,6 +96,11 @@ userSchema.pre("save", function (next) {
   next();
 });
 
+userSchema.pre(/^find/, function (next) {
+  this.find({ active: { $ne: false } });
+  next();
+});
+
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;

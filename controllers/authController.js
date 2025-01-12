@@ -43,16 +43,7 @@ exports.signUp = catchAsync(async (req, res) => {
     passwordConfirm: req.body.passwordConfirm,
     photo: req.body.photo,
   });
-
-  const token = signToken(newUser._id);
-
-  res.status(201).json({
-    status: "success",
-    token,
-    data: {
-      user: newUser,
-    },
-  });
+  createSendToken(newUser, 201, res);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -68,11 +59,7 @@ exports.login = catchAsync(async (req, res, next) => {
     next(new AppError("Invalid Credentials", 401));
   }
   // 3. if everything ok, send token to client
-  const token = signToken(user._id);
-  res.status(200).json({
-    status: "success",
-    token,
-  });
+  createSendToken(user, 200, res);
 });
 
 exports.protect = catchAsync(async (req, res, next) => {

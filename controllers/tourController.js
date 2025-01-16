@@ -1,4 +1,5 @@
 const Tour = require("../models/tourModel");
+const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const factory = require("./handlerFactory");
 
@@ -7,6 +8,25 @@ exports.aliasTopTours = async (req, res, next) => {
   req.query.sort = "-ratingsAverage,price";
   req.query.fields = "name,price,ratingsAverage,summary,difficulty";
   next();
+};
+
+// /tours-within/:distance/center/:latlng/unit/:unit
+exports.getToursWithin = (req, res, next) => {
+  const { distance, latlng, unit } = req.params;
+  const [lat, lan] = latlng.split(",");
+  if (!lat || !lan) {
+    return next(
+      new AppError(
+        "this should be latitude and longitude in the specific format lat,lng",
+        400,
+      ),
+    );
+  }
+  console.log(distance, lat, lan, unit);
+
+  res.status(200).json({
+    status: "success",
+  });
 };
 
 /*

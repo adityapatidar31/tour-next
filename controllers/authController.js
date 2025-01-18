@@ -104,6 +104,37 @@ exports.protect = catchAsync(async (req, res, next) => {
   next();
 });
 
+exports.isLoggedIn = catchAsync(async (req, res, next) => {
+  // 1. Getting token and check of it's there
+
+  if (req.cookies.jwt) {
+    const token = req.cookies.jwt;
+
+    if (!token) {
+      return next();
+    }
+    // 2. Verification token
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
+    // 3. Check if user still exists
+    const currentUser = await User.findById(decoded.id);
+    if (!currentUser) {
+      return next();
+    }
+
+    // 4. Check if user changed password after the token was issued
+    if (currentUser.changedPasswordAfter(decoded.iat)) {
+      return next();
+    }
+
+    // GRANT ACCESS TO PROTECTED ROUTE
+    req.locals.user = currentUser;
+    req.user = currentUser;
+    next();
+  }
+  next();
+});
+
 exports.restrictTo =
   (...roles) =>
   (req, res, next) => {

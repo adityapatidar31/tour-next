@@ -4,6 +4,7 @@ import NameComponent from "./NameComponent";
 import TourDates from "./startDate";
 import Location from "./Location";
 import MapComponent from "./Map";
+import ReviewList from "./ReviewComponent";
 
 const tour = {
   startLocation: {
@@ -214,9 +215,10 @@ function Product() {
         />
       </div>
 
-      <Location locations={tour.locations} />
       <div className="max-w-screen-xl mx-4">
+        <Location locations={tour.locations} />
         <MapComponent />
+        <ReviewList reviews={tour.reviews} />
       </div>
     </>
   );

@@ -10,6 +10,7 @@ import {
   Utensils,
   PartyPopper,
   Landmark,
+  Plane,
 } from "lucide-react";
 
 const categories: { name: string; icon: LucideIcon }[] = [
@@ -24,16 +25,17 @@ const categories: { name: string; icon: LucideIcon }[] = [
   { name: "Festival", icon: PartyPopper },
   { name: "Culture", icon: Landmark },
   { name: "Adventure", icon: Mountain },
+  { name: "Fly", icon: Plane },
 ];
 
 export default function CategoryFilter() {
   return (
     <div className="overflow-x-auto w-full">
-      <div className="flex gap-6 p-4 min-w-max">
+      <div className="flex gap-8 p-4 min-w-max">
         {categories.map(({ name, icon: Icon }) => (
           <div key={name} className="flex flex-col items-center gap-2">
             <Icon className="w-16 h-16 text-primary" />
-            <span className="text-sm font-medium text-primary">{name}</span>
+            <span className="text-m font-medium text-primary">{name}</span>
           </div>
         ))}
       </div>

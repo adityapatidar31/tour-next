@@ -7,7 +7,7 @@ import HomePage from "./components/components/HomePage";
 
 function Layout() {
   return (
-    <div className="max-w-screen-xl mx-auto">
+    <div className="max-w-screen-xl mx-auto lg:px-13 ">
       <Navbar />
       <main className="mt-4">
         <Outlet /> {/* This will render the child route component */}

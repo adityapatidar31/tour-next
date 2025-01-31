@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import ImageCarousel from "./Carousel";
 import NameComponent from "./NameComponent";
 import TourDates from "./startDate";
+import Location from "./Location";
 
 const tour = {
   startLocation: {
@@ -37,40 +38,7 @@ const tour = {
       day: 1,
       _id: "5c88fa8cf4afda39709c2959",
       id: "5c88fa8cf4afda39709c2959",
-    },
-    {
-      type: "Point",
-      coordinates: [-80.647885, 24.909047],
-      name: "Islamorada",
-      day: 2,
-      _id: "5c88fa8cf4afda39709c2958",
-      id: "5c88fa8cf4afda39709c2958",
-    },
-    {
-      type: "Point",
-      coordinates: [-81.0784, 24.707496],
-      name: "Sombrero Beach",
-      day: 3,
-      _id: "5c88fa8cf4afda39709c2957",
-      id: "5c88fa8cf4afda39709c2957",
-    },
-    {
-      type: "Point",
-      coordinates: [-81.768719, 24.552242],
-      name: "West Key",
-      day: 5,
-      _id: "5c88fa8cf4afda39709c2956",
-      id: "5c88fa8cf4afda39709c2956",
-    },
-  ],
-  guides: [
-    {
-      type: "Point",
-      coordinates: [-80.128473, 25.781842],
-      name: "Lummus Park Beach",
-      day: 1,
-      _id: "5c88fa8cf4afda39709c2959",
-      id: "5c88fa8cf4afda39709c2959",
+      image: "lummus-park-beach.jpg",
       description:
         "Lummus Park Beach is a stunning beachfront park in Miami’s famous South Beach. With its soft white sand, swaying palm trees, and scenic ocean views, it’s a favorite spot for sunbathers, joggers, and volleyball players. The lively atmosphere, proximity to restaurants, and vibrant nightlife make it an ideal destination for visitors. Whether relaxing by the waves or exploring the iconic Art Deco district, this beach offers endless enjoyment.",
     },
@@ -81,6 +49,7 @@ const tour = {
       day: 2,
       _id: "5c88fa8cf4afda39709c2958",
       id: "5c88fa8cf4afda39709c2958",
+      image: "islamorada.jpg",
       description:
         "Islamorada, known as the 'Sportfishing Capital of the World,' is a paradise in the Florida Keys. Its crystal-clear waters, vibrant coral reefs, and abundant marine life attract divers, anglers, and adventure seekers. The island boasts scenic boat tours, delicious seafood restaurants, and breathtaking sunsets. Whether exploring its rich history, snorkeling in turquoise waters, or simply relaxing on the beach, Islamorada offers an unforgettable island getaway experience.",
     },
@@ -91,6 +60,7 @@ const tour = {
       day: 3,
       _id: "5c88fa8cf4afda39709c2957",
       id: "5c88fa8cf4afda39709c2957",
+      image: "sombrero-beach.jpg",
       description:
         "Sombrero Beach is a hidden gem in Marathon, Florida, offering pristine sandy shores and warm, clear waters. This family-friendly beach is perfect for swimming, picnicking, and soaking up the sun. A nearby coral reef makes it a great spot for snorkeling and marine exploration. With shaded pavilions, a playground, and breathtaking sunset views, Sombrero Beach is an ideal destination for both relaxation and outdoor adventure.",
     },
@@ -101,8 +71,25 @@ const tour = {
       day: 5,
       _id: "5c88fa8cf4afda39709c2956",
       id: "5c88fa8cf4afda39709c2956",
+      image: "west-key.jpg",
       description:
         "West Key is a secluded island in the Florida Keys, known for its untouched natural beauty and abundant wildlife. A perfect escape from the crowds, it offers serene beaches, crystal-clear waters, and fantastic kayaking opportunities. Birdwatchers and nature enthusiasts will love exploring its diverse ecosystem. Whether enjoying a peaceful day on the shore or discovering hidden coves, West Key is a tranquil paradise for those seeking a quiet retreat.",
+    },
+  ],
+  guides: [
+    {
+      _id: "5c8a22c62f8fb814b56fa18b",
+      name: "Miyah Myles",
+      email: "miyah@example.com",
+      photo: "user-12.jpg",
+      role: "lead-guide",
+    },
+    {
+      _id: "5c8a1f4e2f8fb814b56fa185",
+      name: "Jennifer Hardy",
+      email: "jennifer@example.com",
+      photo: "user-6.jpg",
+      role: "guide",
     },
   ],
   slug: "the-sea-explorer",
@@ -225,6 +212,8 @@ function Product() {
           ratingsQuantity={tour.ratingsQuantity}
         />
       </div>
+
+      <Location locations={tour.locations} />
     </>
   );
 }

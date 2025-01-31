@@ -4,6 +4,8 @@ import Product from "./components/components/pages/product/ProductPage";
 import { Outlet } from "react-router-dom";
 import Navbar from "./components/components/navbar/Navbar";
 import HomePage from "./components/components/HomePage";
+import LoginPage from "./components/components/pages/login/LoginPage";
+import RegisterPage from "./components/components/pages/register/registerPage";
 
 function Layout() {
   return (
@@ -27,6 +29,8 @@ export default function App() {
           {/* The dynamic route is defined as :id */}
           <Route path=":id" element={<Product />} />
         </Route>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
       </Routes>
     </BrowserRouter>
   );

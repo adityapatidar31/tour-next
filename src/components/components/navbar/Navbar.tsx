@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Menu, User } from "lucide-react";
-import ThemeSwitcher from "../ThemeSwitcher";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 export default function Navbar() {
   return (

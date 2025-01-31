@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import ImageCarousel from "./Carousel";
 import NameComponent from "./NameComponent";
+import TourDates from "./startDate";
 
 const tour = {
   startLocation: {
@@ -208,14 +209,22 @@ function Product() {
   return (
     <>
       <ImageCarousel images={tour.images} coverImage={tour.imageCover} />
-      <NameComponent
-        name={tour.name}
-        duration={tour.duration}
-        maxGroupSize={tour.maxGroupSize}
-        difficulty={tour.difficulty}
-        price={tour.price}
-        summary={tour.summary}
-      />
+      <div className="flex md:flex-row flex-col ">
+        <NameComponent
+          name={tour.name}
+          duration={tour.duration}
+          maxGroupSize={tour.maxGroupSize}
+          difficulty={tour.difficulty}
+          price={tour.price}
+          summary={tour.summary}
+        />
+        <TourDates
+          startDates={tour.startDates}
+          guides={tour.guides}
+          ratingsAverage={tour.ratingsAverage}
+          ratingsQuantity={tour.ratingsQuantity}
+        />
+      </div>
     </>
   );
 }

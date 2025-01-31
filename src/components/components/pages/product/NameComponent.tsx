@@ -18,7 +18,7 @@ export default function NameComponent({
   summary,
 }: TourNameProps) {
   return (
-    <Card className="max-w-2xl p-6">
+    <Card className="w-full max-w-2xl m-6">
       <CardHeader>
         <CardTitle className="text-3xl font-bold text-primary">
           {name}

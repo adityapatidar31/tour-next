@@ -31,7 +31,7 @@ export default function ImageCarousel({
     <div className="relative w-full max-w-screen-xl mx-auto">
       <button
         onClick={() => scroll("left")}
-        className="absolute left-2 top-1/2 -translate-y-1/2 bg-background p-2 rounded-full shadow-md z-10"
+        className="absolute left-1 top-1/2 -translate-y-1/2 bg-background p-2 rounded-full shadow-md z-10"
       >
         <ChevronLeft className="w-6 h-6 text-primary" />
       </button>
@@ -50,7 +50,7 @@ export default function ImageCarousel({
       </div>
       <button
         onClick={() => scroll("right")}
-        className="absolute right-2 top-1/2 -translate-y-1/2 bg-background p-2 rounded-full shadow-md z-10"
+        className="absolute right-1 top-1/2 -translate-y-1/2 bg-background p-2 rounded-full shadow-md z-10"
       >
         <ChevronRight className="w-6 h-6 text-primary" />
       </button>

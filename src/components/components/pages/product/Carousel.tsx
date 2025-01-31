@@ -31,18 +31,18 @@ export default function ImageCarousel({
     <div className="relative w-full max-w-screen-xl mx-auto">
       <button
         onClick={() => scroll("left")}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-background p-2 rounded-full shadow-md z-10"
+        className="absolute left-2 top-1/2 -translate-y-1/2 bg-background p-2 rounded-full shadow-md z-10"
       >
         <ChevronLeft className="w-6 h-6 text-primary" />
       </button>
       <div
         ref={scrollRef}
-        className="flex gap-6 overflow-x-auto scroll-smooth scrollbar-hide px-8 py-6"
+        className="flex gap-6 overflow-x-auto scroll-smooth rounded-xl m-6 scrollbar-hide "
       >
         {allImages.map((src, index) => (
           <img
             key={index}
-            src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            src={`/img/${src}`}
             alt={`Tour Image ${index + 1}`}
             className="w-[360px] md:h-[240px] lg:w-[540px] lg:h-[360px] object-cover rounded-xl shadow-lg shrink-0"
           />
@@ -50,7 +50,7 @@ export default function ImageCarousel({
       </div>
       <button
         onClick={() => scroll("right")}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-background p-2 rounded-full shadow-md z-10"
+        className="absolute right-2 top-1/2 -translate-y-1/2 bg-background p-2 rounded-full shadow-md z-10"
       >
         <ChevronRight className="w-6 h-6 text-primary" />
       </button>

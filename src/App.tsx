@@ -1,11 +1,9 @@
-import { Button } from "@/components/ui/button";
-import ThemeSwitcher from "./components/components/ThemeSwitcher";
+import Navbar from "./components/components/navbar/Navbar";
 
 export default function App() {
   return (
     <div>
-      <Button>Click me</Button>
-      <ThemeSwitcher />
+      <Navbar />
     </div>
   );
 }

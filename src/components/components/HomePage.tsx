@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import CategoryFilter from "./CategoryFiller";
+import CardContainer from "./CardContainer";
 
 export default function HomePage() {
   return (
     <div>
       <CategoryFilter />
+      <CardContainer />
       <h2 className="text-2xl font-semibold">Welcome to the Home Page!</h2>
       <div className="mt-4">
         <Link to="/home/1" className="text-violet-600 hover:underline">

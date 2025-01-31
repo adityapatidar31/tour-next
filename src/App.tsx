@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Hero from "./components/components/Hero";
-import Product from "./components/components/Product";
+import Product from "./components/components/pages/product/ProductPage";
 import { Outlet } from "react-router-dom";
 import Navbar from "./components/components/navbar/Navbar";
 import HomePage from "./components/components/HomePage";

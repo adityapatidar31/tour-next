@@ -3,6 +3,7 @@ import ImageCarousel from "./Carousel";
 import NameComponent from "./NameComponent";
 import TourDates from "./startDate";
 import Location from "./Location";
+import MapComponent from "./Map";
 
 const tour = {
   startLocation: {
@@ -214,6 +215,9 @@ function Product() {
       </div>
 
       <Location locations={tour.locations} />
+      <div className="max-w-screen-xl mx-4">
+        <MapComponent />
+      </div>
     </>
   );
 }

@@ -1,5 +1,3 @@
-import { ScrollArea } from "@/components/ui/scroll-area";
-
 import {
   LucideIcon,
   Mountain,
@@ -30,15 +28,15 @@ const categories: { name: string; icon: LucideIcon }[] = [
 
 export default function CategoryFilter() {
   return (
-    <ScrollArea className="w-full min-w-[800px] overflow-auto">
+    <div className="overflow-x-auto w-full">
       <div className="flex gap-6 p-4 min-w-max">
         {categories.map(({ name, icon: Icon }) => (
           <div key={name} className="flex flex-col items-center gap-2">
-            <Icon className="w-8 h-8 text-primary" />
-            <span className="text-sm font-medium text-white">{name}</span>
+            <Icon className="w-16 h-16 text-primary" />
+            <span className="text-sm font-medium text-primary">{name}</span>
           </div>
         ))}
       </div>
-    </ScrollArea>
+    </div>
   );
 }

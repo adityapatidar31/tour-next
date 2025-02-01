@@ -8,6 +8,7 @@ import ReviewList from "./ReviewComponent";
 import { useQuery } from "@tanstack/react-query";
 import { getSingleTour } from "@/services/backend";
 import ErrorComponent from "../../Error";
+import SingleProductLoading from "./Loading";
 
 function Product() {
   const { id } = useParams<{ id: string }>();
@@ -20,7 +21,7 @@ function Product() {
     queryFn: () => getSingleTour(id || "Invalid Id"),
   });
 
-  if (isLoading) return <p>Loading ....</p>;
+  if (isLoading) return <SingleProductLoading />;
 
   if (error || !tour) {
     return <ErrorComponent message="Invalid Id: Please Provide the valid Id" />;

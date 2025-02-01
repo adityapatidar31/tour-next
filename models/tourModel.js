@@ -2,6 +2,20 @@ const mongoose = require("mongoose");
 const slugify = require("slugify");
 // const validator = require('validator');
 
+const tourCategory = [
+  "Sea",
+  "Park",
+  "City",
+  "Sport",
+  "Light",
+  "Snow",
+  "Forest",
+  "Culture",
+  "Adventure",
+  "Fly",
+  "Food",
+];
+
 const tourSchema = new mongoose.Schema(
   {
     name: {
@@ -28,6 +42,14 @@ const tourSchema = new mongoose.Schema(
       enum: {
         values: ["easy", "medium", "difficult"],
         message: "Difficulty is either: easy, medium, difficult",
+      },
+    },
+    category: {
+      type: String,
+      required: [true, "A tour must have a category"],
+      enum: {
+        values: tourCategory,
+        message: "Tour category in not matching",
       },
     },
     ratingsAverage: {

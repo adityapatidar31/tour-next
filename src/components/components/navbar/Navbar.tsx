@@ -9,12 +9,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Menu, User } from "lucide-react";
 import ThemeSwitcher from "./ThemeSwitcher";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
     <nav className="w-full bg-background p-4 shadow-md">
       <div className="container mx-auto flex items-center justify-between">
-        <div className="text-xl font-bold text-violet-600">Tour Next</div>
+        <Link to="/home">
+          <div className="text-xl font-bold text-violet-600">Tour Next</div>
+        </Link>
 
         <div className="hidden md:flex flex-1 justify-center max-w-md">
           <Input type="text" placeholder="Search Tour" className="w-84" />

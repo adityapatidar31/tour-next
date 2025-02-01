@@ -34,7 +34,6 @@ interface MapComponentProps {
 }
 
 function MapComponent({ locations }: MapComponentProps) {
-  console.log(locations[0].name);
   return (
     <div className="w-full h-[500px] rounded-2xl overflow-hidden shadow-lg">
       <MapContainer

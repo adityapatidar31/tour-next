@@ -15,7 +15,6 @@ export default function HomePage() {
     queryKey: ["tours"],
     queryFn: getTours,
   });
-  console.log(error);
   return (
     <div>
       <CategoryFilter />

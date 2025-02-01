@@ -33,9 +33,6 @@ const RegisterPage = () => {
     } catch {
       console.log("Failed to signup, Try again later");
     }
-
-    setError("");
-    console.log("Logging in with", { email, password });
   }
 
   return (

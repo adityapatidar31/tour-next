@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import CardComponent from "./CardComponent";
-import { Tour } from "./HomePage";
+import { Tour } from "@/services/types";
 
 interface CardContainerProps {
   tours: Tour[];

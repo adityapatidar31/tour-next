@@ -1,8 +1,24 @@
 import { Link } from "react-router-dom";
 import CategoryFilter from "./CategoryFiller";
 import CardContainer from "./CardContainer";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function HomePage() {
+  const [tours, setTours] = useState([]);
+
+  useEffect(() => {
+    const fetchTours = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/v1/tours");
+        console.log(response.data); // Log output
+        setTours(response.data);
+      } catch (error) {
+        console.error("Error fetching tours:", error);
+      }
+    };
+    fetchTours();
+  }, []);
   return (
     <div>
       <CategoryFilter />

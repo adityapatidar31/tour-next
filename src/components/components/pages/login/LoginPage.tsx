@@ -1,21 +1,29 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<string>("");
+  // const [error, setError] = useState<string>("");
 
-  const handleLogin = () => {
-    // if (password !== confirmPassword) {
-    //   setError("Passwords do not match");
-    //   return;
-    // }
-    setError("");
-    console.log("Logging in with", { email, password });
-  };
+  async function handleLogin() {
+    try {
+      const data = {
+        email,
+        password,
+      };
+      const response = await axios.post(
+        "http://localhost:3000/api/v1/users/login",
+        data
+      );
+      console.log(response);
+    } catch {
+      console.log("Failed to login. Try again");
+    }
+  }
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -24,7 +32,7 @@ const LoginPage = () => {
           Welcome Back
         </h2>
 
-        {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
+        {/* {error && <div className="text-red-500 text-sm mb-4">{error}</div>} */}
 
         <div className="mb-4">
           <label

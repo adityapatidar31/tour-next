@@ -1,24 +1,42 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const RegisterPage = () => {
+  const [name, setName] = useState<string>("");
+
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
 
-  const handleLogin = () => {
+  async function handleLogin() {
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
     }
-    // handle login logic here
+    try {
+      const body = {
+        email,
+        password,
+        passwordConfirm: confirmPassword,
+        name,
+      };
+      console.log(body);
+      const response = await axios.post(
+        "http://localhost:3000/api/v1/users/signup",
+        body
+      );
+      console.log(response);
+    } catch {
+      console.log("Failed to signup, Try again later");
+    }
 
     setError("");
     console.log("Logging in with", { email, password });
-  };
+  }
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -26,6 +44,24 @@ const RegisterPage = () => {
         <h2 className="text-2xl font-semibold text-center text-violet-600 mb-6">
           Create an account
         </h2>
+
+        <div className="mb-4">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-600"
+          >
+            Full Name
+          </label>
+          <Input
+            id="name"
+            type="name"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Enter your name"
+            className="mt-2"
+          />
+        </div>
 
         <div className="mb-4">
           <label
@@ -58,7 +94,7 @@ const RegisterPage = () => {
             value={password}
             required
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter your password"
+            placeholder="Enter password"
             className="mt-2"
           />
         </div>
@@ -76,7 +112,7 @@ const RegisterPage = () => {
             required
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            placeholder="Confirm your password"
+            placeholder="Confirm password"
             className="mt-2"
           />
         </div>

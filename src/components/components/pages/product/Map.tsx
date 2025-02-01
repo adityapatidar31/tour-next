@@ -2,29 +2,6 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
-const locations = [
-  {
-    coordinates: [28.6139, 77.209] as [number, number],
-    name: "New Delhi",
-  },
-  {
-    coordinates: [19.076, 72.8777] as [number, number],
-    name: "Mumbai",
-  },
-  {
-    coordinates: [13.0827, 80.2707] as [number, number],
-    name: "Chennai",
-  },
-  {
-    coordinates: [12.9716, 77.5946] as [number, number],
-    name: "Bangalore",
-  },
-  {
-    coordinates: [22.5726, 88.3639] as [number, number],
-    name: "Kolkata",
-  },
-];
-
 // Make sure you define the icon outside of the map render
 const customIcon = new L.Icon({
   iconUrl:
@@ -40,12 +17,24 @@ const FitBounds = ({
   locations: { coordinates: [number, number]; name: string }[];
 }) => {
   const map = useMap();
-  const bounds = locations.map((location) => location.coordinates);
-  map.fitBounds(bounds);
+  // Correctly format the bounds as LatLngBoundsLiteral (array of arrays)
+  const bounds = locations.map((location) => [
+    location.coordinates[1], // latitude
+    location.coordinates[0], // longitude
+  ]);
+  map.fitBounds(bounds as [number, number][]); // Explicitly cast the bounds type
   return null;
 };
 
-const MapComponent = () => {
+interface MapComponentProps {
+  locations: {
+    coordinates: [number, number];
+    name: string;
+  }[];
+}
+
+function MapComponent({ locations }: MapComponentProps) {
+  console.log(locations[0].name);
   return (
     <div className="w-full h-[500px] rounded-2xl overflow-hidden shadow-lg">
       <MapContainer
@@ -60,13 +49,17 @@ const MapComponent = () => {
         />
         <FitBounds locations={locations} />
         {locations.map((location, index) => (
-          <Marker key={index} position={location.coordinates} icon={customIcon}>
+          <Marker
+            key={index}
+            position={[location.coordinates[1], location.coordinates[0]]} // Swap coordinates here as well
+            icon={customIcon}
+          >
             <Popup>{location.name}</Popup>
           </Marker>
         ))}
       </MapContainer>
     </div>
   );
-};
+}
 
 export default MapComponent;

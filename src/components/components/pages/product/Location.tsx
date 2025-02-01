@@ -2,11 +2,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
 interface Location {
-  id: string;
+  type: string;
+  coordinates: [number, number];
   name: string;
-  image: string;
   description: string;
   day: number;
+  _id: string;
+  id: string;
 }
 
 interface LocationProps {

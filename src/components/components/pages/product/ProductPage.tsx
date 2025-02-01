@@ -82,7 +82,7 @@ function Product() {
       async function fetchSingleTour() {
         try {
           const res = await axios.get(
-            `http://localhost:3000/api/v1/tours/${id}`
+            `https://tour-next.onrender.com/api/v1/tours/${id}`
           );
           const data = res.data.data.doc;
           setTour(data);

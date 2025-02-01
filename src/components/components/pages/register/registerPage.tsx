@@ -26,7 +26,7 @@ const RegisterPage = () => {
       };
       console.log(body);
       const response = await axios.post(
-        "http://localhost:3000/api/v1/users/signup",
+        "https://tour-next.onrender.com/api/v1/users/signup",
         body
       );
       console.log(response);

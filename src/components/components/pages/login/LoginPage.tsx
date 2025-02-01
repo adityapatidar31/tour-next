@@ -16,7 +16,7 @@ const LoginPage = () => {
         password,
       };
       const response = await axios.post(
-        "http://localhost:3000/api/v1/users/login",
+        "https://tour-next.onrender.com/api/v1/users/login",
         data
       );
       console.log(response);

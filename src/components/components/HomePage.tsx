@@ -55,7 +55,9 @@ export default function HomePage() {
   useEffect(() => {
     const fetchTours = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/v1/tours");
+        const response = await axios.get(
+          "https://tour-next.onrender.com/api/v1/tours"
+        );
         const data = response.data.data.doc;
         setTours(data);
       } catch (error) {

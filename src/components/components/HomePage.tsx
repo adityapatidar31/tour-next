@@ -1,71 +1,24 @@
 import CategoryFilter from "./CategoryFiller";
 import CardContainer from "./CardContainer";
-import { useEffect, useState } from "react";
-import axios from "axios";
 
-interface Location {
-  type: string;
-  coordinates: [number, number];
-  description: string;
-  day: number;
-  _id: string;
-  id: string;
-}
-
-interface Guide {
-  _id: string;
-  name: string;
-  email: string;
-  photo: string;
-  role: string;
-}
-
-export interface Tour {
-  startLocation: {
-    type: string;
-    coordinates: [number, number];
-    address: string;
-    description: string;
-  };
-  _id: string;
-  name: string;
-  category: string;
-  duration: number;
-  maxGroupSize: number;
-  difficulty: string;
-  ratingsAverage: number;
-  ratingsQuantity: number;
-  price: number;
-  summary: string;
-  description: string;
-  imageCover: string;
-  images: string[];
-  startDates: string[];
-  secretTour: boolean;
-  locations: Location[];
-  guides: Guide[];
-  slug: string;
-  durationWeeks: number;
-  id: string;
-}
+import { useQuery } from "@tanstack/react-query";
+import { getTours } from "@/services/backend";
 
 export default function HomePage() {
-  const [tours, setTours] = useState<Tour[]>([]);
+  const {
+    isLoading,
+    data: tours,
+    error,
+  } = useQuery({
+    queryKey: ["tours"],
+    queryFn: getTours,
+  });
 
-  useEffect(() => {
-    const fetchTours = async () => {
-      try {
-        const response = await axios.get(
-          "https://tour-next.onrender.com/api/v1/tours"
-        );
-        const data = response.data.data.doc;
-        setTours(data);
-      } catch (error) {
-        console.error("Error fetching tours:", error);
-      }
-    };
-    fetchTours();
-  }, []);
+  if (isLoading) return <p>Loading...</p>;
+  if (!tours) return <p>No Tour Available </p>;
+  if (error) {
+    return <p>There is error on server side. Please try again letter</p>;
+  }
   console.log(tours);
   return (
     <div>

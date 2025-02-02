@@ -1,8 +1,8 @@
+const cors = require("cors");
 const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
 // const rateLimit = require("express-rate-limit");
-const cors = require("cors");
 const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
@@ -30,7 +30,12 @@ app.use(express.static(path.join(__dirname, "public")));
 // set Security HTTP headers
 app.use(helmet());
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
+);
 
 // Limit request from same API
 // const limiter = rateLimit({
@@ -78,6 +83,15 @@ app.use((req, res, next) => {
 });
 
 // 3) ROUTES
+app.get("/set-cookie-test", (req, res) => {
+  res.cookie("testCookie", "hello", {
+    httpOnly: true,
+    sameSite: "none",
+    secure: false, // ⚠️ Change to true if using HTTPS
+  });
+  res.send("Cookie set!");
+});
+
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/reviews", reviewRouter);

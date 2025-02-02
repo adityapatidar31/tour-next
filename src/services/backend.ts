@@ -9,7 +9,6 @@ import { User } from "@/store/userSlice";
 const BASE_URL = "http://localhost:3000/";
 
 export async function getTours(filter: Filter): Promise<Tour[]> {
-  console.log(filter);
   const {
     category,
     durationStart,

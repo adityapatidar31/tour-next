@@ -9,6 +9,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getSingleTour } from "@/services/backend";
 import ErrorComponent from "../../Error";
 import SingleProductLoading from "./Loading";
+import CreateReview from "./CreateReview";
+import { useAppSelector } from "@/services/hooks";
 
 function Product() {
   const { id } = useParams<{ id: string }>();
@@ -49,6 +51,7 @@ function Product() {
       <div className="max-w-screen-xl mx-4">
         <Location locations={tour.locations} />
         <MapComponent locations={tour.locations} />
+        <CreateReview />
         <ReviewList reviews={tour.reviews} />
       </div>
     </>

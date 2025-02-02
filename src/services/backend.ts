@@ -1,10 +1,15 @@
 import axios from "axios";
-import { CompleteTour, Tour } from "./types";
+import { CompleteTour, Filter, Tour } from "./types";
 
 const BASE_URL = "https://tour-next.onrender.com/";
 
-export async function getTours(): Promise<Tour[]> {
-  const response = await axios.get(`${BASE_URL}api/v1/tours`);
+export async function getTours(filter: Filter): Promise<Tour[]> {
+  console.log(filter);
+  let url = `${BASE_URL}api/v1/tours?`;
+  if (filter.category) {
+    url += `category=${filter.category}&`;
+  }
+  const response = await axios.get(url);
   return response?.data?.data?.doc;
 }
 

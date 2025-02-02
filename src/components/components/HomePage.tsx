@@ -6,17 +6,21 @@ import { getTours } from "@/services/backend";
 import HomePageLoading from "./HomePageLoading";
 import ErrorComponent from "./Error";
 import { useSearchParams } from "react-router-dom";
+import { Filter } from "@/services/types";
+
+const filter: Filter = {};
 
 export default function HomePage() {
   const [searchParams] = useSearchParams();
-  console.log(searchParams.get("category"));
+  filter.category = searchParams.get("category") || undefined;
+
   const {
     isLoading,
     data: tours,
     error,
   } = useQuery({
-    queryKey: ["tours"],
-    queryFn: getTours,
+    queryKey: ["tours", filter],
+    queryFn: () => getTours(filter),
   });
   return (
     <div>

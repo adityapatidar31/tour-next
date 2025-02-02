@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import axios from "axios";
+import { loginUser } from "@/services/backend";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>("");
@@ -11,17 +12,13 @@ const LoginPage = () => {
 
   async function handleLogin() {
     try {
-      const data = {
-        email,
-        password,
-      };
-      const response = await axios.post(
-        "https://tour-next.onrender.com/api/v1/users/login",
-        data
-      );
+      const data = { email, password };
+
+      const response = await loginUser(data);
+
       console.log(response);
     } catch {
-      console.log("Failed to login. Try again");
+      toast.error("Failed to login. Try again");
     }
   }
 

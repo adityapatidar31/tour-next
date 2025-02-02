@@ -20,3 +20,19 @@ export async function getSingleTour(id: string): Promise<CompleteTour> {
   const data = res.data.data.doc;
   return data;
 }
+
+export async function getUser() {
+  const res = await axios.get(
+    "https://tour-next.onrender.com/api/v1/users/isLogedIn",
+    {
+      withCredentials: true, // ✅ Required to send cookies
+    }
+  );
+  return res.data.user;
+}
+
+export async function loginUser(data: { email: string; password: string }) {
+  axios.post("https://tour-next.onrender.com/api/v1/users/login", data, {
+    withCredentials: true,
+  });
+}

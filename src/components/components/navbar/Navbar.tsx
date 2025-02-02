@@ -10,8 +10,18 @@ import {
 import { User } from "lucide-react";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { Link } from "react-router-dom";
+import { getUser } from "@/services/backend";
+import { useEffect } from "react";
 
 export default function Navbar() {
+  useEffect(function () {
+    async function fetchUser() {
+      const user = await getUser();
+      console.log(user);
+    }
+    fetchUser();
+  }, []);
+
   return (
     <>
       <nav className="w-full bg-background p-4 shadow-md">

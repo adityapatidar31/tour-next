@@ -39,6 +39,10 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.sendUser = (req, res) => {
+  res.status(200).json({ status: "success", user: req.user });
+};
+
 exports.getMe = (req, res, next) => {
   req.params.id = req.user.id;
   next();

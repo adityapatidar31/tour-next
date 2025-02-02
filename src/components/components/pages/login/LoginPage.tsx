@@ -26,9 +26,9 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
-        <h2 className="text-2xl font-semibold text-center text-violet-600 mb-6">
+    <div className="flex justify-center items-center min-h-screen bg-background">
+      <div className="w-full max-w-md p-8 bg-card rounded-lg shadow-lg">
+        <h2 className="text-2xl font-semibold text-center text-primary mb-6">
           Welcome Back
         </h2>
 
@@ -37,7 +37,7 @@ const LoginPage = () => {
         <div className="mb-4">
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-gray-600"
+            className="block text-sm font-medium text-foreground"
           >
             Email
           </label>
@@ -55,7 +55,7 @@ const LoginPage = () => {
         <div className="mb-4">
           <label
             htmlFor="password"
-            className="block text-sm font-medium text-gray-600"
+            className="block text-sm font-medium text-foreground"
           >
             Password
           </label>
@@ -70,17 +70,20 @@ const LoginPage = () => {
           />
         </div>
 
+        <div className="text-right mb-4">
+          <Link to="/forgot-password" className="text-primary hover:underline">
+            Forgot password?
+          </Link>
+        </div>
+
         <div className="flex justify-center mt-6">
-          <Button
-            onClick={handleLogin}
-            className="bg-violet-600 w-full text-white hover:bg-violet-700 dark:bg-violet-400 dark:text-gray-900 dark:hover:bg-violet-500 "
-          >
+          <Button onClick={handleLogin} className="w-full">
             Login
           </Button>
         </div>
 
         <div className="mt-4 text-center">
-          <Link to="/register" className="text-violet-600 hover:underline">
+          <Link to="/signup" className="text-primary hover:underline">
             Don't have an account? Register here
           </Link>
         </div>

@@ -10,9 +10,8 @@ function CardContainer({ tours }: CardContainerProps) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {tours.map((tour) => (
-        <Link to={`/home/${tour.id}`}>
+        <Link to={`/home/${tour.id}`} key={tour.id}>
           <CardComponent
-            key={tour.id}
             category={tour.category}
             name={tour.name}
             duration={tour.duration}

@@ -6,14 +6,27 @@ import { getTours } from "@/services/backend";
 import HomePageLoading from "./HomePageLoading";
 import ErrorComponent from "./Error";
 import { useSearchParams } from "react-router-dom";
-import { Filter } from "@/services/types";
 import FilterComponent from "./Filter";
-
-const filter: Filter = {};
+import { useMemo } from "react";
+import { Filter } from "@/services/types";
 
 export default function HomePage() {
   const [searchParams] = useSearchParams();
-  filter.category = searchParams.get("category") || undefined;
+  const filter: Filter = useMemo(() => {
+    return {
+      category: searchParams.get("category"),
+      sort: searchParams.get("sort"),
+      durationStart: searchParams.get("durationStart"),
+      durationEnd: searchParams.get("durationEnd"),
+      priceStart: searchParams.get("priceStart"),
+      priceEnd: searchParams.get("priceEnd"),
+      difficulty: [
+        ...(searchParams.get("difficultyEasy") ? ["easy"] : []),
+        ...(searchParams.get("difficultyMedium") ? ["medium"] : []),
+        ...(searchParams.get("difficultyHard") ? ["difficult"] : []),
+      ],
+    };
+  }, [searchParams]);
 
   const {
     isLoading,

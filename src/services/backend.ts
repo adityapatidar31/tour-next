@@ -10,10 +10,36 @@ const BASE_URL = "http://localhost:3000/";
 
 export async function getTours(filter: Filter): Promise<Tour[]> {
   console.log(filter);
+  const {
+    category,
+    durationStart,
+    durationEnd,
+    priceStart,
+    priceEnd,
+    sort,
+    difficulty,
+  } = filter;
   let url = `${BASE_URL}api/v1/tours?`;
-  if (filter.category) {
-    url += `category=${filter.category}&`;
+  if (category) {
+    url += `category=${category}&`;
   }
+  if (durationStart) {
+    url += `duration[gte]=${durationStart}&`;
+  }
+  if (durationEnd) {
+    url += `duration[lte]=${durationEnd}&`;
+  }
+  if (priceStart) {
+    url += `price[gte]=${priceStart}&`;
+  }
+  if (priceEnd) {
+    url += `price[lte]=${priceEnd}&`;
+  }
+  if (sort) {
+    url += `sort=${sort}&`;
+  }
+  difficulty.map((ele) => (url += `difficulty=${ele}&`));
+  console.log(url);
   const response = await axios.get(url);
   return response?.data?.data?.doc;
 }

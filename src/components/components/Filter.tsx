@@ -9,9 +9,9 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Card } from "@/components/ui/card";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
-const difficulties = ["Easy", "Medium", "Hard"];
+const difficulty = ["Easy", "Medium", "Hard"];
 const sortOptions = [
   { value: "price_asc", label: "Price: Low to High" },
   { value: "price_desc", label: "Price: High to Low" },
@@ -20,9 +20,9 @@ const sortOptions = [
 ];
 
 export default function FilterComponent() {
-  const [selectedDifficulties, setSelectedDifficulties] = useState<string[]>(
-    []
-  );
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string[]>([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [duration, setDuration] = useState<[number, number]>([1, 14]);
   const [price, setPrice] = useState<[number, number]>([50, 1000]);
   const [sort, setSort] = useState<string>(sortOptions[0].value);
@@ -30,14 +30,28 @@ export default function FilterComponent() {
   const navigate = useNavigate();
 
   const handleDifficultyChange = (difficulty: string) => {
-    setSelectedDifficulties((prev) =>
+    setSelectedDifficulty((prev) =>
       prev.includes(difficulty)
         ? prev.filter((d) => d !== difficulty)
         : [...prev, difficulty]
     );
   };
   function handleApplyFilter() {
-    console.log(selectedDifficulties, duration, price, sort);
+    searchParams.set("durationStart", duration[0].toString());
+    searchParams.set("durationEnd", duration[1].toString());
+    searchParams.set("priceStart", price[0].toString());
+    searchParams.set("priceEnd", price[1].toString());
+
+    if (sort === "price_asc") searchParams.set("sort", "price");
+    else if (sort === "price_desc") searchParams.set("sort", "-price");
+    else if (sort === "rating_asc") searchParams.set("sort", "rating");
+    else searchParams.set("sort", "-rating");
+
+    selectedDifficulty.map((difficulty) =>
+      searchParams.set(`difficulty${difficulty}`, difficulty)
+    );
+
+    setSearchParams(searchParams);
   }
 
   function handleClearFilter() {
@@ -50,10 +64,10 @@ export default function FilterComponent() {
         <div className="w-full">
           <h3 className="text-lg font-semibold">Difficulty</h3>
           <div className="flex gap-3 mt-2">
-            {difficulties.map((diff) => (
+            {difficulty.map((diff) => (
               <label key={diff} className="flex items-center gap-2">
                 <Checkbox
-                  checked={selectedDifficulties.includes(diff)}
+                  checked={selectedDifficulty.includes(diff)}
                   onCheckedChange={() => handleDifficultyChange(diff)}
                 />
                 {diff}

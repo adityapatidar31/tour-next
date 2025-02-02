@@ -1,5 +1,11 @@
 export interface Filter {
-  category?: string;
+  category: string | null;
+  durationStart: string | null;
+  durationEnd: string | null;
+  priceStart: string | null;
+  priceEnd: string | null;
+  sort: string | null;
+  difficulty: string[];
 }
 
 export interface Location {

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { CompleteTour, Filter, Tour } from "./types";
 import { User } from "@/store/userSlice";
+import { Review } from "@/store/reviewSlice";
 
 // const BASE_URL = "https://tour-next.onrender.com/";
 //  {
@@ -73,14 +74,6 @@ interface signBody {
 export async function signUpUser(body: signBody): Promise<User> {
   const res = await axios.post(`${BASE_URL}api/v1/users/signup`, body);
   return res.data.data.user;
-}
-
-export interface Review {
-  review: string;
-  rating: number;
-  userId: string;
-  tourId: string;
-  id: string;
 }
 
 export async function createReview(): Promise<Review> {

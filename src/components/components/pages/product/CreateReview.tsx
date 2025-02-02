@@ -13,6 +13,7 @@ import { useAppSelector } from "@/services/hooks";
 import { useNavigate, useParams } from "react-router-dom";
 import { createReview } from "@/services/backend";
 import { toast } from "react-toastify";
+import { queryClient } from "@/services/queryClient";
 
 export default function Rating() {
   const [description, setDescription] = useState("");
@@ -43,6 +44,7 @@ export default function Rating() {
     try {
       await createReview(body);
       toast.success("Review Created Successfully");
+      queryClient.invalidateQueries({ queryKey: [id] });
     } catch {
       toast.error("Failed to create review");
     }

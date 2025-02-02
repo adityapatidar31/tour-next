@@ -76,7 +76,12 @@ export async function signUpUser(body: signBody): Promise<User> {
   return res.data.data.user;
 }
 
-export async function createReview(): Promise<Review> {
-  const res = await axios.post(`${BASE_URL}api/v1/reviews`);
+export async function createReview(body: {
+  review: string;
+  rating: number;
+  tour: string;
+  user: string;
+}): Promise<Review> {
+  const res = await axios.post(`${BASE_URL}api/v1/reviews`, body);
   return res.data.data.data;
 }

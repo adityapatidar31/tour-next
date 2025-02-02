@@ -2,37 +2,46 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 // import { RootState } from "./store";
 
-// Define a type for the slice state
 interface CounterState {
-  value: number;
+  name: string;
+  role: "user" | "guide" | "lead-guide" | "admin";
+  id: string;
+  email: string;
+  photo: string;
+}
+
+interface User {
+  name: string;
+  role: "user" | "guide" | "lead-guide" | "admin";
+  id: string;
+  email: string;
+  photo?: string;
 }
 
 // Define the initial state using that type
 const initialState: CounterState = {
-  value: 0,
+  name: "",
+  role: "user",
+  id: "",
+  email: "",
+  photo: "",
 };
 
 export const userSlice = createSlice({
-  name: "counter",
-  // `createSlice` will infer the state type from the `initialState` argument
+  name: "user",
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1;
-    },
-    decrement: (state) => {
-      state.value -= 1;
-    },
-    // Use the PayloadAction type to declare the contents of `action.payload`
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload;
+    addUser(state, action: PayloadAction<User>) {
+      const { name, id, email, role, photo } = action.payload;
+      state.name = name;
+      state.id = id;
+      state.email = email;
+      state.role = role;
+      state.photo = photo || "";
     },
   },
 });
 
-export const { increment, decrement, incrementByAmount } = userSlice.actions;
-
-// Other code such as selectors can use the imported `RootState` type
-// export const selectCount = (state: RootState) => state.counter.value;
+export const { addUser } = userSlice.actions;
 
 export default userSlice.reducer;

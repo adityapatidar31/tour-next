@@ -71,7 +71,7 @@ export default function Rating() {
           required
         />
 
-        {!userId ? (
+        {userId ? (
           <Button onClick={handleSubmit} className="w-full">
             Submit
           </Button>

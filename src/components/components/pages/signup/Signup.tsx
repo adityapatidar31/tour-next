@@ -4,9 +4,8 @@ import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const RegisterPage = () => {
+const SignupPage = () => {
   const [name, setName] = useState<string>("");
-
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
@@ -36,22 +35,22 @@ const RegisterPage = () => {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
-        <h2 className="text-2xl font-semibold text-center text-violet-600 mb-6">
+    <div className="flex justify-center items-center min-h-screen bg-background">
+      <div className="w-full max-w-md p-8 bg-card rounded-lg shadow-lg">
+        <h2 className="text-2xl font-semibold text-center text-primary mb-6">
           Create an account
         </h2>
 
         <div className="mb-4">
           <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-600"
+            htmlFor="name"
+            className="block text-sm font-medium text-foreground"
           >
             Full Name
           </label>
           <Input
             id="name"
-            type="name"
+            type="text"
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -63,7 +62,7 @@ const RegisterPage = () => {
         <div className="mb-4">
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-gray-600"
+            className="block text-sm font-medium text-foreground"
           >
             Email
           </label>
@@ -81,7 +80,7 @@ const RegisterPage = () => {
         <div className="mb-4">
           <label
             htmlFor="password"
-            className="block text-sm font-medium text-gray-600"
+            className="block text-sm font-medium text-foreground"
           >
             Password
           </label>
@@ -99,7 +98,7 @@ const RegisterPage = () => {
         <div className="mb-4">
           <label
             htmlFor="confirmPassword"
-            className="block text-sm font-medium text-gray-600"
+            className="block text-sm font-medium text-foreground"
           >
             Confirm Password
           </label>
@@ -115,17 +114,14 @@ const RegisterPage = () => {
         </div>
 
         <div className="flex justify-center mt-6">
-          <Button
-            onClick={handleLogin}
-            className="bg-violet-600 w-full text-white hover:bg-violet-700 dark:bg-violet-400 dark:text-gray-900 dark:hover:bg-violet-500 "
-          >
+          <Button onClick={handleLogin} className="w-full">
             Sign Up
           </Button>
         </div>
         {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
 
         <div className="mt-4 text-center">
-          <Link to="/login" className="text-violet-600 hover:underline">
+          <Link to="/login" className="text-primary hover:underline">
             Already have an account? Login here
           </Link>
         </div>
@@ -134,4 +130,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default SignupPage;

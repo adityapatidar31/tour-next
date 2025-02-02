@@ -7,49 +7,48 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Menu, User } from "lucide-react";
+import { User } from "lucide-react";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
-    <nav className="w-full bg-background p-4 shadow-md">
-      <div className="container mx-auto flex items-center justify-between">
-        <Link to="/home">
-          <div className="text-xl font-bold text-violet-600">Tour Next</div>
-        </Link>
+    <>
+      <nav className="w-full bg-background p-4 shadow-md">
+        <div className="container mx-auto flex items-center justify-between">
+          <Link to="/home">
+            <div className="text-xl font-bold text-violet-600">Tour Next</div>
+          </Link>
 
-        <div className="hidden md:flex flex-1 justify-center max-w-md">
-          <Input type="text" placeholder="Search Tour" className="w-84" />
+          <div className="hidden sm:flex flex-1 justify-center sm:max-w-xs md:max-w-sm">
+            <Input type="text" placeholder="Search Tour" />
+          </div>
+          <div>
+            <ThemeSwitcher />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost">
+                  <User className="w-5 h-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <Link to="/login">
+                  <DropdownMenuItem>Login</DropdownMenuItem>
+                </Link>
+                <Link to="/signup">
+                  <DropdownMenuItem>Signup</DropdownMenuItem>
+                </Link>
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Logout</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
-
-        <div className="hidden md:flex space-x-4">
-          <Button variant="ghost">Featured Tours</Button>
-          <ThemeSwitcher />
-          <Button variant="ghost">
-            <User className="w-5 h-5" />
-          </Button>
-        </div>
-
-        <div className="md:hidden">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost">
-                <Menu className="h-6 w-6" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem>Featured Tours</DropdownMenuItem>
-              <DropdownMenuItem>
-                <ThemeSwitcher />
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Login</DropdownMenuItem>
-              <DropdownMenuItem>Register</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+      </nav>
+      <div className="sm:hidden w-full max-w-lg mx-auto px-4 mt-2">
+        <Input type="text" placeholder="Search Tour" className="w-full" />
       </div>
-    </nav>
+    </>
   );
 }

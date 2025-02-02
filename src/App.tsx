@@ -9,7 +9,7 @@ import { Outlet } from "react-router-dom";
 import Navbar from "./components/components/navbar/Navbar";
 import HomePage from "./components/components/HomePage";
 import LoginPage from "./components/components/pages/login/LoginPage";
-import RegisterPage from "./components/components/pages/register/registerPage";
+import SignupPage from "./components/components/pages/signup/Signup";
 import { useEffect, useState } from "react";
 
 const queryClient = new QueryClient();
@@ -56,7 +56,7 @@ export default function App() {
             <Route path=":id" element={<Product />} />
           </Route>
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/signup" element={<SignupPage />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

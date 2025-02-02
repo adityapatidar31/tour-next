@@ -22,13 +22,12 @@ export default function Navbar() {
     function () {
       async function fetchUser() {
         const user = await getUser();
-        dispatch(addUser(user));
+        if (user) dispatch(addUser(user));
       }
       fetchUser();
     },
     [dispatch]
   );
-  console.log(user);
 
   function handleLogout() {
     console.log("Logout successfully");

@@ -7,6 +7,7 @@ import HomePageLoading from "./HomePageLoading";
 import ErrorComponent from "./Error";
 import { useSearchParams } from "react-router-dom";
 import { Filter } from "@/services/types";
+import FilterComponent from "./Filter";
 
 const filter: Filter = {};
 
@@ -25,6 +26,7 @@ export default function HomePage() {
   return (
     <div>
       <CategoryFilter />
+      <FilterComponent />
       {isLoading && <HomePageLoading />}
       {error && (
         <ErrorComponent message="There is error on server side. Please try again letter" />

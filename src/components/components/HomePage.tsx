@@ -5,8 +5,11 @@ import { useQuery } from "@tanstack/react-query";
 import { getTours } from "@/services/backend";
 import HomePageLoading from "./HomePageLoading";
 import ErrorComponent from "./Error";
+import { useSearchParams } from "react-router-dom";
 
 export default function HomePage() {
+  const [searchParams] = useSearchParams();
+  console.log(searchParams.get("category"));
   const {
     isLoading,
     data: tours,

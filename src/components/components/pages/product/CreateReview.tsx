@@ -9,15 +9,20 @@ import {
   SelectItem,
   SelectValue,
 } from "@/components/ui/select";
+import { useAppSelector } from "@/services/hooks";
+import { useNavigate } from "react-router-dom";
+import { createReview } from "@/services/backend";
 
 export default function Rating() {
   const [description, setDescription] = useState("");
   const [rating, setRating] = useState<number | null>(null);
-
-  const handleSubmit = () => {
+  const userId = useAppSelector((store) => store.user._id);
+  const navigate = useNavigate();
+  async function handleSubmit() {
     console.log({ description, rating });
-    // Handle submission logic, e.g., API call
-  };
+    const review = await createReview();
+    console.log(review);
+  }
 
   return (
     <Card className="w-full max-w-full p-6 space-y-4">
@@ -41,9 +46,15 @@ export default function Rating() {
           className="w-full"
         />
 
-        <Button onClick={handleSubmit} className="w-full">
-          Submit
-        </Button>
+        {userId ? (
+          <Button onClick={handleSubmit} className="w-full">
+            Submit
+          </Button>
+        ) : (
+          <Button onClick={() => navigate("/login")} className="w-full ">
+            Login
+          </Button>
+        )}
       </CardContent>
     </Card>
   );

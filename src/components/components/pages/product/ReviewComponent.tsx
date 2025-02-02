@@ -1,4 +1,3 @@
-import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar } from "@/components/ui/avatar";
 import { Star } from "lucide-react";
@@ -21,7 +20,7 @@ interface ReviewListProps {
   reviews: Review[];
 }
 
-const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
+function ReviewList({ reviews }: ReviewListProps) {
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold text-[--foreground]">
@@ -64,6 +63,6 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
       </div>
     </div>
   );
-};
+}
 
 export default ReviewList;

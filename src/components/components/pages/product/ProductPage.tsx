@@ -10,7 +10,6 @@ import { getSingleTour } from "@/services/backend";
 import ErrorComponent from "../../Error";
 import SingleProductLoading from "./Loading";
 import CreateReview from "./CreateReview";
-import { useAppSelector } from "@/services/hooks";
 
 function Product() {
   const { id } = useParams<{ id: string }>();

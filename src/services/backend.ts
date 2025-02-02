@@ -74,3 +74,16 @@ export async function signUpUser(body: signBody): Promise<User> {
   const res = await axios.post(`${BASE_URL}api/v1/users/signup`, body);
   return res.data.data.user;
 }
+
+export interface Review {
+  review: string;
+  rating: number;
+  userId: string;
+  tourId: string;
+  id: string;
+}
+
+export async function createReview(): Promise<Review> {
+  const res = await axios.post(`${BASE_URL}api/v1/reviews`);
+  return res.data.data.data;
+}

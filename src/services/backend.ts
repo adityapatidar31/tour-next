@@ -1,5 +1,6 @@
 import axios from "axios";
 import { CompleteTour, Filter, Tour } from "./types";
+import { User } from "@/store/userSlice";
 
 const BASE_URL = "https://tour-next.onrender.com/";
 
@@ -25,14 +26,24 @@ export async function getUser() {
   const res = await axios.get(
     "https://tour-next.onrender.com/api/v1/users/isLogedIn",
     {
-      withCredentials: true, // ✅ Required to send cookies
+      withCredentials: true,
     }
   );
   return res.data.user;
 }
 
-export async function loginUser(data: { email: string; password: string }) {
-  axios.post("https://tour-next.onrender.com/api/v1/users/login", data, {
-    withCredentials: true,
-  });
+export async function loginUser(data: {
+  email: string;
+  password: string;
+}): Promise<User> {
+  const res = await axios.post(
+    "https://tour-next.onrender.com/api/v1/users/login",
+    data,
+    {
+      withCredentials: true,
+    }
+  );
+  const user = res.data.data.user;
+  user.id = user._id;
+  return user;
 }

@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { loginUser } from "@/services/backend";
+import { useAppDispatch } from "@/services/hooks";
+import { addUser } from "@/store/userSlice";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -9,14 +11,13 @@ const LoginPage = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   // const [error, setError] = useState<string>("");
-
+  const dispatch = useAppDispatch();
   async function handleLogin() {
     try {
       const data = { email, password };
 
-      const response = await loginUser(data);
-
-      console.log(response);
+      const user = await loginUser(data);
+      dispatch(addUser(user));
     } catch {
       toast.error("Failed to login. Try again");
     }

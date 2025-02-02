@@ -10,7 +10,7 @@ interface CounterState {
   photo: string;
 }
 
-interface User {
+export interface User {
   name: string;
   role: "user" | "guide" | "lead-guide" | "admin";
   id: string;
@@ -33,6 +33,7 @@ export const userSlice = createSlice({
   reducers: {
     addUser(state, action: PayloadAction<User>) {
       const { name, id, email, role, photo } = action.payload;
+      console.log(name, id, email, role, photo);
       state.name = name;
       state.id = id;
       state.email = email;

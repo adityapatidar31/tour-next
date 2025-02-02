@@ -5,7 +5,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 interface CounterState {
   name: string;
   role: "user" | "guide" | "lead-guide" | "admin";
-  id: string;
+  _id: string;
   email: string;
   photo: string;
 }
@@ -13,7 +13,7 @@ interface CounterState {
 export interface User {
   name: string;
   role: "user" | "guide" | "lead-guide" | "admin";
-  id: string;
+  _id: string;
   email: string;
   photo?: string;
 }
@@ -22,9 +22,9 @@ export interface User {
 const initialState: CounterState = {
   name: "",
   role: "user",
-  id: "",
+  _id: "",
   email: "",
-  photo: "",
+  photo: "user.jpeg",
 };
 
 export const userSlice = createSlice({
@@ -32,13 +32,13 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     addUser(state, action: PayloadAction<User>) {
-      const { name, id, email, role, photo } = action.payload;
-      console.log(name, id, email, role, photo);
+      const { name, _id, email, role, photo } = action.payload;
+      // console.log(name, id, email, role, photo);
       state.name = name;
-      state.id = id;
+      state._id = _id;
       state.email = email;
       state.role = role;
-      state.photo = photo || "";
+      state.photo = photo || state.photo;
     },
   },
 });

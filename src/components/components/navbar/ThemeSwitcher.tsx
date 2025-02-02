@@ -30,9 +30,9 @@ export default function ThemeSwitcher() {
       className="transition-all"
     >
       {theme === "dark" ? (
-        <Sun className="h-5 w-5 text-yellow-400" />
+        <Sun className="h-6 w-6 text-yellow-400" />
       ) : (
-        <Moon className="h-5 w-5 text-gray-700" />
+        <Moon className="h-6 w-6 text-gray-700" />
       )}
     </Button>
   );

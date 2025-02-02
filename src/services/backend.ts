@@ -44,6 +44,5 @@ export async function loginUser(data: {
     }
   );
   const user = res.data.data.user;
-  user.id = user._id;
   return user;
 }

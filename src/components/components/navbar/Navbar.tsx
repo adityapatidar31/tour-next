@@ -12,45 +12,81 @@ import ThemeSwitcher from "./ThemeSwitcher";
 import { Link } from "react-router-dom";
 import { getUser } from "@/services/backend";
 import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/services/hooks";
+import { addUser } from "@/store/userSlice";
 
 export default function Navbar() {
-  useEffect(function () {
-    async function fetchUser() {
-      const user = await getUser();
-      console.log(user);
-    }
-    fetchUser();
-  }, []);
+  const user = useAppSelector((store) => store.user);
+  const dispatch = useAppDispatch();
+  useEffect(
+    function () {
+      async function fetchUser() {
+        const user = await getUser();
+        dispatch(addUser(user));
+      }
+      fetchUser();
+    },
+    [dispatch]
+  );
+  console.log(user);
+
+  function handleLogout() {
+    console.log("Logout successfully");
+  }
 
   return (
     <>
       <nav className="w-full bg-background p-4 shadow-md">
         <div className="container mx-auto flex items-center justify-between">
-          <Link to="/home">
-            <div className="text-xl font-bold text-violet-600">Tour Next</div>
+          <Link to="/home" className="text-xl font-bold text-violet-600">
+            Tour Next
           </Link>
 
           <div className="hidden sm:flex flex-1 justify-center sm:max-w-xs md:max-w-sm">
             <Input type="text" placeholder="Search Tour" />
           </div>
-          <div>
+
+          <div className="flex items-center gap-4">
             <ThemeSwitcher />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost">
-                  <User className="w-5 h-5" />
+                <Button variant="ghost" className="p-0">
+                  {user.name ? (
+                    <img src={user.photo} className="w-7 h-7 rounded-lg" />
+                  ) : (
+                    <User className="w-5 h-5" />
+                  )}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <Link to="/login">
-                  <DropdownMenuItem>Login</DropdownMenuItem>
-                </Link>
-                <Link to="/signup">
-                  <DropdownMenuItem>Signup</DropdownMenuItem>
-                </Link>
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Logout</DropdownMenuItem>
+                {user.name ? (
+                  <>
+                    <Link to="/me">
+                      <DropdownMenuItem>Profile</DropdownMenuItem>
+                    </Link>
+                    <Link to="/password">
+                      <DropdownMenuItem>Favorites</DropdownMenuItem>
+                    </Link>
+
+                    <Link to="/address">
+                      <DropdownMenuItem>Reviews</DropdownMenuItem>
+                    </Link>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleLogout}>
+                      Logout
+                    </DropdownMenuItem>
+                  </>
+                ) : (
+                  <>
+                    <Link to="/login">
+                      <DropdownMenuItem>Login</DropdownMenuItem>
+                    </Link>
+
+                    <Link to="/signup">
+                      <DropdownMenuItem>Signup</DropdownMenuItem>
+                    </Link>
+                  </>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

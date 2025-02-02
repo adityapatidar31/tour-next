@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import axios from "axios";
+import { signUpUser } from "@/services/backend";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const SignupPage = () => {
   const [name, setName] = useState<string>("");
@@ -10,6 +11,7 @@ const SignupPage = () => {
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const navigate = useNavigate();
 
   async function handleLogin() {
     if (password !== confirmPassword) {
@@ -23,14 +25,14 @@ const SignupPage = () => {
         passwordConfirm: confirmPassword,
         name,
       };
-      console.log(body);
-      const response = await axios.post(
-        "https://tour-next.onrender.com/api/v1/users/signup",
-        body
-      );
-      console.log(response);
+      const user = await signUpUser(body);
+      if (user) {
+        setEmail("");
+        setPassword("");
+        navigate("/home");
+      }
     } catch {
-      console.log("Failed to signup, Try again later");
+      toast.error("Failed to Signup. Try again later");
     }
   }
 

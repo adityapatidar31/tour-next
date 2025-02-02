@@ -4,12 +4,13 @@ import { loginUser } from "@/services/backend";
 import { useAppDispatch } from "@/services/hooks";
 import { addUser } from "@/store/userSlice";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const navigate = useNavigate();
   // const [error, setError] = useState<string>("");
   const dispatch = useAppDispatch();
   async function handleLogin() {
@@ -18,6 +19,11 @@ const LoginPage = () => {
 
       const user = await loginUser(data);
       dispatch(addUser(user));
+      if (user) {
+        setEmail("");
+        setPassword("");
+        navigate("/home");
+      }
     } catch {
       toast.error("Failed to login. Try again");
     }

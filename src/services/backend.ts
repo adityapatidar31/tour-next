@@ -37,3 +37,15 @@ export async function loginUser(data: {
   const user = res.data.data.user;
   return user;
 }
+
+interface signBody {
+  email: string;
+  password: string;
+  passwordConfirm: string;
+  name: string;
+}
+
+export async function signUpUser(body: signBody): Promise<User> {
+  const res = await axios.post(`${BASE_URL}api/v1/users/signup`, body);
+  return res.data.data.user;
+}

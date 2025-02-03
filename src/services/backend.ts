@@ -3,13 +3,13 @@ import { CompleteTour, Filter, Tour } from "./types";
 import { User } from "@/store/userSlice";
 import { Review } from "@/store/reviewSlice";
 
-// const BASE_URL = "https://tour-next.onrender.com/";
+const BASE_URL = "https://tour-next.onrender.com/";
 
 const cookieSender = {
   withCredentials: false,
 };
 
-const BASE_URL = "http://localhost:3000/";
+// const BASE_URL = "http://localhost:3000/";
 
 export async function getTours(filter: Filter): Promise<Tour[]> {
   const {

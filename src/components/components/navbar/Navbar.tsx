@@ -49,7 +49,7 @@ export default function Navbar() {
             <ThemeSwitcher />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="p-0">
+                <Button variant="ghost" className="p-3">
                   {user.name ? (
                     <img src={user.photo} className="w-7 h-7 rounded-lg" />
                   ) : (

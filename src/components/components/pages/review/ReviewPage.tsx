@@ -57,6 +57,8 @@ export default function ReviewPage() {
                   defaultRating={review.rating}
                   defaultDescription={review.review}
                   tourName={review.tour.name}
+                  tourId={review.tour.id}
+                  reviewId={review._id}
                 />
                 <DeleteReview />
               </div>

@@ -16,6 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useUpdateReview } from "@/services/queryClient";
 import { Edit } from "lucide-react";
 import { useState } from "react";
 
@@ -23,14 +24,18 @@ export function UpdateReviewModel({
   defaultRating,
   defaultDescription,
   tourName,
+  tourId,
+  reviewId,
 }: {
   defaultRating: number;
   defaultDescription: string;
   tourName: string;
+  tourId: string;
+  reviewId: string;
 }) {
   const [rating, setRating] = useState<number>(defaultRating);
-  const [description, setDescription] = useState<string>(defaultDescription);
-
+  const [review, setReview] = useState<string>(defaultDescription);
+  const { isPending, mutate } = useUpdateReview();
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -66,15 +71,21 @@ export function UpdateReviewModel({
             <Label className="text-right">Description</Label>
             <Textarea
               placeholder="Enter your feedback"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              value={review}
+              onChange={(e) => setReview(e.target.value)}
               className="w-full"
               required
             />
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Update Review</Button>
+          <Button
+            type="submit"
+            disabled={isPending}
+            onClick={() => mutate({ review, rating, tourId, reviewId })}
+          >
+            {isPending ? "Updating" : "Update Review"}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

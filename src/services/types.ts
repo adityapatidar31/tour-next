@@ -111,5 +111,6 @@ export interface ReviewPageReview {
     name: string;
     ratingsAverage: number;
     imageCover: string;
+    id: string;
   };
 }

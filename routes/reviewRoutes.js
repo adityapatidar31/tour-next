@@ -10,6 +10,8 @@ router.use(authController.protect);
 
 router.get("/review", reviewController.getReviewByUserAndTour);
 
+router.get("/user/:userId", reviewController.getReviewsByUserId);
+
 router
   .route("/")
   .get(reviewController.getAllReviews)

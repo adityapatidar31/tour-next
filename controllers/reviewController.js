@@ -23,6 +23,17 @@ exports.getReviewByUserAndTour = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getReviewsByUserId = async (req, res, next) => {
+  const { id } = req.user;
+  const reviews = await Review.find({ user: id }).populate("tour");
+  res.status(200).json({
+    status: "success",
+    data: {
+      reviews,
+    },
+  });
+};
+
 exports.getAllReviews = factory.getAll(Review);
 
 exports.getReview = factory.getOne(Review);

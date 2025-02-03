@@ -60,7 +60,7 @@ export default function ReviewPage() {
                   tourId={review.tour.id}
                   reviewId={review._id}
                 />
-                <DeleteReview />
+                <DeleteReview reviewId={review._id} />
               </div>
             </CardContent>
           </Card>

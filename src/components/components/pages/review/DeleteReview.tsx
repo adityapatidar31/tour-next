@@ -10,9 +10,11 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { useDeleteReview } from "@/services/queryClient";
 import { Trash2 } from "lucide-react";
 
-export function DeleteReview() {
+export function DeleteReview({ reviewId }: { reviewId: string }) {
+  const { mutate, isPending } = useDeleteReview();
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -31,7 +33,13 @@ export function DeleteReview() {
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction className="p-0">
-            <Button variant="destructive">Delete</Button>
+            <Button
+              variant="destructive"
+              disabled={isPending}
+              onClick={() => mutate(reviewId)}
+            >
+              {isPending ? "Deleting..." : "Delete"}
+            </Button>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

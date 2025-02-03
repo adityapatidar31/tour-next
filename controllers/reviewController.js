@@ -10,8 +10,7 @@ exports.setTourUserIds = (req, res, next) => {
 
 exports.getReviewByUserAndTour = catchAsync(async (req, res, next) => {
   const { tourId: tour } = req.params;
-  // const { id: user } = req.user;
-  const user = "679f0d3dd5561e3966786ab0";
+  const { id: user } = req.user;
   const review = await Review.findOne({
     tour,
     user,

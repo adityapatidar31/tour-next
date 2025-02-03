@@ -17,16 +17,18 @@ export function useUpdateReview() {
       tourId,
       review,
       rating,
+      reviewId,
     }: {
       tourId: string;
       review: string;
       rating: number;
+      reviewId: string;
     }) => {
       if (!tourId) throw new Error("Tour ID is required");
       if (!review) throw new Error("Review is required");
       if (!rating) throw new Error("Rating is required");
-
-      return await updateReview(tourId, review, rating);
+      if (!reviewId) throw new Error("reviewID is required");
+      return await updateReview(tourId, review, rating, reviewId);
     },
     onSuccess: (_, { tourId }) => {
       toast.success("Review Updated Successfully");

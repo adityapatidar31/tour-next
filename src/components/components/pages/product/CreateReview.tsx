@@ -70,6 +70,7 @@ export default function Rating() {
       tourId,
       review: description,
       rating,
+      reviewId,
     });
   }
   // async function handleDelete() {}

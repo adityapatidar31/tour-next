@@ -111,7 +111,8 @@ export async function findReviewByUserAndTour(tourId: string): Promise<Review> {
 export async function updateReview(
   tourId: string,
   review: string,
-  rating: number
+  rating: number,
+  reviewId: string
 ) {
   console.log(tourId, review, rating);
   const body = {
@@ -120,7 +121,7 @@ export async function updateReview(
     rating,
   };
   const res = await axios.patch(
-    `${BASE_URL}api/v1/reviews`,
+    `${BASE_URL}api/v1/reviews/${reviewId}`,
     body,
     cookieSender
   );

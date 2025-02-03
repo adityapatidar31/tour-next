@@ -13,15 +13,38 @@ import { useAppSelector } from "@/services/hooks";
 import { useNavigate, useParams } from "react-router-dom";
 import { createReview, findReviewByUserAndTour } from "@/services/backend";
 import { toast } from "react-toastify";
-import { queryClient } from "@/services/queryClient";
+import { queryClient, useUpdateReview } from "@/services/queryClient";
+import { useMutation } from "@tanstack/react-query";
 
 export default function Rating() {
   const [description, setDescription] = useState("");
   const [rating, setRating] = useState<number>();
   const [reviewId, setReviewId] = useState<string>("");
+
   const userId = useAppSelector((store) => store.user._id);
   const navigate = useNavigate();
   const { id: tourId } = useParams();
+  const updateMutation = useUpdateReview();
+
+  const mutation = useMutation({
+    mutationFn: async () => {
+      if (!rating) throw new Error("Rating is required");
+      if (!description) throw new Error("Description is required");
+      if (!tourId)
+        throw new Error("Bad request. Try to create review on tour page");
+
+      const body = { review: description, rating, tour: tourId, user: userId };
+      return await createReview(body);
+    },
+    onSuccess: () => {
+      toast.success("Review Created Successfully");
+
+      queryClient.invalidateQueries({ queryKey: ["tour", tourId] });
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to create review");
+    },
+  });
 
   useEffect(
     function () {
@@ -38,34 +61,18 @@ export default function Rating() {
     [tourId]
   );
 
-  async function handleSubmit() {
-    if (!rating) {
-      toast.error("Rating is required");
+  function handleUpdate() {
+    if (!tourId || !description || !rating) {
+      toast.error("Please fill in all required fields");
       return;
     }
-    if (!description) {
-      toast.error("Description is required");
-      return;
-    }
-    if (!tourId) {
-      toast.error("Bad request. Try to create review on tour page");
-      return;
-    }
-    const body = {
+    updateMutation.mutate({
+      tourId,
       review: description,
       rating,
-      tour: tourId,
-      user: userId,
-    };
-    try {
-      await createReview(body);
-      toast.success("Review Created Successfully");
-      queryClient.invalidateQueries({ queryKey: [tourId] });
-    } catch {
-      toast.error("Failed to create review");
-    }
+    });
   }
-
+  // async function handleDelete() {}
   return (
     <Card className="w-full max-w-full p-6 space-y-4">
       <CardContent className="space-y-4">
@@ -94,11 +101,11 @@ export default function Rating() {
         />
         {reviewId && (
           <div className="flex sm:gap-20 gap-10 justify-center">
-            <Button onClick={handleSubmit} className="w-96">
+            <Button onClick={handleUpdate} className="w-96">
               Update
             </Button>
             <Button
-              onClick={handleSubmit}
+              // onClick={handleSubmit}
               className="w-96"
               variant="destructive"
             >
@@ -108,7 +115,7 @@ export default function Rating() {
         )}
         {!reviewId &&
           (userId ? (
-            <Button onClick={handleSubmit} className="w-full">
+            <Button onClick={() => mutation.mutate()} className="w-full">
               Submit
             </Button>
           ) : (

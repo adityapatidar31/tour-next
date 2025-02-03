@@ -107,3 +107,23 @@ export async function findReviewByUserAndTour(tourId: string): Promise<Review> {
   );
   return res.data.data.review;
 }
+
+export async function updateReview(
+  tourId: string,
+  review: string,
+  rating: number
+) {
+  console.log(tourId, review, rating);
+  const body = {
+    tourId,
+    review,
+    rating,
+  };
+  const res = await axios.patch(
+    `${BASE_URL}api/v1/reviews`,
+    body,
+    cookieSender
+  );
+  console.log(res);
+  return res.data.data;
+}

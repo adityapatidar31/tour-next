@@ -32,7 +32,8 @@ app.use(helmet());
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    // origin: "http://localhost:5173",
+    origin: "https://tour-next.onrender.com/",
     credentials: true,
   }),
 );
@@ -83,15 +84,6 @@ app.use((req, res, next) => {
 });
 
 // 3) ROUTES
-app.get("/set-cookie-test", (req, res) => {
-  res.cookie("testCookie", "hello", {
-    httpOnly: true,
-    sameSite: "none",
-    secure: false, // ⚠️ Change to true if using HTTPS
-  });
-  res.send("Cookie set!");
-});
-
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/reviews", reviewRouter);

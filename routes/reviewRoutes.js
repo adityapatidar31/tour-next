@@ -8,7 +8,7 @@ const router = express.Router({ mergeParams: true });
 
 // router.use(authController.protect);
 
-router.get("/:userId/review", reviewController.getReviewByUserAndTour);
+router.get("/review", reviewController.getReviewByUserAndTour);
 
 router
   .route("/")

@@ -144,3 +144,20 @@ export async function getAllReviewByUser(
   console.log(res);
   return res.data.data.reviews;
 }
+
+export async function updateCurrentPassword(
+  currentPassword: string,
+  password: string,
+  passwordConfirm: string
+) {
+  const body = {
+    password,
+    currentPassword,
+    passwordConfirm,
+  };
+  await axios.patch(
+    `${BASE_URL}api/v1/users/updateMyPassword`,
+    body,
+    cookieSender
+  );
+}

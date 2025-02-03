@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
+import { updateCurrentPassword } from "@/services/backend";
 
 const PasswordUpdate = () => {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -14,12 +15,13 @@ const PasswordUpdate = () => {
     mutationFn: async () => {
       if (password !== passwordConfirm)
         throw new Error("password and confirmPassword is not matching");
+      await updateCurrentPassword(currentPassword, password, passwordConfirm);
     },
     onSuccess: () => {
       toast.success("Password update successfully");
     },
     onError: (error) => {
-      toast.error(error.message || "Password update Failed");
+      toast.error(error.message || "Password update failed");
     },
   });
 

@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -35,7 +34,7 @@ export function UpdateReviewModel({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" className="p-3">
+        <Button variant="outline" size="icon">
           <Edit className="w-4 h-4" />
         </Button>
       </DialogTrigger>

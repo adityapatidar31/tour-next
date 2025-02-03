@@ -13,7 +13,11 @@ import { useAppSelector } from "@/services/hooks";
 import { useNavigate, useParams } from "react-router-dom";
 import { createReview, findReviewByUserAndTour } from "@/services/backend";
 import { toast } from "react-toastify";
-import { queryClient, useUpdateReview } from "@/services/queryClient";
+import {
+  queryClient,
+  useDeleteReview,
+  useUpdateReview,
+} from "@/services/queryClient";
 import { useMutation } from "@tanstack/react-query";
 
 export default function Rating() {
@@ -25,6 +29,7 @@ export default function Rating() {
   const navigate = useNavigate();
   const { id: tourId } = useParams();
   const updateMutation = useUpdateReview();
+  const deleteMutation = useDeleteReview();
 
   const mutation = useMutation({
     mutationFn: async () => {
@@ -73,7 +78,10 @@ export default function Rating() {
       reviewId,
     });
   }
-  // async function handleDelete() {}
+  function handleDelete() {
+    if (!reviewId) return toast.error("Review ID is not fount. Try again");
+    deleteMutation.mutate(reviewId);
+  }
   return (
     <Card className="w-full max-w-full p-6 space-y-4">
       <CardContent className="space-y-4">
@@ -106,7 +114,7 @@ export default function Rating() {
               Update
             </Button>
             <Button
-              // onClick={handleSubmit}
+              onClick={handleDelete}
               className="w-96"
               variant="destructive"
             >

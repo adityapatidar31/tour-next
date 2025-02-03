@@ -128,3 +128,7 @@ export async function updateReview(
   console.log(res);
   return res.data.data;
 }
+
+export async function deleteReview(reviewID: string): Promise<void> {
+  await axios.delete(`${BASE_URL}api/v1/reviews/${reviewID}`, cookieSender);
+}

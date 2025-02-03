@@ -8,7 +8,7 @@ export const queryClient = new QueryClient({
   },
 });
 
-import { updateReview } from "@/services/backend";
+import { deleteReview, updateReview } from "@/services/backend";
 import { toast } from "react-toastify";
 
 export function useUpdateReview() {
@@ -37,6 +37,21 @@ export function useUpdateReview() {
     },
     onError: (error) => {
       toast.error(error.message || "Failed to update review");
+    },
+  });
+}
+
+export function useDeleteReview() {
+  return useMutation({
+    mutationFn: async (reviewId: string) => {
+      return await deleteReview(reviewId);
+    },
+    onSuccess: () => {
+      toast.success("Review Delete Successfully");
+      queryClient.invalidateQueries({ queryKey: ["tour"] });
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to delete review");
     },
   });
 }

@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { signUpUser } from "@/services/backend";
+import { useAppDispatch } from "@/services/hooks";
+import { addUser } from "@/store/userSlice";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -12,6 +14,7 @@ const SignupPage = () => {
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   async function handleLogin() {
     if (password !== confirmPassword) {
@@ -29,6 +32,7 @@ const SignupPage = () => {
       if (user) {
         setEmail("");
         setPassword("");
+        dispatch(addUser(user));
         navigate("/home");
       }
     } catch {

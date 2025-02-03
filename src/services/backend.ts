@@ -3,9 +3,13 @@ import { CompleteTour, Filter, Tour } from "./types";
 import { User } from "@/store/userSlice";
 import { Review } from "@/store/reviewSlice";
 
-const BASE_URL = "https://tour-next.onrender.com/";
+// const BASE_URL = "https://tour-next.onrender.com/";
 
-// const BASE_URL = "http://localhost:3000/";
+const cookieSender = {
+  withCredentials: false,
+};
+
+const BASE_URL = "http://localhost:3000/";
 
 export async function getTours(filter: Filter): Promise<Tour[]> {
   const {
@@ -37,7 +41,6 @@ export async function getTours(filter: Filter): Promise<Tour[]> {
     url += `sort=${sort}&`;
   }
   difficulty.map((ele) => (url += `difficulty=${ele}&`));
-  console.log(url);
   const response = await axios.get(url, {
     withCredentials: true,
   });
@@ -45,15 +48,16 @@ export async function getTours(filter: Filter): Promise<Tour[]> {
 }
 
 export async function getSingleTour(id: string): Promise<CompleteTour> {
-  const res = await axios.get(`${BASE_URL}api/v1/tours/${id}`, {
-    withCredentials: true,
-  });
+  const res = await axios.get(`${BASE_URL}api/v1/tours/${id}`, cookieSender);
   const data = res.data.data.doc;
   return data;
 }
 
 export async function getUser() {
-  const res = await axios.get(`${BASE_URL}api/v1/users/isLogedIn`);
+  const res = await axios.get(
+    `${BASE_URL}api/v1/users/isLogedIn`,
+    cookieSender
+  );
   return res.data.user;
 }
 
@@ -61,9 +65,11 @@ export async function loginUser(data: {
   email: string;
   password: string;
 }): Promise<User> {
-  const res = await axios.post(`${BASE_URL}api/v1/users/login`, data, {
-    withCredentials: true,
-  });
+  const res = await axios.post(
+    `${BASE_URL}api/v1/users/login`,
+    data,
+    cookieSender
+  );
   const user = res.data.data.user;
   return user;
 }
@@ -76,9 +82,11 @@ interface signBody {
 }
 
 export async function signUpUser(body: signBody): Promise<User> {
-  const res = await axios.post(`${BASE_URL}api/v1/users/signup`, body, {
-    withCredentials: true,
-  });
+  const res = await axios.post(
+    `${BASE_URL}api/v1/users/signup`,
+    body,
+    cookieSender
+  );
   return res.data.data.user;
 }
 
@@ -88,9 +96,7 @@ export async function createReview(body: {
   tour: string;
   user: string;
 }): Promise<Review> {
-  const res = await axios.post(`${BASE_URL}api/v1/reviews`, body, {
-    withCredentials: true,
-  });
+  const res = await axios.post(`${BASE_URL}api/v1/reviews`, body, cookieSender);
   return res.data.data.data;
 }
 

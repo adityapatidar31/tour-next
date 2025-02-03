@@ -14,6 +14,7 @@ import SignupPage from "./components/components/pages/signup/Signup";
 import { useEffect, useState } from "react";
 import { store } from "./store/store";
 import { queryClient } from "./services/queryClient";
+import ReviewPage from "./components/components/pages/review/ReviewPage";
 
 function Layout() {
   return (
@@ -56,6 +57,7 @@ export default function App() {
               <Route path="" element={<HomePage />} />
               {/* The dynamic route is defined as :id */}
               <Route path=":id" element={<Product />} />
+              <Route path="/home/review" element={<ReviewPage />} />
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />

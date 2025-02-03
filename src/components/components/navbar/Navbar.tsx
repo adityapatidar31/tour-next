@@ -60,15 +60,18 @@ export default function Navbar() {
               <DropdownMenuContent align="end">
                 {user.name ? (
                   <>
-                    <Link to="/me">
+                    <Link to="/home/me">
                       <DropdownMenuItem>Profile</DropdownMenuItem>
                     </Link>
-                    <Link to="/password">
+                    <Link to="/home/favorites">
                       <DropdownMenuItem>Favorites</DropdownMenuItem>
                     </Link>
 
-                    <Link to="/address">
+                    <Link to="/home/review">
                       <DropdownMenuItem>Reviews</DropdownMenuItem>
+                    </Link>
+                    <Link to="/home/password">
+                      <DropdownMenuItem>Password</DropdownMenuItem>
                     </Link>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleLogout}>

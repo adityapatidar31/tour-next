@@ -54,7 +54,7 @@ export default function Rating() {
   useEffect(
     function () {
       async function fetchReview() {
-        if (tourId) {
+        if (tourId && userId) {
           const { id, review, rating } = await findReviewByUserAndTour(tourId);
           if (review) setDescription(review);
           if (rating) setRating(rating);
@@ -63,7 +63,7 @@ export default function Rating() {
       }
       fetchReview();
     },
-    [tourId]
+    [tourId, userId]
   );
 
   function handleUpdate() {

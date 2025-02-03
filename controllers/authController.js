@@ -20,7 +20,6 @@ const createSendToken = (user, statusCode, res) => {
     ),
     httpOnly: true,
     sameSite: "none",
-    secure: true,
   };
 
   res.cookie("jwt", token, cookieOptions);

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -11,16 +11,32 @@ import {
 } from "@/components/ui/select";
 import { useAppSelector } from "@/services/hooks";
 import { useNavigate, useParams } from "react-router-dom";
-import { createReview } from "@/services/backend";
+import { createReview, findReviewByUserAndTour } from "@/services/backend";
 import { toast } from "react-toastify";
 import { queryClient } from "@/services/queryClient";
 
 export default function Rating() {
   const [description, setDescription] = useState("");
   const [rating, setRating] = useState<number>();
+  const [reviewId, setReviewId] = useState<string>("");
   const userId = useAppSelector((store) => store.user._id);
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { id: tourId } = useParams();
+
+  useEffect(
+    function () {
+      async function fetchReview() {
+        if (tourId) {
+          const { id, review, rating } = await findReviewByUserAndTour(tourId);
+          if (review) setDescription(review);
+          if (rating) setRating(rating);
+          if (id) setReviewId(id);
+        }
+      }
+      fetchReview();
+    },
+    [tourId]
+  );
 
   async function handleSubmit() {
     if (!rating) {
@@ -31,20 +47,20 @@ export default function Rating() {
       toast.error("Description is required");
       return;
     }
-    if (!id) {
+    if (!tourId) {
       toast.error("Bad request. Try to create review on tour page");
       return;
     }
     const body = {
       review: description,
       rating,
-      tour: id,
+      tour: tourId,
       user: userId,
     };
     try {
       await createReview(body);
       toast.success("Review Created Successfully");
-      queryClient.invalidateQueries({ queryKey: [id] });
+      queryClient.invalidateQueries({ queryKey: [tourId] });
     } catch {
       toast.error("Failed to create review");
     }
@@ -53,7 +69,11 @@ export default function Rating() {
   return (
     <Card className="w-full max-w-full p-6 space-y-4">
       <CardContent className="space-y-4">
-        <Select onValueChange={(value) => setRating(Number(value))} required>
+        <Select
+          onValueChange={(value) => setRating(Number(value))}
+          value={rating?.toString()}
+          required
+        >
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Select a rating" />
           </SelectTrigger>
@@ -72,16 +92,30 @@ export default function Rating() {
           className="w-full"
           required
         />
-
-        {userId ? (
-          <Button onClick={handleSubmit} className="w-full">
-            Submit
-          </Button>
-        ) : (
-          <Button onClick={() => navigate("/login")} className="w-full ">
-            Login
-          </Button>
+        {reviewId && (
+          <div className="flex sm:gap-20 gap-10 justify-center">
+            <Button onClick={handleSubmit} className="w-96">
+              Update
+            </Button>
+            <Button
+              onClick={handleSubmit}
+              className="w-96"
+              variant="destructive"
+            >
+              Delete
+            </Button>
+          </div>
         )}
+        {!reviewId &&
+          (userId ? (
+            <Button onClick={handleSubmit} className="w-full">
+              Submit
+            </Button>
+          ) : (
+            <Button onClick={() => navigate("/login")} className="w-full">
+              Login
+            </Button>
+          ))}
       </CardContent>
     </Card>
   );

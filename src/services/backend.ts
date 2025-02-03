@@ -100,4 +100,10 @@ export async function createReview(body: {
   return res.data.data.data;
 }
 
-export async function findReviewForUserAndTour() {}
+export async function findReviewByUserAndTour(tourId: string): Promise<Review> {
+  const res = await axios.get(
+    `${BASE_URL}api/v1/tours/${tourId}/user/review`,
+    cookieSender
+  );
+  return res.data.data.review;
+}

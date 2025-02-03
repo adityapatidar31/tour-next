@@ -3,13 +3,13 @@ import { CompleteTour, Filter, ReviewPageReview, Tour } from "./types";
 import { User } from "@/store/userSlice";
 import { Review } from "@/store/reviewSlice";
 
-// const BASE_URL = "https://tour-next.onrender.com/";
+const BASE_URL = "https://tour-next.onrender.com/";
 
 const cookieSender = {
   withCredentials: true,
 };
 
-const BASE_URL = "http://localhost:3000/";
+// const BASE_URL = "http://localhost:3000/";
 
 export async function getTours(filter: Filter): Promise<Tour[]> {
   const {
@@ -41,9 +41,7 @@ export async function getTours(filter: Filter): Promise<Tour[]> {
     url += `sort=${sort}&`;
   }
   difficulty.map((ele) => (url += `difficulty=${ele}&`));
-  const response = await axios.get(url, {
-    withCredentials: true,
-  });
+  const response = await axios.get(url, cookieSender);
   return response?.data?.data?.doc;
 }
 
@@ -136,9 +134,8 @@ export async function deleteReview(reviewID: string): Promise<void> {
 export async function getAllReviewByUser(
   userId: string
 ): Promise<ReviewPageReview[]> {
-  console.log(userId);
   const res = await axios.get(
-    `${BASE_URL}api/v1/reviews/user/679f0d3dd5561e3966786ab0`,
+    `${BASE_URL}api/v1/reviews/user/${userId}`,
     cookieSender
   );
   console.log(res);

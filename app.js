@@ -33,7 +33,7 @@ app.use(helmet());
 app.use(
   cors({
     // origin: "http://localhost:5173",
-    origin: "https://tour-next.onrender.com/",
+    origin: "https://tour-next.onrender.com",
     credentials: true,
   }),
 );

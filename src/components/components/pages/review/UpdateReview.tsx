@@ -8,11 +8,30 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { Edit } from "lucide-react";
+import { useState } from "react";
 
-export function UpdateReviewModel() {
+export function UpdateReviewModel({
+  defaultRating,
+  defaultDescription,
+  tourName,
+}: {
+  defaultRating: number;
+  defaultDescription: string;
+  tourName: string;
+}) {
+  const [rating, setRating] = useState<number>(defaultRating);
+  const [description, setDescription] = useState<string>(defaultDescription);
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -22,35 +41,41 @@ export function UpdateReviewModel() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
-          </DialogDescription>
+          <DialogTitle>{`Update ${tourName.toLowerCase()} review`}</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input
-              id="name"
-              defaultValue="Pedro Duarte"
-              className="col-span-3"
-            />
+          <div className="flex flex-col gap-2 items-start">
+            <Label className="text-right">Rating</Label>
+            <Select
+              onValueChange={(value) => setRating(Number(value))}
+              value={rating.toString()}
+              required
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select a rating" />
+              </SelectTrigger>
+              <SelectContent>
+                {[1, 2, 3, 4, 5].map((num) => (
+                  <SelectItem key={num} value={num.toString()}>
+                    {num}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
-            </Label>
-            <Input
-              id="username"
-              defaultValue="@peduarte"
-              className="col-span-3"
+          <div className="flex flex-col gap-2 items-start">
+            <Label className="text-right">Description</Label>
+            <Textarea
+              placeholder="Enter your feedback"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="w-full"
+              required
             />
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Save changes</Button>
+          <Button type="submit">Update Review</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

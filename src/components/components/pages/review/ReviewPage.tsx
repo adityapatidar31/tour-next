@@ -55,7 +55,11 @@ export default function ReviewPage() {
               </p>
               <div className="flex gap-2">
                 <Button variant="outline" size="icon">
-                  <UpdateReviewModel />
+                  <UpdateReviewModel
+                    defaultRating={review.rating}
+                    defaultDescription={review.review}
+                    tourName={review.tour.name}
+                  />
                 </Button>
                 <Button variant="destructive" size="icon">
                   <Trash2 className="w-4 h-4" />

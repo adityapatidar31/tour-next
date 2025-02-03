@@ -99,3 +99,17 @@ export interface CompleteTour {
   reviews: Review[];
   id: string;
 }
+
+export interface ReviewPageReview {
+  _id: string;
+  review: string;
+  rating: number;
+  user: {
+    name: string;
+  };
+  tour: {
+    name: string;
+    ratingsAverage: number;
+    imageCover: string;
+  };
+}

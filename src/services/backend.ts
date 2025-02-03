@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CompleteTour, Filter, Tour } from "./types";
+import { CompleteTour, Filter, ReviewPageReview, Tour } from "./types";
 import { User } from "@/store/userSlice";
 import { Review } from "@/store/reviewSlice";
 
@@ -131,4 +131,16 @@ export async function updateReview(
 
 export async function deleteReview(reviewID: string): Promise<void> {
   await axios.delete(`${BASE_URL}api/v1/reviews/${reviewID}`, cookieSender);
+}
+
+export async function getAllReviewByUser(
+  userId: string
+): Promise<ReviewPageReview[]> {
+  console.log(userId);
+  const res = await axios.get(
+    `${BASE_URL}api/v1/reviews/user/679f0d3dd5561e3966786ab0`,
+    cookieSender
+  );
+  console.log(res);
+  return res.data.data.reviews;
 }

@@ -74,15 +74,23 @@ reviewSchema.post("save", function () {
   // this points to current review
   this.constructor.calcAverageRatings(this.tour);
 });
-
-reviewSchema.pre(/^findOneAnd/, async function (next) {
-  this.r = await this.findOne();
+reviewSchema.pre(/^findOneAnd/, function (next) {
+  // Store the query so you can use it in post middleware
+  this._updateData = this.getUpdate(); // Get the update object
   next();
 });
 
 reviewSchema.post(/^findOneAnd/, async function () {
-  // await this.findOne(); does NOT work here, query has already executed
-  await this.r.constructor.calcAverageRatings(this.r.tour);
+  // Access the stored query data (update)
+  if (this._updateData && this._updateData.tour) {
+    // Recalculate the average rating for the tour after the review is updated
+    await this.model.constructor.calcAverageRatings(this._updateData.tour);
+  }
+});
+
+reviewSchema.post("save", function () {
+  // This will still calculate the average ratings after creating a review
+  this.constructor.calcAverageRatings(this.tour);
 });
 
 const Review = mongoose.model("Review", reviewSchema);

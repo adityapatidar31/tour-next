@@ -11,7 +11,7 @@ const PasswordUpdate = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
-  const mutation = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async () => {
       if (password !== passwordConfirm)
         throw new Error("password and confirmPassword is not matching");
@@ -73,8 +73,12 @@ const PasswordUpdate = () => {
               required
             />
           </div>
-          <Button className="w-full" onClick={() => mutation.mutate()}>
-            Update Password
+          <Button
+            className="w-full"
+            onClick={() => mutate()}
+            disabled={isPending}
+          >
+            {isPending ? "Updating..." : "Update Password"}
           </Button>
         </CardContent>
       </Card>

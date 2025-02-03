@@ -49,7 +49,9 @@ export default function ReviewPage() {
                 <h2 className="text-xl font-semibold">{review.tour.name}</h2>
                 <StarComponent rating={review.rating} />
               </div>
-              <p className="text-gray-600 mb-2">{review.review}</p>
+              <p className="text-gray-600 mb-2">
+                <span className="font-bold">Review:</span> {review.review}
+              </p>
               <div className="flex gap-2">
                 <Button variant="outline" size="icon">
                   <Edit className="w-4 h-4" />

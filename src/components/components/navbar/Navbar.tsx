@@ -70,8 +70,8 @@ export default function Navbar() {
                     <Link to="/home/review">
                       <DropdownMenuItem>Reviews</DropdownMenuItem>
                     </Link>
-                    <Link to="/home/password">
-                      <DropdownMenuItem>Password</DropdownMenuItem>
+                    <Link to="/home/updateMyPassword">
+                      <DropdownMenuItem>Reset Password</DropdownMenuItem>
                     </Link>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleLogout}>

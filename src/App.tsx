@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { store } from "./store/store";
 import { queryClient } from "./services/queryClient";
 import ReviewPage from "./components/components/pages/review/ReviewPage";
+import PasswordUpdate from "./components/components/pages/Password/PasswordUpdate";
 
 function Layout() {
   return (
@@ -58,6 +59,10 @@ export default function App() {
               {/* The dynamic route is defined as :id */}
               <Route path=":id" element={<Product />} />
               <Route path="/home/review" element={<ReviewPage />} />
+              <Route
+                path="/home/updateMyPassword"
+                element={<PasswordUpdate />}
+              />
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />

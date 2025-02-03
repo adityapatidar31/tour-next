@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Edit, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import StarComponent from "../../Star";
 import { useAppSelector } from "@/services/hooks";
@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { getAllReviewByUser } from "@/services/backend";
 import { ReviewPageReview } from "@/services/types";
 import ReviewPageLoader from "./ReviewPageLoading";
+import { UpdateReviewModel } from "./UpdateReview";
 
 export default function ReviewPage() {
   const { _id: userId } = useAppSelector((store) => store.user);
@@ -54,7 +55,7 @@ export default function ReviewPage() {
               </p>
               <div className="flex gap-2">
                 <Button variant="outline" size="icon">
-                  <Edit className="w-4 h-4" />
+                  <UpdateReviewModel />
                 </Button>
                 <Button variant="destructive" size="icon">
                   <Trash2 className="w-4 h-4" />

@@ -81,6 +81,9 @@ export default function Navbar() {
                     <DropdownMenuItem onClick={handleLogout}>
                       Logout
                     </DropdownMenuItem>
+                    <Link to="/home/about">
+                      <DropdownMenuItem>About</DropdownMenuItem>
+                    </Link>
                   </>
                 ) : (
                   <>
@@ -90,6 +93,9 @@ export default function Navbar() {
 
                     <Link to="/signup">
                       <DropdownMenuItem>Signup</DropdownMenuItem>
+                    </Link>
+                    <Link to="/home/about">
+                      <DropdownMenuItem>About</DropdownMenuItem>
                     </Link>
                   </>
                 )}

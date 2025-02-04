@@ -17,6 +17,7 @@ import { queryClient } from "./services/queryClient";
 import ReviewPage from "./components/components/pages/review/ReviewPage";
 import PasswordUpdate from "./components/components/pages/Password/PasswordUpdate";
 import CreateTourPage from "./components/components/pages/createTour/CreateTourPage";
+import AboutPage from "./components/components/pages/about/About";
 
 function Layout() {
   return (
@@ -60,6 +61,8 @@ export default function App() {
               {/* The dynamic route is defined as :id */}
               <Route path=":id" element={<Product />} />
               <Route path="/home/review" element={<ReviewPage />} />
+            <Route path="/home/about" element={<AboutPage />} />
+
               <Route
                 path="/home/updateMyPassword"
                 element={<PasswordUpdate />}

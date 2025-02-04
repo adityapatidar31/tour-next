@@ -14,6 +14,7 @@ import { getUser } from "@/services/backend";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/services/hooks";
 import { addUser } from "@/store/userSlice";
+import SearchInput from "./Search";
 
 export default function Navbar() {
   const user = useAppSelector((store) => store.user);
@@ -42,7 +43,7 @@ export default function Navbar() {
           </Link>
 
           <div className="hidden sm:flex flex-1 justify-center sm:max-w-xs md:max-w-sm">
-            <Input type="text" placeholder="Search Tour" />
+            <SearchInput />
           </div>
 
           <div className="flex items-center gap-4">

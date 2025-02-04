@@ -60,16 +60,21 @@ export default function Rating() {
       async function fetchReview() {
         if (tourId && userId) {
           setIsLoading(true);
-          const { id, review, rating } = await findReviewByUserAndTour(tourId);
-          if (review) setDescription(review);
-          if (rating) setRating(rating);
-          if (id) setReviewId(id);
-          setIsLoading(false);
+          try {
+            const { id, review, rating } = await findReviewByUserAndTour(
+              tourId
+            );
+            if (review) setDescription(review);
+            if (rating) setRating(rating);
+            if (id) setReviewId(id);
+          } finally {
+            setIsLoading(false);
+          }
         }
       }
       fetchReview();
     },
-    [tourId, userId]
+    [tourId, userId, reviewId]
   );
 
   function handleUpdate() {

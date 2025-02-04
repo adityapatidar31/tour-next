@@ -26,7 +26,7 @@ const CardComponent: React.FC<CardProps> = ({
   imageCover,
 }) => {
   return (
-    <div className="rounded-lg shadow-lg overflow-hidden border border-gray-200 mx-4">
+    <div className="rounded-lg shadow-lg sm:w-full overflow-hidden border border-gray-200 mx-4">
       <img
         src={`./img/${imageCover}`}
         alt={name}

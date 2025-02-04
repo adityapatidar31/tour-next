@@ -8,6 +8,7 @@ import { UpdateReviewModel } from "./UpdateReview";
 import { DeleteReview } from "./DeleteReview";
 import { useQuery } from "@tanstack/react-query";
 import ErrorComponent from "../../Error";
+import NoReviews from "./NoReviews";
 
 export default function ReviewPage() {
   const { _id: userId } = useAppSelector((store) => store.user);
@@ -33,6 +34,7 @@ export default function ReviewPage() {
   if (isError && !reviews) {
     return <ErrorComponent message="Failed to fetch Reviews Try again Later" />;
   }
+  if (reviews.length === 0) return <NoReviews />;
 
   return (
     <div className="px-12 min-w-[615px]">

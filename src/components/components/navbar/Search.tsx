@@ -1,24 +1,28 @@
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
+import { useNavigate } from "react-router-dom";
 
 export default function SearchInput() {
-  const [value, setValue] = useState("");
-  const debounced = useDebouncedCallback(
-    // function
-    (value) => {
-      setValue(value);
-    },
-    // delay in ms
-    1000
-  );
+  const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
-  console.log(value);
+  const debounced = useDebouncedCallback((query) => {
+    if (query.length < 3) {
+      navigate("?", { replace: true });
+    } else {
+      navigate(`?search=${query}`, { replace: true });
+    }
+  }, 1000);
+
   return (
     <Input
       type="text"
-      // defaultValue={defaultValue}
-      onChange={(e) => debounced(e.target.value)}
+      value={search}
+      onChange={(e) => {
+        setSearch(e.target.value);
+        debounced(e.target.value);
+      }}
       placeholder="Search Tour"
     />
   );

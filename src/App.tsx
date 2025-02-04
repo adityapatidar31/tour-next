@@ -16,6 +16,7 @@ import { store } from "./store/store";
 import { queryClient } from "./services/queryClient";
 import ReviewPage from "./components/components/pages/review/ReviewPage";
 import PasswordUpdate from "./components/components/pages/Password/PasswordUpdate";
+import CreateTourPage from "./components/components/pages/createTour/CreateTourPage";
 
 function Layout() {
   return (
@@ -63,6 +64,7 @@ export default function App() {
                 path="/home/updateMyPassword"
                 element={<PasswordUpdate />}
               />
+              <Route path="/home/createTour" element={<CreateTourPage />} />
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />

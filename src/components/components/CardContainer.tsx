@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 import CardComponent from "./CardComponent";
 import { Tour } from "@/services/types";
-import { Separator } from "../ui/separator";
-import { MapPin } from "lucide-react";
 import NoToursAvailable from "./NoTourFound";
 
 interface CardContainerProps {
@@ -12,11 +10,6 @@ interface CardContainerProps {
 function CardContainer({ tours }: CardContainerProps) {
   return (
     <>
-      <div className="flex items-center gap-2 text-2xl font-semibold ">
-        <MapPin className="w-6 h-6 text-violet-500" />
-        <span>Tours</span>
-      </div>
-      <Separator className="my-3" />
       {tours.length === 0 && <NoToursAvailable />}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {tours.map((tour) => (

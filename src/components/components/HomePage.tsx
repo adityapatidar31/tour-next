@@ -1,5 +1,6 @@
 import CategoryFilter from "./CategoryFiller";
 import CardContainer from "./CardContainer";
+import { Separator } from "../ui/separator";
 
 import { useQuery } from "@tanstack/react-query";
 import { getTours } from "@/services/backend";
@@ -9,6 +10,7 @@ import { useSearchParams } from "react-router-dom";
 import FilterComponent from "./Filter";
 import { useMemo } from "react";
 import { Filter } from "@/services/types";
+import { MapPin } from "lucide-react";
 
 export default function HomePage() {
   const [searchParams] = useSearchParams();
@@ -41,6 +43,11 @@ export default function HomePage() {
     <div>
       <CategoryFilter />
       <FilterComponent />
+      <div className="flex items-center gap-2 text-2xl font-semibold mt-3 ">
+        <MapPin className="w-6 h-6 text-violet-500" />
+        <span>Tours</span>
+      </div>
+      <Separator className="my-3" />
       {isLoading && <HomePageLoading />}
       {error && (
         <ErrorComponent message="There is error on server side. Please try again letter" />

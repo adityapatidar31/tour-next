@@ -6,28 +6,46 @@ import { addUser } from "@/store/userSlice";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
+import { SyncLoader } from "react-spinners";
+import { useMutation } from "@tanstack/react-query";
 const LoginPage = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const navigate = useNavigate();
-  // const [error, setError] = useState<string>("");
   const dispatch = useAppDispatch();
+
+  const {
+    mutate,
+    data: user,
+    isPending,
+  } = useMutation({
+    mutationFn: async () => {
+      const data = { email, password };
+      if (!email || !password)
+        throw new Error("Email and Password is required");
+      const user = await loginUser(data);
+      return user;
+    },
+    onSuccess: () => {
+      setEmail("");
+      setPassword("");
+      navigate("/home");
+    },
+    onError: () => {
+      toast.error("Invalid Credential");
+    },
+  });
+
   async function handleLogin(e: React.SyntheticEvent<EventTarget>) {
     e.preventDefault();
-    try {
-      const data = { email, password };
+    mutate();
 
-      const user = await loginUser(data);
-      dispatch(addUser(user));
-      if (user) {
-        setEmail("");
-        setPassword("");
-        navigate("/home");
-      }
-    } catch {
-      toast.error("Failed to login. Try again");
+    if (!user) {
+      toast.error("Bad Request");
+      return;
     }
+
+    dispatch(addUser(user));
   }
 
   return (
@@ -37,8 +55,6 @@ const LoginPage = () => {
           <h2 className="text-2xl font-semibold text-center text-primary mb-6">
             Welcome Back
           </h2>
-
-          {/* {error && <div className="text-red-500 text-sm mb-4">{error}</div>} */}
 
           <div className="mb-4">
             <label
@@ -86,8 +102,8 @@ const LoginPage = () => {
           </div>
 
           <div className="flex justify-center mt-6">
-            <Button type="submit" className="w-full">
-              Login
+            <Button type="submit" className="w-full" disabled={isPending}>
+              {isPending ? <SyncLoader color="#fff" /> : "Login"}
             </Button>
           </div>
 

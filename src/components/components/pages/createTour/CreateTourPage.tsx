@@ -84,6 +84,68 @@ export default function CreateTourPage() {
         />
       </div>
       <MultiDatePicker />
+      <div>
+        <label
+          htmlFor="latitude"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Latitude
+        </label>
+        <Input
+          id="latitude"
+          type="number"
+          step="any"
+          className="mt-1 block w-full border-gray-300 shadow-sm focus:ring-violet-500 focus:border-violet-500 sm:text-sm"
+          required
+        />
+      </div>
+
+      <div>
+        <label
+          htmlFor="longitude"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Longitude
+        </label>
+        <Input
+          id="longitude"
+          type="number"
+          step="any"
+          className="mt-1 block w-full border-gray-300 shadow-sm focus:ring-violet-500 focus:border-violet-500 sm:text-sm"
+          required
+        />
+      </div>
+
+      <div>
+        <label
+          htmlFor="day"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Day
+        </label>
+        <Input
+          id="day"
+          type="date"
+          className="mt-1 block w-full border-gray-300 shadow-sm focus:ring-violet-500 focus:border-violet-500 sm:text-sm"
+          required
+        />
+      </div>
+
+      <div>
+        <label
+          htmlFor="description"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Description
+        </label>
+        <textarea
+          id="description"
+          rows={4}
+          className="mt-1 block w-full border-gray-300 shadow-sm focus:ring-violet-500 focus:border-violet-500 sm:text-sm"
+          placeholder="Enter a description for the tour"
+          required
+        />
+      </div>
     </>
   );
 }

@@ -17,7 +17,7 @@ export default function ReviewPage() {
     isPending,
     isError,
   } = useQuery({
-    queryKey: ["reviews", userId],
+    queryKey: ["reviews"],
     queryFn: async () => {
       if (!userId) {
         navigate("/login");

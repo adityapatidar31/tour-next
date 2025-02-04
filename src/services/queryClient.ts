@@ -33,7 +33,7 @@ export function useUpdateReview() {
     onSuccess: (_, { tourId }) => {
       toast.success("Review Updated Successfully");
 
-      queryClient.invalidateQueries({ queryKey: ["tour", tourId] });
+      queryClient.invalidateQueries({ queryKey: ["tour", tourId, "reviews"] });
     },
     onError: (error) => {
       toast.error(error.message || "Failed to update review");
@@ -48,7 +48,7 @@ export function useDeleteReview() {
     },
     onSuccess: () => {
       toast.success("Review Delete Successfully");
-      queryClient.invalidateQueries({ queryKey: ["tour"] });
+      queryClient.invalidateQueries({ queryKey: ["tour", "reviews"] });
     },
     onError: (error) => {
       toast.error(error.message || "Failed to delete review");

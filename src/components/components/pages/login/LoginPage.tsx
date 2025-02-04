@@ -14,19 +14,15 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const {
-    mutate,
-    data: user,
-    isPending,
-  } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async () => {
       const data = { email, password };
       if (!email || !password)
         throw new Error("Email and Password is required");
-      const user = await loginUser(data);
-      return user;
+      return await loginUser(data);
     },
-    onSuccess: () => {
+    onSuccess: (user) => {
+      dispatch(addUser(user));
       setEmail("");
       setPassword("");
       navigate("/home");
@@ -39,13 +35,6 @@ const LoginPage = () => {
   async function handleLogin(e: React.SyntheticEvent<EventTarget>) {
     e.preventDefault();
     mutate();
-
-    if (!user) {
-      toast.error("Bad Request");
-      return;
-    }
-
-    dispatch(addUser(user));
   }
 
   return (

@@ -17,11 +17,7 @@ const SignupPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const {
-    data: user,
-    mutate,
-    isPending,
-  } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async () => {
       const body = {
         email,
@@ -29,10 +25,10 @@ const SignupPage = () => {
         passwordConfirm: confirmPassword,
         name,
       };
-      const user = await signUpUser(body);
-      return user;
+      return await signUpUser(body);
     },
-    onSuccess: () => {
+    onSuccess: (user) => {
+      dispatch(addUser(user));
       setEmail("");
       setPassword("");
       navigate("/home");
@@ -45,14 +41,10 @@ const SignupPage = () => {
   function handleSignup(e: React.SyntheticEvent<EventTarget>) {
     e.preventDefault();
     if (password !== confirmPassword) {
-      toast.error("password and confirm password is not match");
+      toast.error("Password and Confirm Password do not match");
       return;
     }
-    const user = mutate();
-
-    if (user) {
-      dispatch(addUser(user));
-    }
+    mutate();
   }
 
   return (
@@ -137,7 +129,7 @@ const SignupPage = () => {
 
           <div className="flex justify-center mt-6">
             <Button type="submit" className="w-full" disabled={isPending}>
-              {isPending ? <SyncLoader color="#fff" /> : "Login"}
+              {isPending ? <SyncLoader color="#fff" /> : "Register"}
             </Button>
           </div>
 

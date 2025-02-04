@@ -20,6 +20,7 @@ export async function getTours(filter: Filter): Promise<Tour[]> {
     priceEnd,
     sort,
     difficulty,
+    search,
   } = filter;
   let url = `${BASE_URL}api/v1/tours?`;
   if (category) {
@@ -40,7 +41,13 @@ export async function getTours(filter: Filter): Promise<Tour[]> {
   if (sort) {
     url += `sort=${sort}&`;
   }
+
   difficulty.map((ele) => (url += `difficulty=${ele}&`));
+  if (search) {
+    url += `search=${search}`;
+  }
+
+  console.log(url);
   const response = await axios.get(url, cookieSender);
   return response?.data?.data?.doc;
 }

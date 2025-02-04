@@ -6,6 +6,7 @@ export interface Filter {
   priceEnd: string | null;
   sort: string | null;
   difficulty: string[];
+  search: string | null;
 }
 
 export interface Location {

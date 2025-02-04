@@ -25,6 +25,7 @@ export default function HomePage() {
         ...(searchParams.get("difficultyMedium") ? ["medium"] : []),
         ...(searchParams.get("difficultyHard") ? ["difficult"] : []),
       ],
+      search: searchParams.get("search"),
     };
   }, [searchParams]);
 

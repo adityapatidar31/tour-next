@@ -22,7 +22,6 @@ import { useMutation, useQuery, UseQueryOptions } from "@tanstack/react-query";
 import { Star } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Review } from "@/store/reviewSlice";
-import { SyncLoader } from "react-spinners";
 
 export default function Rating() {
   const [description, setDescription] = useState("");
@@ -32,10 +31,8 @@ export default function Rating() {
   const userId = useAppSelector((store) => store.user._id);
   const navigate = useNavigate();
   const { id: tourId } = useParams();
-  const { mutate: updateMutate, isPending: isUpdatePending } =
-    useUpdateReview();
-  const { mutate: deleteMutate, isPending: isDeletePending } =
-    useDeleteReview();
+  const updateMutation = useUpdateReview();
+  const deleteMutation = useDeleteReview();
 
   const { isLoading } = useQuery<Review | null, Error>({
     queryKey: ["review"],
@@ -77,18 +74,12 @@ export default function Rating() {
       toast.error("Please fill in all required fields");
       return;
     }
-
-    updateMutate({
-      tourId,
-      review: description,
-      rating,
-      reviewId,
-    });
+    updateMutation.mutate({ tourId, review: description, rating, reviewId });
   }
 
   function handleDelete() {
     if (!reviewId) return toast.error("Review ID is not found. Try again");
-    deleteMutate(reviewId);
+    deleteMutation.mutate(reviewId);
   }
 
   if (!userId) return null;
@@ -102,62 +93,57 @@ export default function Rating() {
       <Separator className="mt-2 mb-5" />
       <Card className="w-full max-w-full p-6 space-y-4">
         <CardContent className="space-y-4">
-          <>
-            <Select
-              onValueChange={(value) => setRating(Number(value))}
-              value={rating?.toString()}
-              required
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select a rating" />
-              </SelectTrigger>
-              <SelectContent>
-                {[1, 2, 3, 4, 5].map((num) => (
-                  <SelectItem key={num} value={num.toString()}>
-                    {num}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Textarea
-              placeholder="Enter your feedback"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="w-full"
-              required
-            />
-            {reviewId ? (
-              <div className="flex sm:gap-20 gap-10 justify-center">
-                <Button
-                  onClick={handleUpdate}
-                  disabled={isDeletePending || isUpdatePending}
-                  className="w-96"
-                >
-                  {isUpdatePending ? <SyncLoader color="#fff" /> : "Update"}
-                </Button>
-                <Button
-                  onClick={handleDelete}
-                  className="w-96"
-                  variant="destructive"
-                  disabled={isDeletePending || isUpdatePending}
-                >
-                  {isDeletePending ? <SyncLoader color="#fff" /> : "Delete"}
-                </Button>
-              </div>
-            ) : userId ? (
-              <Button
-                onClick={() => mutation.mutate()}
-                disabled={isLoading}
-                className="w-full"
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            <>
+              <Select
+                onValueChange={(value) => setRating(Number(value))}
+                value={rating?.toString()}
+                required
               >
-                {isLoading ? <SyncLoader color="#fff" /> : "Submit"}
-              </Button>
-            ) : (
-              <Button onClick={() => navigate("/login")} className="w-full">
-                Login
-              </Button>
-            )}
-          </>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select a rating" />
+                </SelectTrigger>
+                <SelectContent>
+                  {[1, 2, 3, 4, 5].map((num) => (
+                    <SelectItem key={num} value={num.toString()}>
+                      {num}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Textarea
+                placeholder="Enter your feedback"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="w-full"
+                required
+              />
+              {reviewId ? (
+                <div className="flex sm:gap-20 gap-10 justify-center">
+                  <Button onClick={handleUpdate} className="w-96">
+                    Update
+                  </Button>
+                  <Button
+                    onClick={handleDelete}
+                    className="w-96"
+                    variant="destructive"
+                  >
+                    Delete
+                  </Button>
+                </div>
+              ) : userId ? (
+                <Button onClick={() => mutation.mutate()} className="w-full">
+                  Submit
+                </Button>
+              ) : (
+                <Button onClick={() => navigate("/login")} className="w-full">
+                  Login
+                </Button>
+              )}
+            </>
+          )}
         </CardContent>
       </Card>
     </>

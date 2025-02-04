@@ -105,8 +105,14 @@ export async function createReview(body: {
   return res.data.data.data;
 }
 
+interface ReviewApiResponse {
+  data: {
+    review: Review;
+  };
+}
+
 export async function findReviewByUserAndTour(tourId: string): Promise<Review> {
-  const res = await axios.get(
+  const res = await axios.get<ReviewApiResponse>(
     `${BASE_URL}api/v1/tours/${tourId}/user/review`,
     cookieSender
   );

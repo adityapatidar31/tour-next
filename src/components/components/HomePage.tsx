@@ -9,6 +9,7 @@ import { useSearchParams } from "react-router-dom";
 import FilterComponent from "./Filter";
 import { useMemo } from "react";
 import { Filter } from "@/services/types";
+import NoToursAvailable from "./NoTourFound";
 
 export default function HomePage() {
   const [searchParams] = useSearchParams();
@@ -45,6 +46,7 @@ export default function HomePage() {
       {error && (
         <ErrorComponent message="There is error on server side. Please try again letter" />
       )}
+      {tours?.length === 0 && <NoToursAvailable />}
       {tours && <CardContainer tours={tours} />}
     </div>
   );

@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar } from "@/components/ui/avatar";
-import { Star } from "lucide-react";
+import { MessageSquareCode, Star } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 
 interface User {
   _id: string;
@@ -23,10 +24,13 @@ interface ReviewListProps {
 function ReviewList({ reviews }: ReviewListProps) {
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold text-[--foreground]">
-        <span>Reviews</span>
+      <h2 className="text-2xl font-semibold flex items-center gap-3">
+        <span>
+          <MessageSquareCode className="w-6 h-6 text-violet-500" />
+        </span>
+        Reviews
       </h2>
-      <hr className="border-[--border] my-4" />
+      <Separator className="mt-2 mb-5" />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {reviews.map((review) => (
           <Card

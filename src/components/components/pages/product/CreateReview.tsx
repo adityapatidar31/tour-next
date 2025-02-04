@@ -19,6 +19,8 @@ import {
   useUpdateReview,
 } from "@/services/queryClient";
 import { useMutation } from "@tanstack/react-query";
+import { Star } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 
 export default function Rating() {
   const [description, setDescription] = useState("");
@@ -83,56 +85,65 @@ export default function Rating() {
     deleteMutation.mutate(reviewId);
   }
   return (
-    <Card className="w-full max-w-full p-6 space-y-4">
-      <CardContent className="space-y-4">
-        <Select
-          onValueChange={(value) => setRating(Number(value))}
-          value={rating?.toString()}
-          required
-        >
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select a rating" />
-          </SelectTrigger>
-          <SelectContent>
-            {[1, 2, 3, 4, 5].map((num) => (
-              <SelectItem key={num} value={num.toString()}>
-                {num}
-              </SelectItem>
+    <>
+      <h2 className="text-2xl font-semibold flex items-center gap-3">
+        <span>
+          <Star className="w-6 h-6 text-violet-500" />
+        </span>
+        Your review
+      </h2>
+      <Separator className="mt-2 mb-5" />
+      <Card className="w-full max-w-full p-6 space-y-4">
+        <CardContent className="space-y-4">
+          <Select
+            onValueChange={(value) => setRating(Number(value))}
+            value={rating?.toString()}
+            required
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select a rating" />
+            </SelectTrigger>
+            <SelectContent>
+              {[1, 2, 3, 4, 5].map((num) => (
+                <SelectItem key={num} value={num.toString()}>
+                  {num}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Textarea
+            placeholder="Enter your feedback"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full"
+            required
+          />
+          {reviewId && (
+            <div className="flex sm:gap-20 gap-10 justify-center">
+              <Button onClick={handleUpdate} className="w-96">
+                Update
+              </Button>
+              <Button
+                onClick={handleDelete}
+                className="w-96"
+                variant="destructive"
+              >
+                Delete
+              </Button>
+            </div>
+          )}
+          {!reviewId &&
+            (userId ? (
+              <Button onClick={() => mutation.mutate()} className="w-full">
+                Submit
+              </Button>
+            ) : (
+              <Button onClick={() => navigate("/login")} className="w-full">
+                Login
+              </Button>
             ))}
-          </SelectContent>
-        </Select>
-        <Textarea
-          placeholder="Enter your feedback"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="w-full"
-          required
-        />
-        {reviewId && (
-          <div className="flex sm:gap-20 gap-10 justify-center">
-            <Button onClick={handleUpdate} className="w-96">
-              Update
-            </Button>
-            <Button
-              onClick={handleDelete}
-              className="w-96"
-              variant="destructive"
-            >
-              Delete
-            </Button>
-          </div>
-        )}
-        {!reviewId &&
-          (userId ? (
-            <Button onClick={() => mutation.mutate()} className="w-full">
-              Submit
-            </Button>
-          ) : (
-            <Button onClick={() => navigate("/login")} className="w-full">
-              Login
-            </Button>
-          ))}
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </>
   );
 }

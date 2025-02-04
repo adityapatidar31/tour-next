@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { MapPin } from "lucide-react";
 
 interface Location {
   type: string;
@@ -17,8 +18,13 @@ interface LocationProps {
 
 const LocationComponent: React.FC<LocationProps> = ({ locations }) => {
   return (
-    <div className="space-y-6 px-4">
-      <h2 className="text-2xl font-semibold">Locations</h2>
+    <div className="space-y-6 px-4 mb-6">
+      <h2 className="text-2xl font-semibold flex items-center gap-3">
+        <span>
+          <MapPin className="w-6 h-6 text-violet-500" />
+        </span>
+        Locations
+      </h2>
       <Separator />
       <div className="space-y-6">
         {locations.map((location) => (

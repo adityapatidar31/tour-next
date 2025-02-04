@@ -30,7 +30,7 @@ function Product() {
   return (
     <>
       <ImageCarousel images={tour.images} coverImage={tour.imageCover} />
-      <div className="flex md:flex-row flex-col ">
+      <div className="flex md:flex-row flex-col">
         <NameComponent
           name={tour.name}
           duration={tour.duration}

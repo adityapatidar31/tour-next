@@ -1,6 +1,8 @@
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import { MapPinned } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 
 // Make sure you define the icon outside of the map render
 const customIcon = new L.Icon({
@@ -35,28 +37,34 @@ interface MapComponentProps {
 
 function MapComponent({ locations }: MapComponentProps) {
   return (
-    <div className="w-full h-[500px] rounded-2xl overflow-hidden shadow-lg">
-      <MapContainer
-        center={[25.781842, -80.128473]}
-        zoom={7}
-        scrollWheelZoom={false}
-        className="h-full w-full"
-      >
-        <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>'
-        />
-        <FitBounds locations={locations} />
-        {locations.map((location, index) => (
-          <Marker
-            key={index}
-            position={[location.coordinates[1], location.coordinates[0]]} // Swap coordinates here as well
-            icon={customIcon}
-          >
-            <Popup>{location.name}</Popup>
-          </Marker>
-        ))}
-      </MapContainer>
+    <div className="mb-5">
+      <h2 className="text-2xl font-semibold flex items-center gap-3">
+        <span>
+          <MapPinned className="w-6 h-6 text-violet-500" />
+        </span>
+        Map
+      </h2>
+      <Separator className="mt-2 mb-5" />
+      <div className="w-full h-[500px] rounded-2xl overflow-hidden shadow-lg">
+        <MapContainer
+          center={[25.781842, -80.128473]}
+          zoom={7}
+          scrollWheelZoom={false}
+          className="h-full w-full"
+        >
+          <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
+          <FitBounds locations={locations} />
+          {locations.map((location, index) => (
+            <Marker
+              key={index}
+              position={[location.coordinates[1], location.coordinates[0]]} // Swap coordinates here as well
+              icon={customIcon}
+            >
+              <Popup>{location.name}</Popup>
+            </Marker>
+          ))}
+        </MapContainer>
+      </div>
     </div>
   );
 }

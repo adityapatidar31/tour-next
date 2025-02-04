@@ -2,37 +2,38 @@ import { Card, CardContent } from "@/components/ui/card";
 import StarComponent from "../../Star";
 import { useAppSelector } from "@/services/hooks";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { getAllReviewByUser } from "@/services/backend";
-import { ReviewPageReview } from "@/services/types";
 import ReviewPageLoader from "./ReviewPageLoading";
 import { UpdateReviewModel } from "./UpdateReview";
 import { DeleteReview } from "./DeleteReview";
+import { useQuery } from "@tanstack/react-query";
+import ErrorComponent from "../../Error";
 
 export default function ReviewPage() {
   const { _id: userId } = useAppSelector((store) => store.user);
-  const [reviews, setReviews] = useState<ReviewPageReview[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-  useEffect(
-    function () {
+  const {
+    data: reviews,
+    isPending,
+    isError,
+  } = useQuery({
+    queryKey: ["reviews", userId],
+    queryFn: async () => {
       if (!userId) {
         navigate("/login");
-        return;
+        return [];
       }
-      setIsLoading(true);
-      async function getReviews() {
-        const data = await getAllReviewByUser(userId);
-        setReviews(data);
-      }
-      setIsLoading(false);
-      getReviews();
+      return await getAllReviewByUser(userId);
     },
-    [userId, navigate]
-  );
-  if (isLoading) {
+  });
+
+  if (isPending) {
     return <ReviewPageLoader />;
   }
+  if (isError && !reviews) {
+    return <ErrorComponent message="Failed to fetch Reviews Try again Later" />;
+  }
+
   return (
     <div className="px-12 min-w-[615px]">
       <h1 className="text-3xl font-bold mb-6">Your Reviews</h1>

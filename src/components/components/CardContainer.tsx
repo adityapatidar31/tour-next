@@ -11,7 +11,7 @@ interface CardContainerProps {
 function CardContainer({ tours }: CardContainerProps) {
   return (
     <>
-      <div className="flex items-center gap-2 text-2xl font-semibold m-3">
+      <div className="flex items-center gap-2 text-2xl font-semibold ">
         <MapPin className="w-6 h-6 text-violet-500" />
         <span>Tours</span>
       </div>
@@ -35,7 +35,6 @@ function CardContainer({ tours }: CardContainerProps) {
           </Link>
         ))}
       </div>
-      <Separator className="my-3 mb-10" />
     </>
   );
 }

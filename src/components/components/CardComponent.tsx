@@ -26,7 +26,7 @@ const CardComponent: React.FC<CardProps> = ({
   imageCover,
 }) => {
   return (
-    <div className="rounded-lg shadow-lg overflow-hidden border border-gray-200">
+    <div className="rounded-lg shadow-lg overflow-hidden border border-gray-200 mx-4">
       <img
         src={`./img/${imageCover}`}
         alt={name}
@@ -44,7 +44,7 @@ const CardComponent: React.FC<CardProps> = ({
         </p>
         <div className="flex justify-between mt-2">
           <div className="text-sm" style={{ color: "var(--muted-foreground)" }}>
-            Duration: {duration} hours
+            Duration: {duration} days
           </div>
           <div className="text-sm" style={{ color: "var(--muted-foreground)" }}>
             Group Size: {maxGroupSize} people

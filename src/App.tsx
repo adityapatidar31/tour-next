@@ -18,14 +18,16 @@ import ReviewPage from "./components/components/pages/review/ReviewPage";
 import PasswordUpdate from "./components/components/pages/Password/PasswordUpdate";
 import CreateTourPage from "./components/components/pages/createTour/CreateTourPage";
 import AboutPage from "./components/components/pages/about/About";
+import Footer from "./components/components/Footer";
 
 function Layout() {
   return (
     <div className="max-w-screen-xl mx-auto lg:px-13 ">
       <Navbar />
       <main className="mt-4">
-        <Outlet /> {/* This will render the child route component */}
+        <Outlet />
       </main>
+      <Footer />
     </div>
   );
 }
@@ -61,7 +63,7 @@ export default function App() {
               {/* The dynamic route is defined as :id */}
               <Route path=":id" element={<Product />} />
               <Route path="/home/review" element={<ReviewPage />} />
-            <Route path="/home/about" element={<AboutPage />} />
+              <Route path="/home/about" element={<AboutPage />} />
 
               <Route
                 path="/home/updateMyPassword"

@@ -33,7 +33,7 @@ export function useUpdateReview() {
     onSuccess: (_, { tourId }) => {
       toast.success("Review Updated Successfully");
 
-      queryClient.invalidateQueries({ queryKey: ["tour", tourId, "reviews"] });
+      queryClient.invalidateQueries({ queryKey: ["tour", tourId] });
       queryClient.invalidateQueries({ queryKey: ["reviews"] });
     },
     onError: (error) => {

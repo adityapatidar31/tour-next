@@ -19,6 +19,7 @@ import PasswordUpdate from "./components/components/pages/Password/PasswordUpdat
 import CreateTourPage from "./components/components/pages/createTour/CreateTourPage";
 import AboutPage from "./components/components/pages/about/About";
 import Footer from "./components/components/Footer";
+import ProfilePage from "./components/components/pages/profile/ProfilePage";
 
 function Layout() {
   return (
@@ -66,7 +67,7 @@ export default function App() {
               <Route path=":id" element={<Product />} />
               <Route path="/home/review" element={<ReviewPage />} />
               <Route path="/home/about" element={<AboutPage />} />
-
+              <Route path="/home/me" element={<ProfilePage />} />
               <Route
                 path="/home/updateMyPassword"
                 element={<PasswordUpdate />}

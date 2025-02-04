@@ -23,11 +23,13 @@ import Footer from "./components/components/Footer";
 function Layout() {
   return (
     <div className="max-w-screen-xl mx-auto lg:px-13 ">
-      <Navbar />
-      <main className="mt-4">
-        <Outlet />
-      </main>
-      <Footer />
+      <div className="flex flex-col min-h-screen">
+        <Navbar />
+        <main className="mt-4 flex-1">
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 }

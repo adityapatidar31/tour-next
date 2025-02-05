@@ -10,6 +10,7 @@ interface Location {
   day: number;
   _id: string;
   id: string;
+  image: string;
 }
 
 interface LocationProps {
@@ -32,7 +33,7 @@ const LocationComponent: React.FC<LocationProps> = ({ locations }) => {
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
               <div className="md:col-span-2">
                 <img
-                  src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  src={`/img/${location.image}`}
                   alt={location.name}
                   className=" object-cover rounded-lg"
                 />

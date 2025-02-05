@@ -17,6 +17,7 @@ export interface Location {
   day: number;
   _id: string;
   id: string;
+  image: string;
 }
 
 interface Guide {

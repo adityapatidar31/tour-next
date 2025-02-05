@@ -71,19 +71,19 @@ export default function Navbar() {
                     <Link to="/home/review">
                       <DropdownMenuItem>Reviews</DropdownMenuItem>
                     </Link>
-                    <Link to="/home/createTour">
+                    {/* <Link to="/home/createTour">
                       <DropdownMenuItem>Create Tour</DropdownMenuItem>
-                    </Link>
+                    </Link> */}
                     <Link to="/home/updateMyPassword">
                       <DropdownMenuItem>Reset Password</DropdownMenuItem>
+                    </Link>
+                    <Link to="/home/about">
+                      <DropdownMenuItem>About</DropdownMenuItem>
                     </Link>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleLogout}>
                       Logout
                     </DropdownMenuItem>
-                    <Link to="/home/about">
-                      <DropdownMenuItem>About</DropdownMenuItem>
-                    </Link>
                   </>
                 ) : (
                   <>

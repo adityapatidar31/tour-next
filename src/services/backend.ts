@@ -116,7 +116,7 @@ export async function findReviewByUserAndTour(tourId: string): Promise<Review> {
     `${BASE_URL}api/v1/tours/${tourId}/user/review`,
     cookieSender
   );
-  return res.data.data.review;
+  return res.data.data?.review;
 }
 
 export async function updateReview(

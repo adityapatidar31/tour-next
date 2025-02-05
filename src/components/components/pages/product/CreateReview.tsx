@@ -61,12 +61,13 @@ export default function Rating() {
         if (tourId && userId) {
           setIsLoading(true);
           try {
-            const { id, review, rating } = await findReviewByUserAndTour(
-              tourId
-            );
-            if (review) setDescription(review);
-            if (rating) setRating(rating);
-            if (id) setReviewId(id);
+            const data = await findReviewByUserAndTour(tourId);
+            if (data) {
+              const { id, review, rating } = data;
+              if (review) setDescription(review);
+              if (rating) setRating(rating);
+              if (id) setReviewId(id);
+            }
           } finally {
             setIsLoading(false);
           }

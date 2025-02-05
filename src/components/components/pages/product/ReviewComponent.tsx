@@ -41,7 +41,7 @@ function ReviewList({ reviews }: ReviewListProps) {
               <div className="flex items-center gap-3">
                 <Avatar>
                   <img
-                    src={review.user.photo}
+                    src={`/img/${review.user.photo}`}
                     alt={review.user.name}
                     className="w-10 h-10 rounded-full object-cover"
                   />

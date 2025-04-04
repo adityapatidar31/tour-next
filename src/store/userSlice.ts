@@ -2,29 +2,23 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 // import { RootState } from "./store";
 
-interface CounterState {
-  name: string;
-  role: "user" | "guide" | "lead-guide" | "admin";
-  _id: string;
-  email: string;
-  photo: string;
-}
-
 export interface User {
   name: string;
   role: "user" | "guide" | "lead-guide" | "admin";
   _id: string;
   email: string;
   photo?: string;
+  cart: string[];
 }
 
 // Define the initial state using that type
-const initialState: CounterState = {
+const initialState: User = {
   name: "",
   role: "user",
   _id: "",
   email: "",
   photo: "user.jpeg",
+  cart: [],
 };
 
 export const userSlice = createSlice({

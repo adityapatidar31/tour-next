@@ -7,7 +7,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { User } from "lucide-react";
+import { ShoppingCart, User } from "lucide-react";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { Link } from "react-router-dom";
 import { getUser } from "@/services/backend";
@@ -48,6 +48,7 @@ export default function Navbar() {
 
           <div className="flex items-center gap-4">
             <ThemeSwitcher />
+
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="p-3">
@@ -101,6 +102,9 @@ export default function Navbar() {
                 )}
               </DropdownMenuContent>
             </DropdownMenu>
+            <Link to="/home/cart">
+              <ShoppingCart className="w-5 h-5 text-violet-500" />
+            </Link>
           </div>
         </div>
       </nav>

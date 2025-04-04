@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { useState } from "react";
 import ImageCarousel from "./Carousel";
 import NameComponent from "./NameComponent";
 import TourDates from "./startDate";
@@ -10,9 +11,13 @@ import { getSingleTour } from "@/services/backend";
 import ErrorComponent from "../../Error";
 import SingleProductLoading from "./Loading";
 import CreateReview from "./CreateReview";
+import BookingModal from "./BookingModal";
 
 function Product() {
   const { id } = useParams<{ id: string }>();
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+
   const {
     isLoading,
     data: tour,
@@ -23,10 +28,10 @@ function Product() {
   });
 
   if (isLoading) return <SingleProductLoading />;
-
   if (error || !tour) {
     return <ErrorComponent message="Invalid Id: Please Provide the valid Id" />;
   }
+
   return (
     <>
       <ImageCarousel images={tour.images} coverImage={tour.imageCover} />
@@ -44,6 +49,10 @@ function Product() {
           guides={tour.guides}
           ratingsAverage={tour.ratingsAverage}
           ratingsQuantity={tour.ratingsQuantity}
+          onBookNow={(date) => {
+            setSelectedDate(date);
+            setIsBookingOpen(true);
+          }}
         />
       </div>
 
@@ -53,6 +62,18 @@ function Product() {
         <CreateReview />
         <ReviewList reviews={tour.reviews} />
       </div>
+
+      {/* Booking Modal */}
+      {tour && selectedDate && (
+        <BookingModal
+          isOpen={isBookingOpen}
+          onClose={() => setIsBookingOpen(false)}
+          tourName={tour.name}
+          summary={tour.summary}
+          price={tour.price}
+          startDate={selectedDate}
+        />
+      )}
     </>
   );
 }

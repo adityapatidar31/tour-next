@@ -6,6 +6,7 @@ interface TourDatesProps {
   guides: { name: string }[];
   ratingsAverage: number;
   ratingsQuantity: number;
+  onBookNow: (date: string) => void;
 }
 
 export default function TourDates({
@@ -13,9 +14,10 @@ export default function TourDates({
   guides,
   ratingsAverage,
   ratingsQuantity,
+  onBookNow,
 }: TourDatesProps) {
   return (
-    <Card className="w-full max-w-2xl m-6 ">
+    <Card className="w-full max-w-2xl m-6">
       <CardHeader>
         <CardTitle>Upcoming Tour Dates</CardTitle>
       </CardHeader>
@@ -37,6 +39,12 @@ export default function TourDates({
                 month: "long",
                 day: "numeric",
               })}
+              <button
+                className="px-3 py-1 bg-violet-600 text-white rounded-md hover:bg-violet-700"
+                onClick={() => onBookNow(date)}
+              >
+                Book Now
+              </button>
             </li>
           ))}
         </ul>

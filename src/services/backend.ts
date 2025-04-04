@@ -171,3 +171,12 @@ export async function updateCurrentPassword(
     cookieSender
   );
 }
+
+export async function getAllCartTours(tourIds: string[]): Promise<Tour[]> {
+  const res = await axios.post(
+    `${BASE_URL}api/v1/tours/cart`,
+    { tourIds },
+    cookieSender
+  );
+  return res.data;
+}

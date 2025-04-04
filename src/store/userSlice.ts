@@ -18,7 +18,11 @@ const initialState: User = {
   _id: "",
   email: "",
   photo: "user.jpeg",
-  cart: [],
+  cart: [
+    "5c88fa8cf4afda39709c2955",
+    "5c88fa8cf4afda39709c2961",
+    "5c88fa8cf4afda39709c295d",
+  ],
 };
 
 export const userSlice = createSlice({
@@ -34,9 +38,14 @@ export const userSlice = createSlice({
       state.role = role;
       state.photo = photo || state.photo;
     },
+    addItem(state, action: PayloadAction<string>) {
+      const itemId = action.payload;
+      console.log(itemId);
+      state.cart.push(itemId);
+    },
   },
 });
 
-export const { addUser } = userSlice.actions;
+export const { addUser, addItem } = userSlice.actions;
 
 export default userSlice.reducer;

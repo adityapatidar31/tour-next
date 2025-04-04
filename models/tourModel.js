@@ -123,6 +123,7 @@ const tourSchema = new mongoose.Schema(
         address: String,
         description: String,
         name: String,
+        image: String,
         day: Number,
       },
     ],

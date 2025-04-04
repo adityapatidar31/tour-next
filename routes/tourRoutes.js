@@ -40,6 +40,8 @@ router
     tourController.createTour,
   );
 
+router.route("/cart").post(tourController.getAllCartTours);
+
 router
   .route("/:id")
   .get(tourController.getTour)

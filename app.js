@@ -30,12 +30,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // set Security HTTP headers
 app.use(helmet());
 
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL,
-    credentials: true,
-  }),
-);
+app.use(cors());
 
 // Limit request from same API
 // const limiter = rateLimit({
@@ -56,7 +51,8 @@ app.use(
     limit: "10kb",
   }),
 );
-app.use(cookieParser());
+
+// app.use(cookieParser());
 // Data sanitization against NoSQL query injection
 app.use(mongoSanitize());
 
@@ -86,7 +82,6 @@ app.use((req, res, next) => {
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/reviews", reviewRouter);
-
 // 4) Unhandled Routes
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on the server`, 404));

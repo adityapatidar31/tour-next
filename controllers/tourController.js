@@ -127,6 +127,16 @@ exports.updateTour = factory.updateOne(Tour);
 
 exports.deleteTour = factory.deleteOne(Tour);
 
+exports.getAllCartTours = catchAsync(async (req, res, next) => {
+  const { tourIds } = req.body;
+  if (!Array.isArray(tourIds) || tourIds.length === 0) {
+    return res.status(400).json({ message: "No tourIds provided" });
+  }
+
+  const tours = await Tour.find({ _id: { $in: tourIds } });
+  res.status(200).json(tours);
+});
+
 // exports.deleteTour = catchAsync(async (req, res, next) => {
 //   const tour = await Tour.findByIdAndDelete(req.params.id);
 

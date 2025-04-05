@@ -11,6 +11,19 @@ const razorpay = new RazorPay({
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
+exports.getAllOrdersUser = catchAsync(async (req, res, next) => {
+  // const {_id:userId}=req.user;
+
+  const userId = "5c8a1d5b0190b214360dc057";
+
+  const orders = await Order.find({ user: userId, paymentStatus: "confirmed" });
+
+  return res.status(200).json({
+    status: "success",
+    data: orders,
+  });
+});
+
 exports.createOrder = catchAsync(async (req, res, next) => {
   const { tourId, people, startDate } = req.body;
   const userId = "5c8a1d5b0190b214360dc057";
@@ -35,7 +48,6 @@ exports.createOrder = catchAsync(async (req, res, next) => {
     tour.price * people + serviceCharge + cleaningCharge + tax,
   );
 
-  console.log(totalPrice);
   const options = {
     amount: totalPrice * 100,
     currency: "USD",

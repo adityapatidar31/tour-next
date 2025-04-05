@@ -180,3 +180,16 @@ export async function getAllCartTours(tourIds: string[]): Promise<Tour[]> {
   );
   return res.data;
 }
+
+export async function createOrder(tourId: string, numberOfPeople: number) {
+  const res = await axios.post(
+    `${BASE_URL}api/v1/razorpay/create-order`,
+    {
+      tourId,
+      numberOfPeople,
+      currency: "USD",
+    },
+    cookieSender
+  );
+  return res;
+}

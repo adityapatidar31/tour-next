@@ -20,7 +20,6 @@ import CreateTourPage from "./components/components/pages/createTour/CreateTourP
 import AboutPage from "./components/components/pages/about/About";
 import Footer from "./components/components/Footer";
 import ProfilePage from "./components/components/pages/profile/ProfilePage";
-import Cart from "./components/components/pages/cart/Cart";
 
 function Layout() {
   return (
@@ -69,7 +68,6 @@ export default function App() {
               <Route path="/home/review" element={<ReviewPage />} />
               <Route path="/home/about" element={<AboutPage />} />
               <Route path="/home/me" element={<ProfilePage />} />
-              <Route path="/home/cart" element={<Cart />} />
               <Route
                 path="/home/updateMyPassword"
                 element={<PasswordUpdate />}

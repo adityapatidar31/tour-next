@@ -59,21 +59,23 @@ export default function BookingModal({
           </p>
           <div>
             <Label htmlFor="people">Number of People:</Label>
-            <Select
-              value={String(numberOfPeople)}
-              onValueChange={(value) => setNumberOfPeople(Number(value))}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select number of people" />
-              </SelectTrigger>
-              <SelectContent>
-                {[1, 2, 3, 4, 5].map((num) => (
-                  <SelectItem key={num} value={String(num)}>
-                    {num}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <div className=" pt-1">
+              <Select
+                value={String(numberOfPeople)}
+                onValueChange={(value) => setNumberOfPeople(Number(value))}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select number of people" />
+                </SelectTrigger>
+                <SelectContent>
+                  {[1, 2, 3, 4, 5].map((num) => (
+                    <SelectItem key={num} value={String(num)}>
+                      {num}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
           <div className="border-t pt-4 space-y-2">
             <div className="flex justify-between">

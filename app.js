@@ -38,7 +38,14 @@ app.use(helmet());
 //   }),
 // );
 
-app.use(cors());
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      callback(null, true); // Allow all origins dynamically
+    },
+    credentials: true,
+  }),
+);
 
 // Limit request from same API
 // const limiter = rateLimit({

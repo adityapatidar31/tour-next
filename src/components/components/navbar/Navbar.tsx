@@ -103,7 +103,7 @@ export default function Navbar() {
               </DropdownMenuContent>
             </DropdownMenu>
             <Button variant="ghost" size="icon" className="p-3" asChild>
-              <Link to="/home/orders">
+              <Link to="/home/bookings">
                 <BaggageClaim className="w-6 h-6 text-violet-500" />
               </Link>
             </Button>

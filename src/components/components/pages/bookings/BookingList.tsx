@@ -28,7 +28,7 @@ export default function BookingList({
       {/* Scrollable container */}
       <div className="overflow-x-auto">
         {/* Header Row */}
-        <Card className="bg-muted text-muted-foreground min-w-[600px]">
+        <Card className="bg-muted text-muted-foreground min-w-[622px]">
           <CardContent className="p-4 flex gap-4 font-semibold">
             <div className="flex-1 min-w-[120px]">Tour</div>
             <div className="flex-[2] min-w-[200px]">Order ID</div>
@@ -43,7 +43,7 @@ export default function BookingList({
           <Card
             key={booking.id}
             onClick={() => onRowClick(booking)}
-            className="cursor-pointer hover:shadow-md transition-shadow min-w-[600px]"
+            className="cursor-pointer hover:bg-muted/50 my-1 hover:shadow-md transition-all min-w-[622px]"
           >
             <CardContent className="p-4 flex gap-4 text-sm items-center">
               <div className="flex-1 min-w-[120px] truncate">
@@ -52,7 +52,7 @@ export default function BookingList({
               <div className="flex-[2] min-w-[200px] truncate">
                 {booking.razorpayOrderId}
               </div>
-              <div className="w-[80px] text-right">₹{booking.payment}</div>
+              <div className="w-[80px] text-right">${booking.payment}</div>
               <div className="w-[60px] text-center">{booking.people}</div>
               <div className="w-[110px] text-right">
                 {formatDate(booking.startDate)}

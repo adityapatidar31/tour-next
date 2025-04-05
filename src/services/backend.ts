@@ -1,5 +1,12 @@
 import axios from "axios";
-import { Booking, CompleteTour, Filter, ReviewPageReview, Tour } from "./types";
+import {
+  Booking,
+  BookingDetail,
+  CompleteTour,
+  Filter,
+  ReviewPageReview,
+  Tour,
+} from "./types";
 import { User } from "@/store/userSlice";
 import { Review } from "@/store/reviewSlice";
 
@@ -204,7 +211,7 @@ export async function createOrder(
   return res;
 }
 
-export async function getOrderById(orderId: string): Promise<string> {
+export async function getOrderById(orderId: string): Promise<BookingDetail> {
   const res = await axios.get(`${BASE_URL}api/v1/orders/${orderId}`);
 
   return res.data.data;

@@ -128,3 +128,16 @@ export interface ReviewPageReview {
     id: string;
   };
 }
+
+export interface BookingDetail {
+  razorpayOrderId: string;
+  startDate: string;
+  payment: number;
+  people: number;
+  paymentStatus: "pending" | "confirmed" | "failed";
+  user: string;
+  tourName: string;
+  tour: Tour;
+  createdAt: string;
+  id: string;
+}

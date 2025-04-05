@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import axios from "axios";
-import { BASE_URL, createOrder } from "@/services/backend";
+import { BASE_URL, cookieSender, createOrder } from "@/services/backend";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -88,7 +88,8 @@ export default function BookingModal({
                 ...response,
                 tourId,
                 numberOfPeople,
-              }
+              },
+              cookieSender
             );
 
             if (verifyRes.data.status) {

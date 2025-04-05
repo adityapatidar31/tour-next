@@ -12,7 +12,7 @@ import { Review } from "@/store/reviewSlice";
 
 export const BASE_URL = "https://tour-next.onrender.com/";
 
-const cookieSender = {
+export const cookieSender = {
   withCredentials: true,
 };
 

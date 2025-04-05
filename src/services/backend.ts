@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CompleteTour, Filter, ReviewPageReview, Tour } from "./types";
+import { Booking, CompleteTour, Filter, ReviewPageReview, Tour } from "./types";
 import { User } from "@/store/userSlice";
 import { Review } from "@/store/reviewSlice";
 
@@ -179,6 +179,12 @@ export async function getAllCartTours(tourIds: string[]): Promise<Tour[]> {
     cookieSender
   );
   return res.data;
+}
+
+export async function getAllBookingUser(): Promise<Booking[]> {
+  const res = await axios.get(`${BASE_URL}api/v1/orders`);
+
+  return res.data.data;
 }
 
 export async function createOrder(

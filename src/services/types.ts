@@ -76,6 +76,18 @@ export interface Tour {
   id: string;
 }
 
+export interface Booking {
+  razorpayOrderId: string;
+  startDate: string;
+  payment: number;
+  people: number;
+
+  tourName: string;
+  tour: string;
+  createdAt: string;
+  id: string;
+}
+
 export interface CompleteTour {
   startLocation: StartLocation;
   _id: string;

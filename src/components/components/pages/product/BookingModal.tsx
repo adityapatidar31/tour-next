@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/select";
 import axios from "axios";
 import { BASE_URL, createOrder } from "@/services/backend";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -39,7 +41,7 @@ export default function BookingModal({
   tourId,
 }: BookingModalProps) {
   const [numberOfPeople, setNumberOfPeople] = useState(1);
-
+  const navigate = useNavigate();
   const serviceFee = 5;
   const cleaningFee = 3;
   const tax = price * 0.1;
@@ -90,10 +92,11 @@ export default function BookingModal({
             );
 
             if (verifyRes.data.status) {
-              alert("🎉 Payment Successful!");
+              toast.success("🎉 Payment Successful!");
+              navigate("/home/orders");
               onClose();
             } else {
-              alert("❌ Payment Verification Failed!");
+              toast.error("❌ Payment Verification Failed!");
             }
           } catch (error) {
             console.error("Payment verification error:", error);
@@ -105,7 +108,7 @@ export default function BookingModal({
           email: "john@example.com",
           contact: "9999999999",
         },
-        theme: { color: "#6D28D9" }, // Your violet theme
+        theme: { color: "#6D28D9" },
       };
 
       const rzp = new (window as any).Razorpay(options);

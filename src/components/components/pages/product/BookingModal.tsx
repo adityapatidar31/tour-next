@@ -93,14 +93,14 @@ export default function BookingModal({
 
             if (verifyRes.data.status) {
               toast.success("🎉 Payment Successful!");
-              navigate("/home/orders");
+              navigate("/home/bookings");
               onClose();
             } else {
               toast.error("❌ Payment Verification Failed!");
             }
           } catch (error) {
             console.error("Payment verification error:", error);
-            alert("❌ Payment verification failed!");
+            toast.error("❌ Payment Verification Failed!");
           }
         },
         prefill: {
@@ -115,7 +115,7 @@ export default function BookingModal({
       rzp.open();
     } catch (error) {
       console.error("Payment error:", error);
-      alert("❌ Payment failed!");
+      toast.error("❌ Payment failed!");
     }
   };
 

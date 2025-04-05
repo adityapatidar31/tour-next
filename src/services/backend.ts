@@ -10,13 +10,13 @@ import {
 import { User } from "@/store/userSlice";
 import { Review } from "@/store/reviewSlice";
 
-// const BASE_URL = "https://tour-next.onrender.com/";
+export const BASE_URL = "https://tour-next.onrender.com/";
 
 const cookieSender = {
-  withCredentials: false,
+  withCredentials: true,
 };
 
-export const BASE_URL = "http://localhost:3000/";
+// export const BASE_URL = "http://localhost:3000/";
 
 export async function getTours(filter: Filter): Promise<Tour[]> {
   const {
@@ -189,7 +189,7 @@ export async function getAllCartTours(tourIds: string[]): Promise<Tour[]> {
 }
 
 export async function getAllBookingUser(): Promise<Booking[]> {
-  const res = await axios.get(`${BASE_URL}api/v1/orders`);
+  const res = await axios.get(`${BASE_URL}api/v1/orders`, cookieSender);
 
   return res.data.data;
 }
@@ -212,7 +212,10 @@ export async function createOrder(
 }
 
 export async function getOrderById(orderId: string): Promise<BookingDetail> {
-  const res = await axios.get(`${BASE_URL}api/v1/orders/${orderId}`);
+  const res = await axios.get(
+    `${BASE_URL}api/v1/orders/${orderId}`,
+    cookieSender
+  );
 
   return res.data.data;
 }

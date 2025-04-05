@@ -1,5 +1,6 @@
 import { CalendarIcon, Star } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useAppSelector } from "@/services/hooks";
 
 interface TourDatesProps {
   startDates: string[];
@@ -16,6 +17,8 @@ export default function TourDates({
   ratingsQuantity,
   onBookNow,
 }: TourDatesProps) {
+  const { _id: userId } = useAppSelector((store) => store.user);
+
   return (
     <Card className="w-full max-w-2xl m-6">
       <CardHeader>
@@ -39,12 +42,14 @@ export default function TourDates({
                 month: "long",
                 day: "numeric",
               })}
-              <button
-                className="px-3 py-1 bg-violet-600 text-white rounded-md hover:bg-violet-700"
-                onClick={() => onBookNow(date)}
-              >
-                Book Now
-              </button>
+              {userId && (
+                <button
+                  className="px-3 py-1 bg-violet-600 text-white rounded-md hover:bg-violet-700"
+                  onClick={() => onBookNow(date)}
+                >
+                  Book Now
+                </button>
+              )}
             </li>
           ))}
         </ul>

@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Booking } from "@/services/types";
+import NoBookings from "./NoBookings";
 
 interface BookingListProps {
   bookings: Booking[];
@@ -19,6 +20,9 @@ export default function BookingList({
   bookings,
   onRowClick,
 }: BookingListProps) {
+  if (bookings.length == 0) {
+    return <NoBookings />;
+  }
   return (
     <div className="max-w-5xl mx-auto p-4 space-y-4">
       <h2 className="text-2xl font-bold mb-4">

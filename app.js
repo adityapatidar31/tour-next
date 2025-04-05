@@ -31,12 +31,14 @@ app.use(express.static(path.join(__dirname, "public")));
 // set Security HTTP headers
 app.use(helmet());
 
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL,
-    credentials: true,
-  }),
-);
+// app.use(
+//   cors({
+//     origin: process.env.FRONTEND_URL,
+//     credentials: true,
+//   }),
+// );
+
+app.use(cors());
 
 // Limit request from same API
 // const limiter = rateLimit({

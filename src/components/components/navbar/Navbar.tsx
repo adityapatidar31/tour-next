@@ -7,7 +7,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { BaggageClaim, User } from "lucide-react";
+import { BaggageClaim, FerrisWheel, User } from "lucide-react";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { Link } from "react-router-dom";
 import { getUser } from "@/services/backend";
@@ -38,9 +38,12 @@ export default function Navbar() {
     <>
       <nav className="w-full bg-background p-4 shadow-md">
         <div className="container mx-auto flex items-center justify-between">
-          <Link to="/home" className="text-xl font-bold text-violet-600">
-            Tour Next
-          </Link>
+          <div className="flex gap-2 items-center">
+            <FerrisWheel className="text-violet-500" />
+            <Link to="/home" className="text-xl font-bold text-violet-500">
+              Tour Next
+            </Link>
+          </div>
 
           <div className="hidden sm:flex flex-1 justify-center sm:max-w-xs md:max-w-sm">
             <SearchInput />

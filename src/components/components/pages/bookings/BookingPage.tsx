@@ -1,14 +1,14 @@
 import { getAllBookingUser } from "@/services/backend";
-import { useAppSelector } from "@/services/hooks";
 import { useQuery } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import ErrorComponent from "../../Error";
 import BookingList from "./BookingList";
 import BookingListLoading from "./BookingLoading";
+import BookingModal from "./BookingModal";
+import { Booking } from "@/services/types";
 
 function BookingPage() {
-  // const { _id: userId } = useAppSelector((store) => store.user);
-  // const navigate = useNavigate();
+  const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
 
   const {
     data: bookings,
@@ -16,25 +16,26 @@ function BookingPage() {
     isError,
   } = useQuery({
     queryKey: ["bookings"],
-    queryFn: async () => {
-      // if (!userId) {
-      //   navigate("/login");
-      //   return [];
-      // }
-      return await getAllBookingUser();
-    },
+    queryFn: getAllBookingUser,
   });
 
-  if (isLoading) {
-    return <BookingListLoading />;
-  }
-
-  console.log(bookings);
-  if (isError) {
+  if (isLoading) return <BookingListLoading />;
+  if (isError)
     return <ErrorComponent message="Failed to load Booking. Try again later" />;
-  }
-  if (!bookings) return;
-  return <BookingList bookings={bookings} onRowClick={() => {}} />;
+  if (!bookings) return null;
+
+  return (
+    <>
+      <BookingList bookings={bookings} onRowClick={setSelectedBooking} />
+      {selectedBooking && (
+        <BookingModal
+          open={!!selectedBooking}
+          onClose={() => setSelectedBooking(null)}
+          orderId={selectedBooking.razorpayOrderId}
+        />
+      )}
+    </>
+  );
 }
 
 export default BookingPage;

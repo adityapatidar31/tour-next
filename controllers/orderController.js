@@ -12,9 +12,9 @@ const razorpay = new RazorPay({
 });
 
 exports.getAllOrdersUser = catchAsync(async (req, res, next) => {
-  // const {_id:userId}=req.user;
+  const { id: userId } = req.user;
 
-  const userId = "5c8a1d5b0190b214360dc057";
+  // const userId = "5c8a1f4e2f8fb814b56fa185";
 
   const orders = await Order.find({ user: userId, paymentStatus: "confirmed" });
 
@@ -24,10 +24,33 @@ exports.getAllOrdersUser = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getOrderById = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  if (!id) {
+    return next(new AppError("Order Id is required", 401));
+  }
+
+  const order = await Order.findById(id).populate(
+    "tour",
+    "imageCover summary ratingsAverage ratingsQuantity category difficulty maxGroupSize duration",
+  );
+
+  if (!order) {
+    return next(
+      new AppError("Invalid Order Id. Please provide the correct Id", 401),
+    );
+  }
+
+  return res.status(200).json({
+    status: "success",
+    data: order,
+  });
+});
+
 exports.createOrder = catchAsync(async (req, res, next) => {
   const { tourId, people, startDate } = req.body;
-  const userId = "5c8a1d5b0190b214360dc057";
-  // const { _id: userId } = req.user;
+  // const userId = "5c8a1f4e2f8fb814b56fa185";
+  const { id: userId } = req.user;
   if (!tourId) {
     return next(new AppError("Tour Id is required.", 401));
   }

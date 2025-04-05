@@ -203,3 +203,9 @@ export async function createOrder(
   );
   return res;
 }
+
+export async function getOrderById(orderId: string): Promise<string> {
+  const res = await axios.get(`${BASE_URL}api/v1/orders/${orderId}`);
+
+  return res.data.data;
+}

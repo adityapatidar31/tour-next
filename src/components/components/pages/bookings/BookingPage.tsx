@@ -31,7 +31,7 @@ function BookingPage() {
         <BookingModal
           open={!!selectedBooking}
           onClose={() => setSelectedBooking(null)}
-          orderId={selectedBooking.razorpayOrderId}
+          orderId={selectedBooking.id}
         />
       )}
     </>

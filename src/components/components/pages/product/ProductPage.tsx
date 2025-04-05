@@ -72,6 +72,7 @@ function Product() {
           summary={tour.summary}
           price={tour.price}
           startDate={selectedDate}
+          tourId={tour._id}
         />
       )}
     </>

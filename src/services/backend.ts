@@ -9,7 +9,7 @@ const cookieSender = {
   withCredentials: false,
 };
 
-const BASE_URL = "http://localhost:3000/";
+export const BASE_URL = "http://localhost:3000/";
 
 export async function getTours(filter: Filter): Promise<Tour[]> {
   const {
@@ -181,13 +181,17 @@ export async function getAllCartTours(tourIds: string[]): Promise<Tour[]> {
   return res.data;
 }
 
-export async function createOrder(tourId: string, numberOfPeople: number) {
+export async function createOrder(
+  tourId: string,
+  people: number,
+  startDate: string
+) {
   const res = await axios.post(
-    `${BASE_URL}api/v1/razorpay/create-order`,
+    `${BASE_URL}api/v1/orders`,
     {
       tourId,
-      numberOfPeople,
-      currency: "USD",
+      people,
+      startDate,
     },
     cookieSender
   );

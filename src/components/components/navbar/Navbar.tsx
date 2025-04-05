@@ -7,7 +7,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ShoppingCart, User } from "lucide-react";
+import { BaggageClaim, User } from "lucide-react";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { Link } from "react-router-dom";
 import { getUser } from "@/services/backend";
@@ -102,9 +102,11 @@ export default function Navbar() {
                 )}
               </DropdownMenuContent>
             </DropdownMenu>
-            <Link to="/home/cart">
-              <ShoppingCart className="w-5 h-5 text-violet-500" />
-            </Link>
+            <Button variant="ghost" size="icon" className="p-3" asChild>
+              <Link to="/home/orders">
+                <BaggageClaim className="w-6 h-6 text-violet-500" />
+              </Link>
+            </Button>
           </div>
         </div>
       </nav>

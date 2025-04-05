@@ -1,4 +1,6 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -14,6 +16,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import axios from "axios";
+import { BASE_URL, createOrder } from "@/services/backend";
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -22,6 +26,7 @@ interface BookingModalProps {
   summary: string;
   price: number;
   startDate: string;
+  tourId: string;
 }
 
 export default function BookingModal({
@@ -31,13 +36,85 @@ export default function BookingModal({
   summary,
   price,
   startDate,
+  tourId,
 }: BookingModalProps) {
   const [numberOfPeople, setNumberOfPeople] = useState(1);
 
   const serviceFee = 5;
   const cleaningFee = 3;
   const tax = price * 0.1;
-  const totalCost = (price + serviceFee + cleaningFee + tax) * numberOfPeople;
+  const totalCost = (price + tax) * numberOfPeople + serviceFee + cleaningFee;
+
+  useEffect(() => {
+    const loadScript = (src: string) => {
+      return new Promise((resolve) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.onload = () => resolve(true);
+        script.onerror = () => resolve(false);
+        document.body.appendChild(script);
+      });
+    };
+
+    loadScript("https://checkout.razorpay.com/v1/checkout.js");
+  }, []);
+
+  const handlePayment = async () => {
+    try {
+      const { data: order } = await createOrder(
+        tourId,
+        numberOfPeople,
+        startDate
+      );
+      console.log(order);
+      if (!order.data || !order.data.id) {
+        throw new Error("Invalid order response");
+      }
+
+      const options = {
+        key: "rzp_test_8J33nqpOV0NR4x", // Replace with your test/live key
+        amount: order.data.amount,
+        currency: order.data.currency,
+        name: "Tour-Next",
+        description: "Tour Booking Payment",
+        order_id: order.data.id,
+        handler: async (response: any) => {
+          try {
+            const verifyRes = await axios.post(
+              `${BASE_URL}api/v1/orders/verifyPayment`,
+              {
+                ...response,
+                tourId,
+                numberOfPeople,
+              }
+            );
+
+            if (verifyRes.data.status) {
+              alert("🎉 Payment Successful!");
+              onClose();
+            } else {
+              alert("❌ Payment Verification Failed!");
+            }
+          } catch (error) {
+            console.error("Payment verification error:", error);
+            alert("❌ Payment verification failed!");
+          }
+        },
+        prefill: {
+          name: "John Doe",
+          email: "john@example.com",
+          contact: "9999999999",
+        },
+        theme: { color: "#6D28D9" }, // Your violet theme
+      };
+
+      const rzp = new (window as any).Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      console.error("Payment error:", error);
+      alert("❌ Payment failed!");
+    }
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -59,7 +136,7 @@ export default function BookingModal({
           </p>
           <div>
             <Label htmlFor="people">Number of People:</Label>
-            <div className=" pt-1">
+            <div className="pt-1">
               <Select
                 value={String(numberOfPeople)}
                 onValueChange={(value) => setNumberOfPeople(Number(value))}
@@ -104,7 +181,7 @@ export default function BookingModal({
           <Button variant="outline" onClick={onClose}>
             Cancel
           </Button>
-          <Button>Book Now</Button>
+          <Button onClick={handlePayment}>Book Now</Button>
         </div>
       </DialogContent>
     </Dialog>

@@ -57,7 +57,7 @@ app.use(
   }),
 );
 
-app.use(cookieParser());
+// app.use(cookieParser());
 // Data sanitization against NoSQL query injection
 app.use(mongoSanitize());
 

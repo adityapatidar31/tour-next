@@ -32,6 +32,10 @@ const orderSchema = new mongoose.Schema(
       ref: "User",
       required: [true, "Order must belong to a user"],
     },
+    tourName: {
+      type: String,
+      require: [true, "tour name is required"],
+    },
     tour: {
       type: mongoose.Schema.ObjectId,
       ref: "Tour",

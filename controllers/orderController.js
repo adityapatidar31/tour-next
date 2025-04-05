@@ -63,6 +63,7 @@ exports.createOrder = catchAsync(async (req, res, next) => {
     people,
     user: userId,
     tour: tourId,
+    tourName: tour.name,
   };
 
   await Order.create(orderData);

@@ -14,7 +14,7 @@ const razorpay = new RazorPay({
 exports.createOrder = catchAsync(async (req, res, next) => {
   const { tourId, people, startDate } = req.body;
   const userId = "5c8a1d5b0190b214360dc057";
-
+  // const { _id: userId } = req.user;
   if (!tourId) {
     return next(new AppError("Tour Id is required.", 401));
   }
@@ -31,11 +31,11 @@ exports.createOrder = catchAsync(async (req, res, next) => {
   const serviceCharge = 3;
   const cleaningCharge = 5;
   const tax = tour.price * Number(people) * 0.1;
-  const totalPrice =
-    Math.round(
-      (tour.price * people + serviceCharge + cleaningCharge + tax) * 100,
-    ) / 100;
+  const totalPrice = Math.round(
+    tour.price * people + serviceCharge + cleaningCharge + tax,
+  );
 
+  console.log(totalPrice);
   const options = {
     amount: totalPrice * 100,
     currency: "USD",
@@ -58,5 +58,38 @@ exports.createOrder = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     data: order,
+  });
+});
+
+exports.verifyPayment = catchAsync(async (req, res, next) => {
+  const {
+    razorpay_order_id: razorpayOrderId,
+    razorpay_payment_id: razorpayPaymentId,
+    razorpay_signature: razorpaySignature,
+  } = req.body;
+
+  const generatedSignature = crypto
+    .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+    .update(`${razorpayOrderId}|${razorpayPaymentId}`)
+    .digest("hex");
+
+  if (generatedSignature !== razorpaySignature) {
+    return next(new AppError("Payment verification failed.", 400));
+  }
+
+  const updatedOrder = await Order.findOneAndUpdate(
+    { razorpayOrderId },
+    {
+      paymentStatus: "confirmed",
+    },
+    { new: true },
+  );
+  if (!updatedOrder) {
+    return next(new AppError("Order not found.", 404));
+  }
+
+  return res.status(200).json({
+    status: "success",
+    message: "Payment verified and order confirmed",
   });
 });

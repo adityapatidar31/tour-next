@@ -42,10 +42,10 @@ export default function BookingModal({
 }: BookingModalProps) {
   const [numberOfPeople, setNumberOfPeople] = useState(1);
   const navigate = useNavigate();
-  const serviceFee = 5;
-  const cleaningFee = 3;
-  const tax = price * 0.1;
-  const totalCost = (price + tax) * numberOfPeople + serviceFee + cleaningFee;
+  const serviceFee = 300;
+  const cleaningFee = 500;
+  const tax = price * numberOfPeople * 0.18;
+  const totalCost = price * numberOfPeople + serviceFee + cleaningFee + tax;
 
   useEffect(() => {
     const loadScript = (src: string) => {
@@ -68,13 +68,13 @@ export default function BookingModal({
         numberOfPeople,
         startDate
       );
-      console.log(order);
+
       if (!order.data || !order.data.id) {
         throw new Error("Invalid order response");
       }
 
       const options = {
-        key: "rzp_test_8J33nqpOV0NR4x", // Replace with your test/live key
+        key: "rzp_test_8J33nqpOV0NR4x", // Replace with your live key if needed
         amount: order.data.amount,
         currency: order.data.currency,
         name: "Tour-Next",
@@ -132,7 +132,7 @@ export default function BookingModal({
           <p className="text-muted-foreground">{summary}</p>
           <p className="text-muted-foreground">
             Start Date:{" "}
-            {new Date(startDate).toLocaleDateString("en-US", {
+            {new Date(startDate).toLocaleDateString("en-IN", {
               weekday: "long",
               year: "numeric",
               month: "long",
@@ -162,23 +162,23 @@ export default function BookingModal({
           <div className="border-t pt-4 space-y-2">
             <div className="flex justify-between">
               <span>Base Price:</span>
-              <span>${price.toFixed(2)}</span>
+              <span>₹{(price * numberOfPeople).toFixed(2)}</span>
             </div>
             <div className="flex justify-between">
               <span>Service Fee:</span>
-              <span>${serviceFee.toFixed(2)}</span>
+              <span>₹{serviceFee.toFixed(2)}</span>
             </div>
             <div className="flex justify-between">
               <span>Cleaning Fee:</span>
-              <span>${cleaningFee.toFixed(2)}</span>
+              <span>₹{cleaningFee.toFixed(2)}</span>
             </div>
             <div className="flex justify-between">
-              <span>Tax (10%):</span>
-              <span>${tax.toFixed(2)}</span>
+              <span>Tax (18%):</span>
+              <span>₹{tax.toFixed(2)}</span>
             </div>
             <div className="flex justify-between font-semibold border-t pt-2">
               <span>Total Cost:</span>
-              <span>${totalCost.toFixed(2)}</span>
+              <span>₹{totalCost.toFixed(2)}</span>
             </div>
           </div>
         </div>

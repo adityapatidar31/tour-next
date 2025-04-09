@@ -55,7 +55,7 @@ const CardComponent: React.FC<CardProps> = ({
             Difficulty: {difficulty}
           </div>
           <div className="text-sm" style={{ color: "var(--muted-foreground)" }}>
-            Price: ${price}
+            Price: ₹{price}
           </div>
         </div>
         <div className="flex justify-between mt-2">

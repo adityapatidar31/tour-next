@@ -39,7 +39,7 @@ export default function NameComponent({
             {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
           </p>
           <p>
-            <strong>Price:</strong> ${price}
+            <strong>Price:</strong> ₹{price}
           </p>
         </div>
       </CardContent>

@@ -56,7 +56,7 @@ export default function BookingList({
               <div className="flex-[2] min-w-[200px] truncate">
                 {booking.razorpayOrderId}
               </div>
-              <div className="w-[80px] text-right">${booking.payment}</div>
+              <div className="w-[80px] text-right">₹{booking.payment}</div>
               <div className="w-[60px] text-center">{booking.people}</div>
               <div className="w-[110px] text-right">
                 {formatDate(booking.startDate)}

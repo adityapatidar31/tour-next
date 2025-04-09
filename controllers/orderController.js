@@ -49,8 +49,11 @@ exports.getOrderById = catchAsync(async (req, res, next) => {
 
 exports.createOrder = catchAsync(async (req, res, next) => {
   const { tourId, people, startDate } = req.body;
-  // const userId = "5c8a1f4e2f8fb814b56fa185";
+
   const { id: userId } = req.user;
+
+  // const userId = "5c8a1f4e2f8fb814b56fa185";
+
   if (!tourId) {
     return next(new AppError("Tour Id is required.", 401));
   }
@@ -60,20 +63,21 @@ exports.createOrder = catchAsync(async (req, res, next) => {
   }
 
   const tour = await Tour.findById(tourId);
-
   if (!tour) {
-    return next(new AppError("Please Provide the valid tourId", 401));
+    return next(new AppError("Please provide a valid tourId", 401));
   }
-  const serviceCharge = 3;
-  const cleaningCharge = 5;
-  const tax = tour.price * Number(people) * 0.1;
+
+  const serviceCharge = 300;
+  const cleaningCharge = 500;
+  const tax = tour.price * Number(people) * 0.18;
+
   const totalPrice = Math.round(
     tour.price * people + serviceCharge + cleaningCharge + tax,
   );
 
   const options = {
     amount: totalPrice * 100,
-    currency: "USD",
+    currency: "INR",
     receipt: `receipt_${Date.now()}`,
   };
 

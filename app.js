@@ -37,15 +37,16 @@ app.use(helmet());
 //     credentials: true,
 //   }),
 // );
+app.use(cors());
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      callback(null, true); // Allow all origins dynamically
-    },
-    credentials: true,
-  }),
-);
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       callback(null, true); // Allow all origins dynamically
+//     },
+//     credentials: true,
+//   }),
+// );
 
 // Limit request from same API
 // const limiter = rateLimit({
@@ -98,6 +99,7 @@ app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/reviews", reviewRouter);
 app.use("/api/v1/orders", orderRouter);
+
 // 4) Unhandled Routes
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on the server`, 404));

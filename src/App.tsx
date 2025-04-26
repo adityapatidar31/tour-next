@@ -23,12 +23,18 @@ import ProfilePage from "./components/components/pages/profile/ProfilePage";
 import BookingPage from "./components/components/pages/bookings/BookingPage";
 import FirstTimeAlert from "./components/components/RenderAlert";
 
-function Layout() {
+function Layout({
+  theme,
+  setTheme,
+}: {
+  theme: "light" | "dark";
+  setTheme: React.Dispatch<React.SetStateAction<"light" | "dark">>;
+}) {
   return (
     <div className="max-w-screen-xl mx-auto lg:px-13 ">
       <div className="flex flex-col min-h-screen">
         <FirstTimeAlert />
-        <Navbar />
+        <Navbar setTheme={setTheme} theme={theme} />
         <main className="mt-4 flex-1">
           <Outlet />
         </main>
@@ -39,11 +45,18 @@ function Layout() {
 }
 
 export default function App() {
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
+
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme") as "light" | "dark";
     if (storedTheme) {
       setTheme(storedTheme);
+      document.documentElement.classList.toggle("dark", storedTheme === "dark");
+    } else {
+      // If no theme in localStorage, default to dark
+      setTheme("dark");
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
     }
   }, []);
 
@@ -63,7 +76,10 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Hero />} />
-            <Route path="/home" element={<Layout />}>
+            <Route
+              path="/home"
+              element={<Layout setTheme={setTheme} theme={theme} />}
+            >
               {/* The HomePage is the default for /home */}
               <Route path="" element={<HomePage />} />
               {/* The dynamic route is defined as :id */}

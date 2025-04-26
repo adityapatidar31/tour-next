@@ -1,18 +1,13 @@
-import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sun, Moon } from "lucide-react";
 
-export default function ThemeSwitcher() {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-
-  useEffect(() => {
-    const storedTheme = localStorage.getItem("theme") as "light" | "dark";
-    if (storedTheme) {
-      setTheme(storedTheme);
-      document.documentElement.classList.toggle("dark", storedTheme === "dark");
-    }
-  }, []);
-
+export default function ThemeSwitcher({
+  theme,
+  setTheme,
+}: {
+  theme: "light" | "dark";
+  setTheme: React.Dispatch<React.SetStateAction<"light" | "dark">>;
+}) {
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
@@ -25,7 +20,7 @@ export default function ThemeSwitcher() {
       onClick={toggleTheme}
       variant="ghost"
       size="icon"
-      className="transition-all"
+      className="cursor-pointer"
     >
       {theme === "dark" ? (
         <Sun className="h-6 w-6 text-yellow-400" />

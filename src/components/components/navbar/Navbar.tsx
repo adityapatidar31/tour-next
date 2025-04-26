@@ -16,7 +16,13 @@ import { useAppDispatch, useAppSelector } from "@/services/hooks";
 import { addUser } from "@/store/userSlice";
 import SearchInput from "./Search";
 
-export default function Navbar() {
+export default function Navbar({
+  theme,
+  setTheme,
+}: {
+  theme: "light" | "dark";
+  setTheme: React.Dispatch<React.SetStateAction<"light" | "dark">>;
+}) {
   const user = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
   useEffect(
@@ -50,7 +56,7 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center gap-4">
-            <ThemeSwitcher />
+            <ThemeSwitcher setTheme={setTheme} theme={theme} />
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

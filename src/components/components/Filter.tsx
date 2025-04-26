@@ -25,7 +25,7 @@ export default function FilterComponent() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [duration, setDuration] = useState<[number, number]>([1, 14]);
-  const [price, setPrice] = useState<[number, number]>([50, 1000]);
+  const [price, setPrice] = useState<[number, number]>([1000, 100000]);
   const [sort, setSort] = useState<string>(sortOptions[0].value);
 
   const navigate = useNavigate();
@@ -114,17 +114,17 @@ export default function FilterComponent() {
 
           {/* Price Filter */}
           <div className="w-full">
-            <h3 className="text-lg font-semibold mb-1">Price ($)</h3>
+            <h3 className="text-lg font-semibold mb-1">Price (₹)</h3>
             <Slider
-              min={200}
-              max={5000}
+              min={1000}
+              max={100000}
               step={50}
               value={price}
               onValueChange={(value) => setPrice(value as [number, number])}
               className="w-full [&>span]:w-4 [&>span]:h-4 [&>span]:bg-white [&>span]:border-2 [&>span]:border-violet-500 rounded-full"
             />
             <div className="text-sm mt-2">
-              ${price[0]} - ${price[1]}
+              ₹{price[0]} - ₹{price[1]}
             </div>
           </div>
         </div>

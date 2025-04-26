@@ -26,6 +26,7 @@ const LoginPage = () => {
       setEmail("");
       setPassword("");
       navigate("/home");
+      toast.success("Login Successfully");
     },
     onError: () => {
       toast.error("Invalid Credential");

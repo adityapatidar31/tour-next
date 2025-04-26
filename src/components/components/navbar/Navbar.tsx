@@ -9,13 +9,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { BaggageClaim, FerrisWheel, User } from "lucide-react";
 import ThemeSwitcher from "./ThemeSwitcher";
-import { Link } from "react-router-dom";
-import { getUser } from "@/services/backend";
+import { Link, useNavigate } from "react-router-dom";
+import { getUser, logoutUser } from "@/services/backend";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/services/hooks";
-import { addUser } from "@/store/userSlice";
+import { addUser, deleteUser } from "@/store/userSlice";
 import SearchInput from "./Search";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 export default function Navbar({
   theme,
@@ -26,6 +28,7 @@ export default function Navbar({
 }) {
   const user = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   useEffect(
     function () {
       async function fetchUser() {
@@ -37,9 +40,17 @@ export default function Navbar({
     [dispatch]
   );
 
-  function handleLogout() {
-    console.log("Logout successfully");
-  }
+  const { mutate } = useMutation({
+    mutationFn: logoutUser,
+    onSuccess: () => {
+      toast.success("Logout Successfully");
+      dispatch(deleteUser());
+      navigate("/home");
+    },
+    onError: () => {
+      toast.error("Failed to logout");
+    },
+  });
 
   return (
     <>
@@ -109,7 +120,11 @@ export default function Navbar({
                       <DropdownMenuItem>About</DropdownMenuItem>
                     </Link>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={handleLogout}>
+                    <DropdownMenuItem
+                      onClick={() => {
+                        mutate();
+                      }}
+                    >
                       Logout
                     </DropdownMenuItem>
                   </>

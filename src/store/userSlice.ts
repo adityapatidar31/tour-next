@@ -32,9 +32,12 @@ export const userSlice = createSlice({
       state.role = role;
       state.photo = photo || state.photo;
     },
+    deleteUser(state) {
+      Object.assign(state, initialState);
+    },
   },
 });
 
-export const { addUser } = userSlice.actions;
+export const { addUser, deleteUser } = userSlice.actions;
 
 export default userSlice.reducer;

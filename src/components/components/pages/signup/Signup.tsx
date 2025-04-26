@@ -32,6 +32,7 @@ const SignupPage = () => {
       setEmail("");
       setPassword("");
       navigate("/home");
+      toast.success("Account Created Successfully");
     },
     onError: () => {
       toast.error("Failed to Signup. Try again later");

@@ -102,6 +102,10 @@ export async function signUpUser(body: signBody): Promise<User> {
   return res.data.data.user;
 }
 
+export async function logoutUser() {
+  await axios.post(`${BASE_URL}api/v1/users/logout`, null, cookieSender);
+}
+
 export async function createReview(body: {
   review: string;
   rating: number;

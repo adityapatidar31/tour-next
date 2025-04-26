@@ -21,11 +21,13 @@ import AboutPage from "./components/components/pages/about/About";
 import Footer from "./components/components/Footer";
 import ProfilePage from "./components/components/pages/profile/ProfilePage";
 import BookingPage from "./components/components/pages/bookings/BookingPage";
+import FirstTimeAlert from "./components/components/RenderAlert";
 
 function Layout() {
   return (
     <div className="max-w-screen-xl mx-auto lg:px-13 ">
       <div className="flex flex-col min-h-screen">
+        <FirstTimeAlert />
         <Navbar />
         <main className="mt-4 flex-1">
           <Outlet />

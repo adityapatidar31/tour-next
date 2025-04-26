@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/services/hooks";
 import { addUser } from "@/store/userSlice";
 import SearchInput from "./Search";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 export default function Navbar({
   theme,
@@ -58,15 +59,32 @@ export default function Navbar({
           <div className="flex items-center gap-4">
             <ThemeSwitcher setTheme={setTheme} theme={theme} />
 
+            {user._id && (
+              <Button variant="ghost" size="icon" className="p-3" asChild>
+                <Link to="/home/bookings">
+                  <BaggageClaim className="w-6 h-6 text-violet-500" />
+                </Link>
+              </Button>
+            )}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="p-3">
-                  {user.name ? (
-                    <img src={user.photo} className="w-7 h-7 rounded-lg" />
-                  ) : (
+                {user.name ? (
+                  <Avatar className="cursor-pointer h-6 w-6">
+                    {user.photo ? (
+                      <img
+                        src={user.photo}
+                        alt="User Avatar"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <AvatarFallback>{user.name[0]}</AvatarFallback>
+                    )}
+                  </Avatar>
+                ) : (
+                  <Button variant="ghost" size="icon" className="">
                     <User className="w-5 h-5" />
-                  )}
-                </Button>
+                  </Button>
+                )}
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 {user.name ? (
@@ -111,13 +129,6 @@ export default function Navbar({
                 )}
               </DropdownMenuContent>
             </DropdownMenu>
-            {user._id && (
-              <Button variant="ghost" size="icon" className="p-3" asChild>
-                <Link to="/home/bookings">
-                  <BaggageClaim className="w-6 h-6 text-violet-500" />
-                </Link>
-              </Button>
-            )}
           </div>
         </div>
       </nav>

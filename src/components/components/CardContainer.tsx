@@ -16,7 +16,7 @@ function CardContainer({ tours }: CardContainerProps) {
           <Link
             to={`/home/${tour.id}`}
             key={tour.id}
-            className="group transition-all duration-300 ease-in-out" // 🆕 added group class
+            className="group transition-all duration-300 ease-in-out"
           >
             <CardComponent
               category={tour.category}

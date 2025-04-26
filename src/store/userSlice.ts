@@ -8,7 +8,6 @@ export interface User {
   _id: string;
   email: string;
   photo?: string;
-  cart: string[];
 }
 
 // Define the initial state using that type
@@ -17,12 +16,7 @@ const initialState: User = {
   role: "user",
   _id: "",
   email: "",
-  photo: "user.jpeg",
-  cart: [
-    "5c88fa8cf4afda39709c2955",
-    "5c88fa8cf4afda39709c2961",
-    "5c88fa8cf4afda39709c295d",
-  ],
+  photo: "",
 };
 
 export const userSlice = createSlice({
@@ -38,14 +32,9 @@ export const userSlice = createSlice({
       state.role = role;
       state.photo = photo || state.photo;
     },
-    addItem(state, action: PayloadAction<string>) {
-      const itemId = action.payload;
-      console.log(itemId);
-      state.cart.push(itemId);
-    },
   },
 });
 
-export const { addUser, addItem } = userSlice.actions;
+export const { addUser } = userSlice.actions;
 
 export default userSlice.reducer;

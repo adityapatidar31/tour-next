@@ -48,7 +48,10 @@ export default function FilterComponent() {
     else if (sort === "rating_asc") searchParams.set("sort", "rating");
     else searchParams.set("sort", "-rating");
 
-    // TODO: Change logic for set query it not not working properly
+    difficulty.forEach((diff) => {
+      searchParams.delete(`difficulty${diff}`);
+    });
+
     selectedDifficulty.map((difficulty) =>
       searchParams.set(`difficulty${difficulty}`, difficulty)
     );

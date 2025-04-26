@@ -23,9 +23,9 @@ export default function HomePage() {
       priceStart: searchParams.get("priceStart"),
       priceEnd: searchParams.get("priceEnd"),
       difficulty: [
-        ...(searchParams.get("difficultyEasy") ? ["easy"] : []),
-        ...(searchParams.get("difficultyMedium") ? ["medium"] : []),
-        ...(searchParams.get("difficultyHard") ? ["difficult"] : []),
+        ...(searchParams.get("difficultyeasy") ? ["easy"] : []),
+        ...(searchParams.get("difficultymedium") ? ["medium"] : []),
+        ...(searchParams.get("difficultyhard") ? ["difficult"] : []),
       ],
       search: searchParams.get("search"),
     };

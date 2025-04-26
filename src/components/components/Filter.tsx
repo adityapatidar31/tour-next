@@ -11,7 +11,8 @@ import {
 import { Card } from "@/components/ui/card";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-const difficulty = ["Easy", "Medium", "Hard"];
+const difficulty = ["easy", "medium", "hard"];
+
 const sortOptions = [
   { value: "price_asc", label: "Price: Low to High" },
   { value: "price_desc", label: "Price: High to Low" },

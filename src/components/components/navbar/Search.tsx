@@ -13,7 +13,7 @@ export default function SearchInput() {
     } else {
       navigate(`?search=${query}`, { replace: true });
     }
-  }, 1000);
+  }, 500);
 
   return (
     <Input

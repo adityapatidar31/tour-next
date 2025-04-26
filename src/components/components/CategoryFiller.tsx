@@ -43,7 +43,7 @@ export default function CategoryFilter() {
           <div
             key={name}
             className="flex flex-col items-center p-1 gap-2 cursor-pointer"
-            onClick={() => addCategory(name.toLowerCase())}
+            onClick={() => addCategory(name)}
           >
             <Icon className="w-16 h-16 text-primary" />
             <span className="text-m font-medium text-primary">{name}</span>

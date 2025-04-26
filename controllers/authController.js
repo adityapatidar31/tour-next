@@ -234,3 +234,16 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   // 4. Log user in, send JWT
   createSendToken(user, 200, res);
 });
+
+exports.logoutUser = catchAsync(async (req, res, next) => {
+  res.clearCookie("jwt", {
+    httpOnly: true,
+    sameSite: "none",
+    secure: process.env.NODE_ENV === "production",
+  });
+
+  res.status(200).json({
+    status: "success",
+    message: "Logged out successfully",
+  });
+});

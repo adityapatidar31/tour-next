@@ -25,7 +25,7 @@ export default function FilterComponent() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [duration, setDuration] = useState<[number, number]>([1, 14]);
-  const [price, setPrice] = useState<[number, number]>([1000, 100000]);
+  const [price, setPrice] = useState<[number, number]>([1000, 30000]);
   const [sort, setSort] = useState<string>(sortOptions[0].value);
 
   const navigate = useNavigate();
@@ -118,7 +118,7 @@ export default function FilterComponent() {
             <Slider
               min={1000}
               max={100000}
-              step={50}
+              step={100}
               value={price}
               onValueChange={(value) => setPrice(value as [number, number])}
               className="w-full [&>span]:w-4 [&>span]:h-4 [&>span]:bg-white [&>span]:border-2 [&>span]:border-violet-500 rounded-full"

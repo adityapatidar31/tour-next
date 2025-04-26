@@ -13,7 +13,11 @@ function CardContainer({ tours }: CardContainerProps) {
       {tours.length === 0 && <NoToursAvailable />}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {tours.map((tour) => (
-          <Link to={`/home/${tour.id}`} key={tour.id}>
+          <Link
+            to={`/home/${tour.id}`}
+            key={tour.id}
+            className="group transition-all duration-300 ease-in-out" // 🆕 added group class
+          >
             <CardComponent
               category={tour.category}
               name={tour.name}

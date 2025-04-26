@@ -26,7 +26,11 @@ const CardComponent: React.FC<CardProps> = ({
   imageCover,
 }) => {
   return (
-    <div className="rounded-lg shadow-lg sm:w-full overflow-hidden border border-gray-200 mx-4">
+    <div
+      className="rounded-lg shadow-lg sm:w-full overflow-hidden border border-gray-200 mx-4 
+                transition-all duration-300 ease-in-out 
+                group-hover:shadow-lg group-hover:ring-1 group-hover:ring-ring group-hover:scale-[1.01]"
+    >
       <img
         src={`./img/${imageCover}`}
         alt={name}

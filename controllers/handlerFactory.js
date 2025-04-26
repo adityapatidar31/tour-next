@@ -75,24 +75,25 @@ exports.getOne = (Model, popOptions) =>
 
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
-    let query = Model.find();
+    // Build base filter object
+    const filter = {};
 
-    // Apply First
+    // If search exists, add $text search
     if (req.query.search) {
-      const searchValue = req.query.search;
-      query = query.find({ $text: { $search: searchValue } });
+      filter.$text = { $search: req.query.search };
     }
 
-    // Apply filtering, sorting, limiting, and pagination
+    // Start with initial filter
+    const query = Model.find(filter);
+
+    // Apply additional features: filtering, sorting, limiting, pagination
     const features = new APIFeatures(query, req.query)
       .filter()
       .sort()
       .limitFields()
       .paginate();
 
-    // 🔥 Debugging
-    // console.log("Final MongoDB Query:", features.query.getFilter());
-
+    // Execute the final query
     const doc = await features.query;
 
     res.status(200).json({

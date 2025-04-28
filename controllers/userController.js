@@ -14,12 +14,12 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     );
   }
   //  2. Filler the undesired fields
-  const { name, email } = req.body;
+  const { name } = req.body;
 
   //  3. Update User Document
   const updatedUser = await User.findByIdAndUpdate(
     req.user.id,
-    { name, email },
+    { name },
     { new: true, runValidators: true },
   );
   res.status(200).json({

@@ -22,6 +22,7 @@ import Footer from "./components/components/Footer";
 import ProfilePage from "./components/components/pages/profile/ProfilePage";
 import BookingPage from "./components/components/pages/bookings/BookingPage";
 import FirstTimeAlert from "./components/components/RenderAlert";
+import FavoritePage from "./components/components/pages/favourite/FavoritePage";
 
 function Layout({
   theme,
@@ -88,6 +89,7 @@ export default function App() {
               <Route path="/home/about" element={<AboutPage />} />
               <Route path="/home/me" element={<ProfilePage />} />
               <Route path="/home/bookings" element={<BookingPage />} />
+              <Route path="/home/favorites" element={<FavoritePage />} />
               <Route
                 path="/home/updateMyPassword"
                 element={<PasswordUpdate />}

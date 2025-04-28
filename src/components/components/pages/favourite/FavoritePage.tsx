@@ -1,5 +1,5 @@
 import ErrorComponent from "../../Error";
-function FavouritePage() {
+function FavoritePage() {
   return (
     <div>
       <ErrorComponent message="This page is under construction" />
@@ -7,4 +7,4 @@ function FavouritePage() {
   );
 }
 
-export default FavouritePage;
+export default FavoritePage;

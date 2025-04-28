@@ -12,13 +12,13 @@ function PasswordSection() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
     reset,
   } = useForm<TypePasswordUpdate>({
     resolver: zodResolver(passwordUpdateSchema),
   });
 
-  const mutation = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (data: TypePasswordUpdate) => updateMyPassword(data),
     onSuccess: () => {
       toast.success("Password updated successfully!");
@@ -28,7 +28,7 @@ function PasswordSection() {
   });
 
   const onSubmit = (data: TypePasswordUpdate) => {
-    mutation.mutate(data);
+    mutate(data);
   };
 
   return (
@@ -40,7 +40,7 @@ function PasswordSection() {
         <label className="text-sm font-medium">Current Password</label>
         <Input
           type="password"
-          disabled={isSubmitting}
+          disabled={isPending}
           placeholder="Enter current password"
           {...register("currentPassword")}
           className="mt-0.5"
@@ -56,7 +56,7 @@ function PasswordSection() {
         <label className="text-sm font-medium">New Password</label>
         <Input
           type="password"
-          disabled={isSubmitting}
+          disabled={isPending}
           placeholder="Enter new password"
           {...register("password")}
           className="mt-0.5"
@@ -70,7 +70,7 @@ function PasswordSection() {
         <label className="text-sm font-medium">Confirm Password</label>
         <Input
           type="password"
-          disabled={isSubmitting}
+          disabled={isPending}
           placeholder="Confirm new password"
           {...register("passwordConfirm")}
           className="mt-0.5"
@@ -84,14 +84,10 @@ function PasswordSection() {
 
       <Button
         type="submit"
-        disabled={isSubmitting}
+        disabled={isPending}
         className="mt-4 text-white max-w-40"
       >
-        {isSubmitting ? (
-          <SyncLoader color="#FFF" size={8} />
-        ) : (
-          "Update Password"
-        )}
+        {isPending ? <SyncLoader color="#FFF" size={8} /> : "Update Password"}
       </Button>
     </form>
   );

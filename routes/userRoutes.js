@@ -1,6 +1,7 @@
 const express = require("express");
 const userController = require("../controllers/userController");
 const authController = require("../controllers/authController");
+const upload = require("../utils/multer");
 
 const router = express.Router();
 
@@ -10,27 +11,27 @@ router.post("/login", authController.login);
 
 router.post("/logout", authController.logoutUser);
 
+// Protect all the below routes
+router.use(authController.protect);
+
 router.post("/forgotPassword", authController.forgotPassword);
 
 router.patch("/resetPassword/:token", authController.resetPassword);
 
 router.get("/isLogedIn", authController.isLoggedIn, userController.sendUser);
 
-// Protect all the below routes
-router.use(authController.protect);
+router.patch("/updateMe", userController.updateMe);
 
-router.patch("/updateMe", authController.protect, userController.updateMe);
+router.delete("/deleteMe", userController.deleteMe);
 
-router.delete("/deleteMe", authController.protect, userController.deleteMe);
+router.route("/me").get(userController.getMe, userController.getUser);
 
-router
-  .route("/me")
-  .get(authController.protect, userController.getMe, userController.getUser);
+router.patch("/updateMyPassword", authController.updatePassword);
 
 router.patch(
-  "/updateMyPassword",
-  authController.protect,
-  authController.updatePassword,
+  "/profile-photo",
+  upload.single("image"),
+  userController.uploadMyProfilePhoto,
 );
 
 router.use(authController.restrictTo("admin"));

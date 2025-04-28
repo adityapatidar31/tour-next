@@ -58,3 +58,17 @@ exports.createUser = factory.createOne(User);
 exports.updateUser = factory.updateOne(User);
 
 exports.deleteUser = factory.deleteOne(User);
+
+exports.uploadMyProfilePhoto = catchAsync(async (req, res, next) => {
+  const { user } = req;
+
+  // 1. upload the image on the cloudinary
+
+  // 2. update the user photo
+
+  // 3. return the updated user
+
+  res
+    .status(201)
+    .json({ status: "success", message: "Hey There", user: req.user });
+});

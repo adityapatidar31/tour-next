@@ -227,7 +227,7 @@ export async function getOrderById(orderId: string): Promise<BookingDetail> {
 
 export async function updateMyName(name: NameType) {
   const response = await axios.patch(
-    `${BASE_URL}api/v1/users/name`,
+    `${BASE_URL}api/v1/users/updateMe`,
     name,
     cookieSender
   );
@@ -251,7 +251,7 @@ export const updateMyPassword = async (password: TypePasswordUpdate) => {
 
 export const updateMyProfileImage = async (formData: FormData) => {
   const response = await axios.patch(
-    `${BASE_URL}api/v1/users/profile`,
+    `${BASE_URL}api/v1/users/profile-photo`,
     formData,
     cookieSender
   );

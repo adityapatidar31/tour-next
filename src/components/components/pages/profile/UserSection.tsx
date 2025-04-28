@@ -17,7 +17,7 @@ function UserSection() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<NameType>({
     resolver: zodResolver(nameSchema),
     defaultValues: {
@@ -25,13 +25,13 @@ function UserSection() {
     },
   });
 
-  const mutation = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (name: NameType) => updateMyName(name),
     onSuccess: (user) => {
       if (user) {
         dispatch(addUser(user));
       }
-      toast.success("Name updated successfully!");
+      toast.success("Name Updated Successfully!");
     },
     // onError: handleApiError,
   });
@@ -39,7 +39,7 @@ function UserSection() {
   if (!user) return null;
 
   const onSubmit = (data: NameType) => {
-    mutation.mutate(data);
+    mutate(data);
   };
 
   return (
@@ -48,12 +48,8 @@ function UserSection() {
         <label className="text-sm font-medium">Name</label>
         <div className="flex items-center gap-2">
           <Input {...register("name")} className="mt-0.5" />
-          <Button type="submit" disabled={isSubmitting} className="text-white">
-            {isSubmitting ? (
-              <SyncLoader color="#FFF" size={10} />
-            ) : (
-              "Update Name"
-            )}
+          <Button type="submit" disabled={isPending} className="text-white">
+            {isPending ? <SyncLoader color="#FFF" size={10} /> : "Update Name"}
           </Button>
         </div>
         {errors.name && (

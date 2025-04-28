@@ -2,6 +2,7 @@ const User = require("../models/userModel");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const factory = require("./handlerFactory");
+const cloudinary = require("../utils/cloudinary");
 
 exports.updateMe = catchAsync(async (req, res, next) => {
   //  1. Create error if user wants to update password data
@@ -62,13 +63,43 @@ exports.deleteUser = factory.deleteOne(User);
 exports.uploadMyProfilePhoto = catchAsync(async (req, res, next) => {
   const { user } = req;
 
-  // 1. upload the image on the cloudinary
+  // 1. Check if file exists
+  if (!req.file) {
+    return res
+      .status(400)
+      .json({ status: "fail", message: "Please provide image" });
+  }
 
-  // 2. update the user photo
+  // 2. Upload the image to Cloudinary
+  const uploadResult = await new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      {
+        folder: "user_profiles",
+        public_id: `user_${user._id}_${Date.now()}`,
+        width: 500,
+        height: 500,
+        crop: "fill",
+      },
+      (error, uploadedImage) => {
+        if (error) return reject(error);
+        resolve(uploadedImage);
+      },
+    );
+    stream.end(req.file.buffer);
+  });
 
-  // 3. return the updated user
+  // 3. Update the user photo in the database
+  const updatedUser = await User.findByIdAndUpdate(
+    user._id,
+    { photo: uploadResult.secure_url }, // save the cloudinary URL
+    { new: true, runValidators: true },
+  );
 
-  res
-    .status(201)
-    .json({ status: "success", message: "Hey There", user: req.user });
+  // 4. Send response
+  res.status(200).json({
+    status: "success",
+    data: {
+      user: updatedUser,
+    },
+  });
 });

@@ -9,7 +9,7 @@ import {
 } from "./types";
 import { User } from "@/store/userSlice";
 import { Review } from "@/store/reviewSlice";
-import { TypePasswordUpdate, userSchema } from "@/schema/schema";
+import { NameType, TypePasswordUpdate, userSchema } from "@/schema/schema";
 
 export const BASE_URL = "https://tour-next.onrender.com/";
 
@@ -225,10 +225,10 @@ export async function getOrderById(orderId: string): Promise<BookingDetail> {
   return res.data.data;
 }
 
-export async function updateMyName(name: string) {
+export async function updateMyName(name: NameType) {
   const response = await axios.patch(
     `${BASE_URL}api/v1/users/name`,
-    { name },
+    name,
     cookieSender
   );
 

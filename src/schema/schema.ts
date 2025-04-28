@@ -35,3 +35,9 @@ export const passwordUpdateSchema = z
   });
 
 export type TypePasswordUpdate = z.infer<typeof passwordUpdateSchema>;
+
+export const nameSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+});
+
+export type NameType = z.infer<typeof nameSchema>;

@@ -248,3 +248,16 @@ export const updateMyPassword = async (password: TypePasswordUpdate) => {
     cookieSender
   );
 };
+
+export const updateMyProfileImage = async (formData: FormData) => {
+  const response = await axios.patch(
+    `${BASE_URL}api/v1/users/profile`,
+    formData,
+    cookieSender
+  );
+
+  const parsed = userSchema.safeParse(response.data.data.user);
+  if (!parsed.success) console.log(parsed.error);
+
+  return parsed.data;
+};

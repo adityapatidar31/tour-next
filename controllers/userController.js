@@ -67,10 +67,20 @@ exports.uploadMyProfilePhoto = catchAsync(async (req, res, next) => {
   if (!req.file) {
     return res
       .status(400)
-      .json({ status: "fail", message: "Please provide image" });
+      .json({ status: "fail", message: "Please provide an image" });
   }
 
-  // 2. Upload the image to Cloudinary
+  // 2. If user has a previous photo on Cloudinary, delete it
+  if (user.photo && user.photo.startsWith("https://res.cloudinary.com/")) {
+    // Extract public_id from the URL
+    const parts = user.photo.split("/");
+    const fileName = parts[parts.length - 1]; // user_5c8a1f4e2f8fb814b56fa185_1745831251859.jpg
+    const publicId = `user_profiles/${fileName.split(".")[0]}`; // Remove .jpg
+
+    await cloudinary.uploader.destroy(publicId);
+  }
+
+  // 3. Upload the new image to Cloudinary
   const uploadResult = await new Promise((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(
       {
@@ -88,14 +98,14 @@ exports.uploadMyProfilePhoto = catchAsync(async (req, res, next) => {
     stream.end(req.file.buffer);
   });
 
-  // 3. Update the user photo in the database
+  // 4. Update the user's photo field
   const updatedUser = await User.findByIdAndUpdate(
     user._id,
-    { photo: uploadResult.secure_url }, // save the cloudinary URL
+    { photo: uploadResult.secure_url },
     { new: true, runValidators: true },
   );
 
-  // 4. Send response
+  // 5. Send the response
   res.status(200).json({
     status: "success",
     data: {

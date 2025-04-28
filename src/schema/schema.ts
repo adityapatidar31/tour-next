@@ -22,3 +22,16 @@ export const userSchema = z.object({
 });
 
 export type userType = z.infer<typeof userSchema>;
+
+export const passwordUpdateSchema = z
+  .object({
+    currentPassword: z.string().min(8, "Current password is too short"),
+    password: z.string().min(8, "New password is too short"),
+    passwordConfirm: z.string(),
+  })
+  .refine((data) => data.password === data.passwordConfirm, {
+    path: ["newPasswordConfirm"],
+    message: "Passwords do not match",
+  });
+
+export type TypePasswordUpdate = z.infer<typeof passwordUpdateSchema>;

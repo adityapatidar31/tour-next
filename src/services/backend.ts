@@ -9,7 +9,7 @@ import {
 } from "./types";
 import { User } from "@/store/userSlice";
 import { Review } from "@/store/reviewSlice";
-import { userSchema } from "@/schema/schema";
+import { TypePasswordUpdate, userSchema } from "@/schema/schema";
 
 export const BASE_URL = "https://tour-next.onrender.com/";
 
@@ -232,7 +232,7 @@ export async function updateMyName(name: string) {
     cookieSender
   );
 
-  const parsed = userSchema.safeParse(response.data?.data);
+  const parsed = userSchema.safeParse(response.data?.data?.user);
 
   if (parsed.error) {
     console.log("Backend is not providing the valid format of the data");
@@ -240,3 +240,11 @@ export async function updateMyName(name: string) {
   }
   return parsed.data || null;
 }
+
+export const updateMyPassword = async (password: TypePasswordUpdate) => {
+  await axios.patch(
+    `${BASE_URL}api/v1/users/updateMyPassword`,
+    password,
+    cookieSender
+  );
+};

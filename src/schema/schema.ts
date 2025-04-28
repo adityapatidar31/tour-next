@@ -12,3 +12,13 @@ export const imageSchema = z.object({
 });
 
 export type ImageType = z.infer<typeof imageSchema>;
+
+export const userSchema = z.object({
+  name: z.string(),
+  role: z.enum(["user", "guide", "lead-guide", "admin"]),
+  _id: z.string(),
+  email: z.string().email(),
+  photo: z.string().optional(),
+});
+
+export type userType = z.infer<typeof userSchema>;

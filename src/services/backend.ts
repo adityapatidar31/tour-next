@@ -9,6 +9,7 @@ import {
 } from "./types";
 import { User } from "@/store/userSlice";
 import { Review } from "@/store/reviewSlice";
+import { userSchema } from "@/schema/schema";
 
 export const BASE_URL = "https://tour-next.onrender.com/";
 
@@ -222,4 +223,20 @@ export async function getOrderById(orderId: string): Promise<BookingDetail> {
   );
 
   return res.data.data;
+}
+
+export async function updateMyName(name: string) {
+  const response = await axios.patch(
+    `${BASE_URL}api/v1/users/name`,
+    { name },
+    cookieSender
+  );
+
+  const parsed = userSchema.safeParse(response.data?.data);
+
+  if (parsed.error) {
+    console.log("Backend is not providing the valid format of the data");
+    console.log(parsed.error);
+  }
+  return parsed.data || null;
 }

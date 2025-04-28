@@ -21,7 +21,7 @@ function UserSection() {
   } = useForm<NameType>({
     resolver: zodResolver(nameSchema),
     defaultValues: {
-      name: user?.name || "",
+      name: user.name || "",
     },
   });
 
@@ -47,7 +47,7 @@ function UserSection() {
       <div>
         <label className="text-sm font-medium">Name</label>
         <div className="flex items-center gap-2">
-          <Input {...register("name")} />
+          <Input {...register("name")} className="mt-0.5" />
           <Button type="submit" disabled={isSubmitting} className="text-white">
             {isSubmitting ? (
               <SyncLoader color="#FFF" size={10} />
@@ -63,7 +63,7 @@ function UserSection() {
 
       <div>
         <label className="text-sm font-medium">Email</label>
-        <Input value={user.email} disabled />
+        <Input value={user.email} disabled className="mt-0.5" />
       </div>
     </form>
   );

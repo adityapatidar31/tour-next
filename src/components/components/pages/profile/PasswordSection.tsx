@@ -43,6 +43,7 @@ function PasswordSection() {
           disabled={isSubmitting}
           placeholder="Enter current password"
           {...register("currentPassword")}
+          className="mt-0.5"
         />
         {errors.currentPassword && (
           <p className="text-sm text-red-500 mt-1">
@@ -58,6 +59,7 @@ function PasswordSection() {
           disabled={isSubmitting}
           placeholder="Enter new password"
           {...register("password")}
+          className="mt-0.5"
         />
         {errors.password && (
           <p className="text-sm text-red-500 mt-1">{errors.password.message}</p>
@@ -71,6 +73,7 @@ function PasswordSection() {
           disabled={isSubmitting}
           placeholder="Confirm new password"
           {...register("passwordConfirm")}
+          className="mt-0.5"
         />
         {errors.passwordConfirm && (
           <p className="text-sm text-red-500 mt-1">

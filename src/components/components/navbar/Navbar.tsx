@@ -113,9 +113,6 @@ export default function Navbar({
                     {/* <Link to="/home/createTour">
                       <DropdownMenuItem>Create Tour</DropdownMenuItem>
                     </Link> */}
-                    <Link to="/home/updateMyPassword">
-                      <DropdownMenuItem>Reset Password</DropdownMenuItem>
-                    </Link>
                     <Link to="/home/about">
                       <DropdownMenuItem>About</DropdownMenuItem>
                     </Link>

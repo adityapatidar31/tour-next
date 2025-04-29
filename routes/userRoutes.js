@@ -9,10 +9,11 @@ router.post("/signup", authController.signUp);
 
 router.post("/login", authController.login);
 
-router.post("/logout", authController.logoutUser);
+router.use(authController.protect);
 
 // Protect all the below routes
-router.use(authController.protect);
+
+router.post("/logout", authController.logoutUser);
 
 router.post("/forgotPassword", authController.forgotPassword);
 
